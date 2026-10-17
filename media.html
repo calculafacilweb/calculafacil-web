@@ -16,6 +16,7 @@
       color: #25233a;
       line-height: 1.6;
     }
+    a { color: inherit; }
     header {
       background: white;
       padding: 18px 20px;
@@ -28,6 +29,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
     }
     .logo {
       color: #7045e8;
@@ -35,7 +37,8 @@
       font-size: 22px;
       text-decoration: none;
     }
-    nav a:last-child { color: #7045e8; }
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .nav-links a { color: #7045e8; font-weight: bold; font-size: 14px; }
     main { max-width: 850px; margin: 35px auto; padding: 0 18px; }
     .hero { text-align: center; margin-bottom: 28px; }
     .hero h1 { line-height: 1.2; font-size: clamp(28px, 5vw, 42px); }
@@ -81,10 +84,26 @@
     #average { font-size: 34px; font-weight: bold; color: #6038ce; }
     .hint { color: #68667a; font-size: 14px; }
     .faq { border-top: 1px solid #eeecf6; padding: 12px 0; }
+    .tool-link {
+      display: block;
+      padding: 20px;
+      border: 1px solid #ded5ff;
+      border-radius: 14px;
+      background: #f0ebff;
+      margin-bottom: 24px;
+      text-decoration: none;
+      transition: transform .2s, border-color .2s;
+    }
+    .tool-link:hover { transform: translateY(-2px); border-color: #7045e8; }
+    .tool-link h2 { color: #6038ce; margin-top: 0; font-size: 21px; }
+    .tool-link p { margin-bottom: 8px; }
+    .tool-link strong { color: #6038ce; }
     footer { text-align: center; padding: 25px; color: #68667a; font-size: 14px; }
     @media (max-width: 500px) {
       .grades { grid-template-columns: 1fr; }
       .panel { padding: 18px; }
+      .nav-links { gap: 10px; }
+      .nav-links a { font-size: 12px; }
     }
   </style>
 </head>
@@ -92,7 +111,10 @@
   <header>
     <nav>
       <a class="logo" href="./">CalculaFácil</a>
-      <a href="./">Todas las calculadoras</a>
+      <div class="nav-links">
+        <a href="./">Todas las calculadoras</a>
+        <a href="./nota-necesaria.html">Nota para aprobar</a>
+      </div>
     </nav>
   </header>
 
@@ -122,6 +144,12 @@
       <p class="hint">Introduce notas entre 0 y 10. Deja vacías las casillas que no uses.</p>
     </section>
 
+    <a class="tool-link" href="./nota-necesaria.html">
+      <h2>🎯 ¿Qué nota necesito para aprobar?</h2>
+      <p>¿Quieres saber qué nota necesitas en el próximo examen para llegar al 5, al 7 o a cualquier objetivo? Utiliza nuestra calculadora gratuita.</p>
+      <strong>Calcular la nota necesaria →</strong>
+    </a>
+
     <section class="panel">
       <h2>¿Cómo se calcula la media de notas?</h2>
       <p>Para calcular la media aritmética, suma todas tus notas y divide el resultado entre el número de asignaturas con calificación.</p>
@@ -141,7 +169,7 @@
       </div>
       <div class="faq">
         <h3>¿Qué pasa si las asignaturas tienen distintos porcentajes?</h3>
-        <p>En ese caso debes calcular una media ponderada, porque cada nota no tiene la misma importancia en el resultado final.</p>
+        <p>En ese caso debes calcular una media ponderada, porque cada nota no tiene la misma importancia en el resultado final. Puedes encontrar más calculadoras en la <a href="./">página principal de CalculaFácil</a>.</p>
       </div>
     </section>
   </main>
@@ -224,4 +252,3 @@
   </script>
 </body>
 </html>
-
