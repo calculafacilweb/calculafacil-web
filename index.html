@@ -3,425 +3,733 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calcula porcentajes, descuentos, IVA, reglas de tres, aumentos porcentuales y edades gratis con CalculaFácil.">
-  <title>CalculaFácil | Calculadoras online gratis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CalculaFácil — Calculadoras para estudiantes</title>
+  <meta name="description" content="Calcula tu media, descubre qué nota necesitas para aprobar y calcula tus notas finales con las herramientas gratuitas de CalculaFácil.">
+  <meta name="theme-color" content="#ffffff">
+
   <style>
     :root {
-      --primary: #4f46e5;
-      --primary-dark: #3730a3;
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #182033;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --success: #15803d;
+      --purple: #6246e5;
+      --purple-dark: #4930c4;
+      --purple-light: #f0edff;
+      --ink: #211d35;
+      --muted: #77738a;
+      --line: #eae7f2;
+      --bg: #faf9fd;
+      --white: #fff;
+      --green: #18794e;
+      --red: #bd3434;
+      --radius: 20px;
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
       background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
+      font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
     }
 
-    header {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: white;
-      padding: 42px 20px 35px;
-      text-align: center;
+    a { color: inherit; text-decoration: none; }
+
+    button, input {
+      font: inherit;
     }
 
-    .brand {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -1px;
+    .container {
+      width: min(1080px, calc(100% - 36px));
+      margin-inline: auto;
     }
 
-    header p {
-      margin: 10px auto 0;
-      max-width: 540px;
-      color: #ede9fe;
+    .navbar {
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
     }
 
-    main {
-      width: min(1050px, 92%);
-      margin: 28px auto 55px;
-    }
-
-    .intro {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .intro h1 {
-      font-size: clamp(25px, 4vw, 34px);
-      margin-bottom: 7px;
-    }
-
-    .intro p { color: var(--muted); margin-top: 0; }
-
-    .tools {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 20px;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 23px;
-      box-shadow: 0 5px 20px rgba(15, 23, 42, .045);
+    .logo {
+      font-size: 22px;
+      font-weight: 850;
+      letter-spacing: -1px;
     }
 
-    .card h2 {
-      font-size: 19px;
-      margin: 0 0 5px;
-    }
+    .logo span { color: var(--purple); }
 
-    .description {
-      color: var(--muted);
-      font-size: 14px;
-      min-height: 42px;
-      margin: 0 0 17px;
-    }
-
-    label {
-      display: block;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
       font-size: 14px;
       font-weight: 600;
-      margin: 13px 0 6px;
+      color: var(--muted);
     }
 
-    input, select {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      font: inherit;
-      background: white;
-      color: var(--text);
+    .nav-links a:hover { color: var(--purple); }
+
+    .hero {
+      padding: 76px 0 55px;
+      background:
+        radial-gradient(ellipse at 80% 10%, #eee9ff 0, transparent 42%),
+        var(--bg);
     }
 
-    input:focus, select:focus {
-      outline: 2px solid #a5b4fc;
-      border-color: var(--primary);
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      background: var(--primary);
+    .eyebrow {
+      display: inline-block;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      border: 1px solid #e2dcff;
+      border-radius: 100px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -2.5px;
+      margin: 20px 0;
+    }
+
+    h1 span { color: var(--purple); }
+
+    .hero p {
+      max-width: 610px;
+      margin: 0 auto;
+      font-size: 17px;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--purple);
       color: white;
-      padding: 12px 15px;
-      margin-top: 17px;
-      font-size: 15px;
-      font-weight: 700;
+      font-weight: 750;
       cursor: pointer;
       transition: background .2s, transform .2s;
     }
 
-    button:hover {
-      background: var(--primary-dark);
+    .button:hover {
+      background: var(--purple-dark);
       transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      background: white;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .button-secondary:hover {
+      background: var(--purple-light);
+      color: var(--purple-dark);
+    }
+
+    .trust-line {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    .section {
+      padding: 38px 0 64px;
+      scroll-margin-top: 85px;
+    }
+
+    .section-heading {
+      margin-bottom: 25px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(25px, 4vw, 34px);
+      letter-spacing: -1px;
+      margin: 0 0 7px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: 0 7px 25px rgba(42, 28, 87, .035);
+      min-width: 0;
+    }
+
+    .tool-top {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .tool-icon {
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--purple-light);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+    }
+
+    .tool-card h3 {
+      font-size: 19px;
+      line-height: 1.35;
+      margin: 0 0 5px;
+    }
+
+    .tool-card .description {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 750;
+      margin: 15px 0 6px;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      border: 1px solid #ded9eb;
+      border-radius: 10px;
+      background: white;
+      color: var(--ink);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px #6246e51c;
+    }
+
+    input::placeholder { color: #aaa5b8; }
+
+    .hint {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .tool-card .button {
+      width: 100%;
+      margin-top: 18px;
     }
 
     .result {
       display: none;
-      margin-top: 15px;
-      padding: 13px;
-      border-radius: 10px;
-      background: #eef2ff;
-      color: #312e81;
+      margin-top: 17px;
+      padding: 15px;
+      background: var(--purple-light);
+      border: 1px solid #e3dcff;
+      border-radius: 12px;
       overflow-wrap: anywhere;
     }
 
-    .result.show { display: block; }
+    .result.visible { display: block; }
+
+    .result.error {
+      color: var(--red);
+      background: #fff0f0;
+      border-color: #ffd6d6;
+    }
+
+    .result-label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
     .result strong {
       display: block;
-      font-size: 20px;
-      margin-top: 3px;
+      font-size: 27px;
+      letter-spacing: -.5px;
+      color: var(--purple-dark);
+      margin-top: 2px;
     }
 
-    .error {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
+    .result.error strong { color: var(--red); }
 
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: var(--muted);
+    .result-detail {
+      display: block;
       font-size: 13px;
-      border-top: 1px solid var(--border);
+      margin-top: 5px;
     }
 
-    footer strong { color: var(--primary); }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
 
-    @media (max-width: 400px) {
-      .card { padding: 18px; }
-      header { padding-top: 32px; }
+    .guide-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 21px;
+    }
+
+    .guide-number {
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .guide-card h3 {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+
+    .guide-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+      max-width: 800px;
+    }
+
+    details {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 17px 19px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    details p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .footer {
+      background: white;
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    @media (max-width: 700px) {
+      .nav-inner { min-height: 64px; }
+      .nav-links { gap: 13px; font-size: 12px; }
+      .logo { font-size: 20px; }
+      .hero { padding: 56px 0 42px; }
+      h1 { letter-spacing: -1.5px; }
+      .tool-grid { grid-template-columns: 1fr; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .tool-card { padding: 21px; }
+      .section { padding: 28px 0 45px; }
+    }
+
+    @media (max-width: 390px) {
+      .nav-links { gap: 9px; }
+      .nav-links a { font-size: 11px; }
+      .container { width: calc(100% - 26px); }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="brand">CalculaFácil</div>
-    <p>Herramientas matemáticas gratuitas, rápidas y fáciles de usar.</p>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#" aria-label="CalculaFácil, inicio">
+        Calcula<span>Fácil</span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#calculadoras">Calculadoras</a>
+        <a href="#guias">Cómo funciona</a>
+        <a href="#preguntas">Ayuda</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <section class="intro">
-      <h1>¿Qué quieres calcular?</h1>
-      <p>Elige una calculadora, introduce los datos y obtén tu resultado al instante.</p>
+    <section class="hero">
+      <div class="container hero-content">
+        <span class="eyebrow">Tu apoyo para estudiar</span>
+        <h1>Estudia mejor.<br><span>Calcula más fácil.</span></h1>
+        <p>
+          Calcula tus medias, descubre qué nota necesitas para aprobar
+          y resuelve tus dudas matemáticas en segundos.
+          Gratis y sin registrarte.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#calculadoras">Ver calculadoras →</a>
+          <a class="button button-secondary" href="#guias">Aprender a calcular</a>
+        </div>
+        <div class="trust-line">Herramientas gratuitas · Resultados al instante · Sin registro</div>
+      </div>
     </section>
 
-    <section class="tools">
-      <article class="card">
-        <h2>📊 Calculadora de porcentajes</h2>
-        <p class="description">Descubre cuánto representa un porcentaje de una cantidad.</p>
-        <form data-calculator="percentage">
-          <label for="percent-value">Porcentaje (%)</label>
-          <input id="percent-value" name="percent" type="number" step="any" placeholder="Ej. 25" required>
-          <label for="percent-total">Cantidad total</label>
-          <input id="percent-total" name="total" type="number" step="any" placeholder="Ej. 200" required>
-          <button type="submit">Calcular porcentaje</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+    <section class="section" id="calculadoras">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Calculadoras para estudiantes</h2>
+          <p>Introduce tus datos y obtén el resultado al momento.</p>
+        </div>
 
-      <article class="card">
-        <h2>🏷️ Calculadora de descuentos</h2>
-        <p class="description">Calcula cuánto ahorras y el precio final de una oferta.</p>
-        <form data-calculator="discount">
-          <label for="discount-price">Precio original (€)</label>
-          <input id="discount-price" name="price" type="number" min="0" step="any" placeholder="Ej. 80" required>
-          <label for="discount-percent">Descuento (%)</label>
-          <input id="discount-percent" name="percent" type="number" min="0" max="100" step="any" placeholder="Ej. 20" required>
-          <button type="submit">Calcular descuento</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+        <div class="tool-grid">
 
-      <article class="card">
-        <h2>🧾 Calculadora de IVA</h2>
-        <p class="description">Añade IVA a un precio o calcula el importe sin IVA.</p>
-        <form data-calculator="vat">
-          <label for="vat-price">Precio (€)</label>
-          <input id="vat-price" name="price" type="number" min="0" step="any" placeholder="Ej. 100" required>
-          <label for="vat-rate">Tipo de IVA</label>
-          <select id="vat-rate" name="rate">
-            <option value="21">21% — General</option>
-            <option value="10">10% — Reducido</option>
-            <option value="4">4% — Superreducido</option>
-          </select>
-          <label for="vat-mode">¿Qué quieres hacer?</label>
-          <select id="vat-mode" name="mode">
-            <option value="add">Añadir IVA al precio</option>
-            <option value="remove">Quitar IVA de un precio con IVA</option>
-          </select>
-          <button type="submit">Calcular IVA</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+          <article class="tool-card">
+            <div class="tool-top">
+              <div class="tool-icon">📚</div>
+              <div>
+                <h3>Calculadora de media</h3>
+                <p class="description">Calcula la media de tus exámenes y trabajos.</p>
+              </div>
+            </div>
+            <form data-calc="average">
+              <label for="average-grades">Tus notas</label>
+              <input id="average-grades" name="grades" type="text"
+                placeholder="Ej. 7, 8.5, 6, 9" required>
+              <span class="hint">Separa las notas con comas. Usa valores del 0 al 10.</span>
+              <button class="button" type="submit">Calcular mi media</button>
+              <div class="result" aria-live="polite"></div>
+            </form>
+          </article>
 
-      <article class="card">
-        <h2>✖️ Regla de tres</h2>
-        <p class="description">Calcula el cuarto valor a partir de tres valores conocidos.</p>
-        <form data-calculator="rule">
-          <label for="rule-a">Primer valor (A)</label>
-          <input id="rule-a" name="a" type="number" step="any" placeholder="Ej. 4" required>
-          <label for="rule-b">Segundo valor (B)</label>
-          <input id="rule-b" name="b" type="number" step="any" placeholder="Ej. 8" required>
-          <label for="rule-c">Tercer valor (C)</label>
-          <input id="rule-c" name="c" type="number" step="any" placeholder="Ej. 10" required>
-          <button type="submit">Calcular X</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+          <article class="tool-card">
+            <div class="tool-top">
+              <div class="tool-icon">🎯</div>
+              <div>
+                <h3>¿Qué nota necesito para aprobar?</h3>
+                <p class="description">Calcula la nota que necesitas en el examen final.</p>
+              </div>
+            </div>
+            <form data-calc="needed">
+              <label for="needed-current">Media actual</label>
+              <input id="needed-current" name="current" type="number"
+                min="0" max="10" step="any" placeholder="Ej. 6.5" required>
+              <label for="needed-completed">Porcentaje ya evaluado (%)</label>
+              <input id="needed-completed" name="completed" type="number"
+                min="0" max="99.99" step="any" placeholder="Ej. 60" required>
+              <label for="needed-target">Nota final que quieres conseguir</label>
+              <input id="needed-target" name="target" type="number"
+                min="0" max="10" step="any" value="5" required>
+              <span class="hint">La parte restante corresponde al examen pendiente.</span>
+              <button class="button" type="submit">Calcular nota necesaria</button>
+              <div class="result" aria-live="polite"></div>
+            </form>
+          </article>
 
-      <article class="card">
-        <h2>📈 Aumento porcentual</h2>
-        <p class="description">Calcula cuánto aumenta una cantidad y cuál es su nuevo valor.</p>
-        <form data-calculator="increase">
-          <label for="increase-value">Cantidad inicial</label>
-          <input id="increase-value" name="value" type="number" step="any" placeholder="Ej. 100" required>
-          <label for="increase-percent">Aumento (%)</label>
-          <input id="increase-percent" name="percent" type="number" min="0" step="any" placeholder="Ej. 15" required>
-          <button type="submit">Calcular aumento</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+          <article class="tool-card">
+            <div class="tool-top">
+              <div class="tool-icon">🧮</div>
+              <div>
+                <h3>Nota final ponderada</h3>
+                <p class="description">Combina dos notas según su peso en la evaluación.</p>
+              </div>
+            </div>
+            <form data-calc="weighted">
+              <label for="weighted-first">Primera nota (0–10)</label>
+              <input id="weighted-first" name="first" type="number"
+                min="0" max="10" step="any" placeholder="Ej. 7" required>
+              <label for="weighted-weight">Peso de la primera nota (%)</label>
+              <input id="weighted-weight" name="weight" type="number"
+                min="0" max="100" step="any" placeholder="Ej. 40" required>
+              <label for="weighted-second">Segunda nota (0–10)</label>
+              <input id="weighted-second" name="second" type="number"
+                min="0" max="10" step="any" placeholder="Ej. 8" required>
+              <span class="hint">La segunda nota tendrá el porcentaje restante.</span>
+              <button class="button" type="submit">Calcular nota final</button>
+              <div class="result" aria-live="polite"></div>
+            </form>
+          </article>
 
-      <article class="card">
-        <h2>🎂 Calculadora de edad</h2>
-        <p class="description">Calcula tu edad en años, meses y días a partir de tu nacimiento.</p>
-        <form data-calculator="age">
-          <label for="birth-date">Fecha de nacimiento</label>
-          <input id="birth-date" name="birth" type="date" required>
-          <button type="submit">Calcular edad</button>
-          <div class="result" aria-live="polite"></div>
-        </form>
-      </article>
+          <article class="tool-card">
+            <div class="tool-top">
+              <div class="tool-icon">📊</div>
+              <div>
+                <h3>Calculadora de porcentajes</h3>
+                <p class="description">Resuelve porcentajes de ejercicios, problemas y descuentos.</p>
+              </div>
+            </div>
+            <form data-calc="percentage">
+              <label for="percentage-value">¿Qué porcentaje?</label>
+              <input id="percentage-value" name="percent" type="number"
+                step="any" placeholder="Ej. 25" required>
+              <label for="percentage-total">¿De qué cantidad?</label>
+              <input id="percentage-total" name="total" type="number"
+                step="any" placeholder="Ej. 200" required>
+              <button class="button" type="submit">Calcular porcentaje</button>
+              <div class="result" aria-live="polite"></div>
+            </form>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guias">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Aprende a calcularlo</h2>
+          <p>Entiende las operaciones, no te quedes solo con el resultado.</p>
+        </div>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <span class="guide-number">01 / MEDIA</span>
+            <h3>¿Cómo se calcula una media?</h3>
+            <p>Suma todas las notas y divide el resultado entre el número de notas. Por ejemplo, (6 + 8 + 10) ÷ 3 = 8.</p>
+          </article>
+          <article class="guide-card">
+            <span class="guide-number">02 / APROBAR</span>
+            <h3>¿Cómo saber qué nota necesitas?</h3>
+            <p>Ten en cuenta tu media actual y qué porcentaje representa. La nota pendiente debe compensar lo que falta para alcanzar tu objetivo.</p>
+          </article>
+          <article class="guide-card">
+            <span class="guide-number">03 / PORCENTAJES</span>
+            <h3>¿Cómo calcular un porcentaje?</h3>
+            <p>Multiplica la cantidad por el porcentaje y divide entre 100. Por ejemplo, el 20% de 50 es 50 × 20 ÷ 100 = 10.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="preguntas">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Preguntas frecuentes</h2>
+          <p>Respuestas rápidas para usar las calculadoras.</p>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>¿CalculaFácil es gratis?</summary>
+            <p>Sí. Las calculadoras de esta página se pueden utilizar gratis y no requieren registro.</p>
+          </details>
+          <details>
+            <summary>¿Cómo escribo los decimales?</summary>
+            <p>Puedes escribir decimales con punto o coma en la calculadora de media. Por ejemplo: 7.5 o 7,5.</p>
+          </details>
+          <details>
+            <summary>¿La nota necesaria es siempre exacta?</summary>
+            <p>El cálculo es matemático y supone que las ponderaciones que introduces son correctas. Tu centro educativo puede aplicar normas adicionales, redondeos o requisitos mínimos.</p>
+          </details>
+          <details>
+            <summary>¿Se guardan mis notas?</summary>
+            <p>Estas calculadoras realizan los cálculos en tu navegador. No incluyen una función para guardar tus notas en una cuenta.</p>
+          </details>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <strong>CalculaFácil</strong> · Herramientas gratuitas para todos.
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="logo" href="#">Calcula<span>Fácil</span></a>
+      <p>Herramientas de estudio gratuitas · © <span id="year"></span> CalculaFácil</p>
+    </div>
   </footer>
 
   <script>
-    const numberFormat = new Intl.NumberFormat("es-ES", {
+    const fmt = new Intl.NumberFormat("es-ES", {
       maximumFractionDigits: 2
     });
 
-    function formatNumber(value) {
-      return numberFormat.format(value);
+    function number(value) {
+      return fmt.format(value);
     }
 
-    function showResult(form, message, isError = false) {
-      const box = form.querySelector(".result");
-      box.classList.toggle("error", isError);
-      box.classList.add("show");
-      box.replaceChildren();
-
-      const text = document.createElement("span");
-      text.textContent = message;
-      box.appendChild(text);
-    }
-
-    function addResult(form, label, value) {
+    function result(form, title, value, detail = "", error = false) {
       const box = form.querySelector(".result");
       box.replaceChildren();
+      box.classList.add("visible");
+      box.classList.toggle("error", error);
 
-      const title = document.createElement("span");
-      title.textContent = label;
+      const label = document.createElement("span");
+      label.className = "result-label";
+      label.textContent = title;
+      box.appendChild(label);
 
       const strong = document.createElement("strong");
       strong.textContent = value;
+      box.appendChild(strong);
 
-      box.append(title, strong);
-      box.classList.remove("error");
-      box.classList.add("show");
-    }
-
-    function getNumber(data, key) {
-      return Number(data.get(key));
-    }
-
-    function validFinite(form, values) {
-      if (values.some(value => !Number.isFinite(value))) {
-        showResult(form, "Introduce valores numéricos válidos.", true);
-        return false;
+      if (detail) {
+        const small = document.createElement("span");
+        small.className = "result-detail";
+        small.textContent = detail;
+        box.appendChild(small);
       }
-      return true;
     }
 
-    document.querySelectorAll("form[data-calculator]").forEach(form => {
+    function fail(form, message) {
+      result(form, "Revisa los datos", message, "", true);
+    }
+
+    function get(form, name) {
+      return form.elements[name].value.trim();
+    }
+
+    function num(form, name) {
+      return Number(get(form, name).replace(",", "."));
+    }
+
+    function validRange(value, min, max) {
+      return Number.isFinite(value) && value >= min && value <= max;
+    }
+
+    document.querySelectorAll("form[data-calc]").forEach(form => {
       form.addEventListener("submit", event => {
         event.preventDefault();
+        const type = form.dataset.calc;
 
-        const data = new FormData(form);
-        const type = form.dataset.calculator;
+        if (type === "average") {
+          const raw = get(form, "grades");
+          const parts = raw.split(/[;,]+/).map(s => s.trim()).filter(Boolean);
+          const grades = parts.map(s => Number(s.replace(",", ".")));
+
+          if (!parts.length || grades.some(g => !validRange(g, 0, 10))) {
+            fail(form, "Introduce notas válidas entre 0 y 10, separadas por comas.");
+            return;
+          }
+
+          const average = grades.reduce((sum, g) => sum + g, 0) / grades.length;
+          result(form, "Tu media es", number(average) + " / 10",
+            "Has introducido " + grades.length + (grades.length === 1 ? " nota." : " notas."));
+        }
+
+        if (type === "needed") {
+          const current = num(form, "current");
+          const completed = num(form, "completed");
+          const target = num(form, "target");
+
+          if (!validRange(current, 0, 10) ||
+              !validRange(completed, 0, 100) ||
+              completed >= 100 ||
+              !validRange(target, 0, 10)) {
+            fail(form, "Comprueba las notas y el porcentaje evaluado. Debe quedar algo por evaluar.");
+            return;
+          }
+
+          const remaining = 100 - completed;
+          const required = (target * 100 - current * completed) / remaining;
+
+          if (required > 10) {
+            result(form, "Objetivo difícil de alcanzar", number(required) + " / 10",
+              "Necesitarías más de un 10 en la parte pendiente para llegar a esa nota.");
+          } else if (required <= 0) {
+            result(form, "Objetivo alcanzado matemáticamente", "0 / 10",
+              "Con tu media actual, ya alcanzarías la nota objetivo incluso con un cero en lo pendiente.");
+          } else {
+            result(form, "Nota necesaria", number(required) + " / 10",
+              "Queda un " + number(remaining) + "% de la nota final.");
+          }
+        }
+
+        if (type === "weighted") {
+          const first = num(form, "first");
+          const weight = num(form, "weight");
+          const second = num(form, "second");
+
+          if (!validRange(first, 0, 10) ||
+              !validRange(second, 0, 10) ||
+              !validRange(weight, 0, 100)) {
+            fail(form, "Las notas deben estar entre 0 y 10 y el peso entre 0 y 100%.");
+            return;
+          }
+
+          const finalGrade = first * weight / 100 +
+            second * (100 - weight) / 100;
+
+          result(form, "Tu nota final es", number(finalGrade) + " / 10",
+            "Primera nota: " + number(weight) + "% · Segunda nota: " +
+            number(100 - weight) + "%.");
+        }
 
         if (type === "percentage") {
-          const percent = getNumber(data, "percent");
-          const total = getNumber(data, "total");
-          if (!validFinite(form, [percent, total])) return;
-          addResult(form, percent + "% de " + formatNumber(total) + " es", formatNumber(percent / 100 * total));
-        }
+          const percent = num(form, "percent");
+          const total = num(form, "total");
 
-        if (type === "discount") {
-          const price = getNumber(data, "price");
-          const percent = getNumber(data, "percent");
-          if (!validFinite(form, [price, percent])) return;
-          if (price < 0 || percent < 0 || percent > 100) {
-            showResult(form, "El precio debe ser positivo y el descuento debe estar entre 0 y 100%.", true);
-            return;
-          }
-          const saving = price * percent / 100;
-          addResult(form, "Precio final: " + formatNumber(price - saving) + " €", "Ahorras " + formatNumber(saving) + " €");
-        }
-
-        if (type === "vat") {
-          const price = getNumber(data, "price");
-          const rate = getNumber(data, "rate");
-          const mode = data.get("mode");
-          if (!validFinite(form, [price, rate])) return;
-          if (price < 0) {
-            showResult(form, "Introduce un precio igual o superior a cero.", true);
-            return;
-          }
-          if (mode === "add") {
-            const tax = price * rate / 100;
-            addResult(form, "Precio con IVA: " + formatNumber(price + tax) + " €", "IVA: " + formatNumber(tax) + " €");
-          } else {
-            const base = price / (1 + rate / 100);
-            addResult(form, "Precio sin IVA: " + formatNumber(base) + " €", "IVA incluido: " + formatNumber(price - base) + " €");
-          }
-        }
-
-        if (type === "rule") {
-          const a = getNumber(data, "a");
-          const b = getNumber(data, "b");
-          const c = getNumber(data, "c");
-          if (!validFinite(form, [a, b, c])) return;
-          if (a === 0) {
-            showResult(form, "El primer valor no puede ser cero.", true);
-            return;
-          }
-          addResult(form, "El resultado de X es", formatNumber(b * c / a));
-        }
-
-        if (type === "increase") {
-          const value = getNumber(data, "value");
-          const percent = getNumber(data, "percent");
-          if (!validFinite(form, [value, percent])) return;
-          if (percent < 0) {
-            showResult(form, "El aumento porcentual no puede ser negativo.", true);
-            return;
-          }
-          const increase = value * percent / 100;
-          addResult(form, "Nuevo valor: " + formatNumber(value + increase), "Aumento: " + formatNumber(increase));
-        }
-
-        if (type === "age") {
-          const birth = data.get("birth");
-          const birthDate = new Date(birth + "T00:00:00");
-          const now = new Date();
-          now.setHours(0, 0, 0, 0);
-
-          if (!birth || Number.isNaN(birthDate.getTime()) || birthDate > now) {
-            showResult(form, "Introduce una fecha de nacimiento válida.", true);
+          if (!Number.isFinite(percent) || !Number.isFinite(total)) {
+            fail(form, "Introduce dos valores numéricos válidos.");
             return;
           }
 
-          let years = now.getFullYear() - birthDate.getFullYear();
-          let months = now.getMonth() - birthDate.getMonth();
-          let days = now.getDate() - birthDate.getDate();
-
-          if (days < 0) {
-            months--;
-            const previousMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-            days += previousMonthDays;
-          }
-
-          if (months < 0) {
-            years--;
-            months += 12;
-          }
-
-          addResult(form, "Tu edad es", years + " años, " + months + " meses y " + days + " días");
+          result(form, number(percent) + "% de " + number(total) + " es",
+            number(percent / 100 * total));
         }
       });
     });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
