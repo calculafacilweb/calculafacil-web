@@ -4,247 +4,424 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calcula porcentajes, descuentos e incrementos gratis. Obtén resultados rápidos y aprende cómo se calculan.">
-  <meta name="theme-color" content="#2563eb">
-  <title>Calculadora de porcentajes gratis | CalculaFácil</title>
-
+  <meta name="description" content="Calcula porcentajes, descuentos, IVA, reglas de tres, aumentos porcentuales y edades gratis con CalculaFácil.">
+  <title>CalculaFácil | Calculadoras online gratis</title>
   <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #182033;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #15803d;
+    }
+
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      color: #172033;
-      background: #f5f7fb;
-      line-height: 1.6;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
     }
 
     header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 18px 20px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      padding: 42px 20px 35px;
+      text-align: center;
     }
 
-    nav, main, footer {
-      max-width: 900px;
-      margin: auto;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      font-size: 22px;
+    .brand {
+      font-size: 32px;
       font-weight: 800;
-      color: #2563eb;
+      letter-spacing: -1px;
     }
 
-    nav a, footer a {
-      color: #475569;
-      text-decoration: none;
+    header p {
+      margin: 10px auto 0;
+      max-width: 540px;
+      color: #ede9fe;
     }
 
-    main { padding: 42px 20px; }
+    main {
+      width: min(1050px, 92%);
+      margin: 28px auto 55px;
+    }
 
-    .intro { text-align: center; margin-bottom: 28px; }
-
-    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; }
-
-    .intro p { color: #64748b; }
-
-    .calculator, .info {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 24px;
+    .intro {
+      text-align: center;
       margin-bottom: 24px;
+    }
+
+    .intro h1 {
+      font-size: clamp(25px, 4vw, 34px);
+      margin-bottom: 7px;
+    }
+
+    .intro p { color: var(--muted); margin-top: 0; }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 23px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, .045);
+    }
+
+    .card h2 {
+      font-size: 19px;
+      margin: 0 0 5px;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 14px;
+      min-height: 42px;
+      margin: 0 0 17px;
     }
 
     label {
       display: block;
+      font-size: 14px;
       font-weight: 600;
-      margin: 16px 0 6px;
+      margin: 13px 0 6px;
     }
 
     input, select {
+      display: block;
       width: 100%;
-      padding: 13px;
+      padding: 12px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 9px;
+      font: inherit;
       background: white;
+      color: var(--text);
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #a5b4fc;
+      border-color: var(--primary);
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 20px;
-      border: 0;
-      border-radius: 8px;
-      background: #2563eb;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary);
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      padding: 12px 15px;
+      margin-top: 17px;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      transition: background .2s, transform .2s;
     }
 
-    button:hover { background: #1d4ed8; }
+    button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
 
     .result {
-      margin-top: 20px;
-      padding: 18px;
-      background: #eff6ff;
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
       border-radius: 10px;
+      background: #eef2ff;
+      color: #312e81;
       overflow-wrap: anywhere;
     }
 
+    .result.show { display: block; }
+
     .result strong {
       display: block;
-      font-size: 27px;
-      color: #1d4ed8;
+      font-size: 20px;
+      margin-top: 3px;
     }
 
-    .error { color: #b91c1c; }
-
-    .info h2 { font-size: 22px; }
+    .error {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
 
     footer {
-      padding: 24px 20px 36px;
-      color: #64748b;
-      font-size: 14px;
+      text-align: center;
+      padding: 25px 15px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
     }
 
-    footer a { text-decoration: underline; }
+    footer strong { color: var(--primary); }
 
-    @media (max-width: 500px) {
-      main { padding: 28px 14px; }
-      .calculator, .info { padding: 18px; }
+    @media (max-width: 400px) {
+      .card { padding: 18px; }
+      header { padding-top: 32px; }
     }
   </style>
 </head>
-
 <body>
   <header>
-    <nav>
-      <div class="logo">CalculaFácil</div>
-      <a href="#calculadora">Calculadoras</a>
-    </nav>
+    <div class="brand">CalculaFácil</div>
+    <p>Herramientas matemáticas gratuitas, rápidas y fáciles de usar.</p>
   </header>
 
   <main>
     <section class="intro">
-      <h1>Calculadora de porcentajes</h1>
-      <p>Calcula porcentajes, descuentos e incrementos
-        de forma gratuita y al instante.</p>
+      <h1>¿Qué quieres calcular?</h1>
+      <p>Elige una calculadora, introduce los datos y obtén tu resultado al instante.</p>
     </section>
 
-    <section class="calculator" id="calculadora">
-      <h2>Calcula tu porcentaje</h2>
+    <section class="tools">
+      <article class="card">
+        <h2>📊 Calculadora de porcentajes</h2>
+        <p class="description">Descubre cuánto representa un porcentaje de una cantidad.</p>
+        <form data-calculator="percentage">
+          <label for="percent-value">Porcentaje (%)</label>
+          <input id="percent-value" name="percent" type="number" step="any" placeholder="Ej. 25" required>
+          <label for="percent-total">Cantidad total</label>
+          <input id="percent-total" name="total" type="number" step="any" placeholder="Ej. 200" required>
+          <button type="submit">Calcular porcentaje</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
 
-      <label for="cantidad">Cantidad inicial (€ o cualquier número)</label>
-      <input id="cantidad" type="number" min="0"
-        step="any" placeholder="Ejemplo: 80">
+      <article class="card">
+        <h2>🏷️ Calculadora de descuentos</h2>
+        <p class="description">Calcula cuánto ahorras y el precio final de una oferta.</p>
+        <form data-calculator="discount">
+          <label for="discount-price">Precio original (€)</label>
+          <input id="discount-price" name="price" type="number" min="0" step="any" placeholder="Ej. 80" required>
+          <label for="discount-percent">Descuento (%)</label>
+          <input id="discount-percent" name="percent" type="number" min="0" max="100" step="any" placeholder="Ej. 20" required>
+          <button type="submit">Calcular descuento</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
 
-      <label for="porcentaje">Porcentaje (%)</label>
-      <input id="porcentaje" type="number" min="0"
-        step="any" placeholder="Ejemplo: 25">
+      <article class="card">
+        <h2>🧾 Calculadora de IVA</h2>
+        <p class="description">Añade IVA a un precio o calcula el importe sin IVA.</p>
+        <form data-calculator="vat">
+          <label for="vat-price">Precio (€)</label>
+          <input id="vat-price" name="price" type="number" min="0" step="any" placeholder="Ej. 100" required>
+          <label for="vat-rate">Tipo de IVA</label>
+          <select id="vat-rate" name="rate">
+            <option value="21">21% — General</option>
+            <option value="10">10% — Reducido</option>
+            <option value="4">4% — Superreducido</option>
+          </select>
+          <label for="vat-mode">¿Qué quieres hacer?</label>
+          <select id="vat-mode" name="mode">
+            <option value="add">Añadir IVA al precio</option>
+            <option value="remove">Quitar IVA de un precio con IVA</option>
+          </select>
+          <button type="submit">Calcular IVA</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
 
-      <label for="operacion">¿Qué quieres calcular?</label>
-      <select id="operacion">
-        <option value="parte">Calcular el porcentaje de una cantidad</option>
-        <option value="descuento">Aplicar un descuento</option>
-        <option value="incremento">Aplicar un incremento</option>
-      </select>
+      <article class="card">
+        <h2>✖️ Regla de tres</h2>
+        <p class="description">Calcula el cuarto valor a partir de tres valores conocidos.</p>
+        <form data-calculator="rule">
+          <label for="rule-a">Primer valor (A)</label>
+          <input id="rule-a" name="a" type="number" step="any" placeholder="Ej. 4" required>
+          <label for="rule-b">Segundo valor (B)</label>
+          <input id="rule-b" name="b" type="number" step="any" placeholder="Ej. 8" required>
+          <label for="rule-c">Tercer valor (C)</label>
+          <input id="rule-c" name="c" type="number" step="any" placeholder="Ej. 10" required>
+          <button type="submit">Calcular X</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
 
-      <button id="calcular" type="button">Calcular resultado</button>
+      <article class="card">
+        <h2>📈 Aumento porcentual</h2>
+        <p class="description">Calcula cuánto aumenta una cantidad y cuál es su nuevo valor.</p>
+        <form data-calculator="increase">
+          <label for="increase-value">Cantidad inicial</label>
+          <input id="increase-value" name="value" type="number" step="any" placeholder="Ej. 100" required>
+          <label for="increase-percent">Aumento (%)</label>
+          <input id="increase-percent" name="percent" type="number" min="0" step="any" placeholder="Ej. 15" required>
+          <button type="submit">Calcular aumento</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
 
-      <div class="result" id="resultado" aria-live="polite" hidden>
-        <strong id="valor"></strong>
-        <p id="explicacion"></p>
-      </div>
-    </section>
-
-    <section class="info">
-      <h2>¿Cómo se calcula un porcentaje?</h2>
-      <p>Para calcular un porcentaje de una cantidad,
-        multiplica la cantidad por el porcentaje y divide
-        el resultado entre 100.</p>
-      <p><b>Ejemplo:</b> el 25 % de 80 es 80 × 25 ÷ 100 = 20.</p>
-      <p>Para aplicar un descuento, resta esa cantidad
-        al precio original. Para aplicar un incremento,
-        súmala al valor inicial.</p>
-    </section>
-
-    <section class="info">
-      <h2>Preguntas frecuentes</h2>
-      <h3>¿Es gratuita esta calculadora?</h3>
-      <p>Sí. Puedes utilizarla directamente desde tu navegador.</p>
-      <h3>¿Necesito registrarme?</h3>
-      <p>No necesitas crear una cuenta ni instalar nada.</p>
-      <h3>¿Cómo calculo un descuento?</h3>
-      <p>Introduce el precio inicial, el porcentaje de descuento
-        y selecciona la opción de descuento.</p>
+      <article class="card">
+        <h2>🎂 Calculadora de edad</h2>
+        <p class="description">Calcula tu edad en años, meses y días a partir de tu nacimiento.</p>
+        <form data-calculator="age">
+          <label for="birth-date">Fecha de nacimiento</label>
+          <input id="birth-date" name="birth" type="date" required>
+          <button type="submit">Calcular edad</button>
+          <div class="result" aria-live="polite"></div>
+        </form>
+      </article>
     </section>
   </main>
 
   <footer>
-    <p>CalculaFácil · Herramientas gratuitas</p>
-    <p>Los resultados se calculan en tu propio navegador.</p>
-    <p>Proyecto en desarrollo.</p>
+    <strong>CalculaFácil</strong> · Herramientas gratuitas para todos.
   </footer>
 
   <script>
-    const cantidad = document.getElementById("cantidad");
-    const porcentaje = document.getElementById("porcentaje");
-    const operacion = document.getElementById("operacion");
-    const resultado = document.getElementById("resultado");
-    const valor = document.getElementById("valor");
-    const explicacion = document.getElementById("explicacion");
-
-    document.getElementById("calcular").addEventListener("click", () => {
-      const base = cantidad.value.trim() === "" ? NaN : Number(cantidad.value);
-      const porc = porcentaje.value.trim() === "" ? NaN : Number(porcentaje.value);
-
-      resultado.hidden = false;
-      valor.classList.remove("error");
-
-      if (!Number.isFinite(base) || !Number.isFinite(porc) ||
-          base < 0 || porc < 0) {
-        valor.textContent = "Datos no válidos";
-        valor.classList.add("error");
-        explicacion.textContent =
-          "Introduce dos números válidos, iguales o mayores que cero.";
-        return;
-      }
-
-      const parte = base * porc / 100;
-      let total;
-      let texto;
-
-      if (operacion.value === "descuento") {
-        total = base - parte;
-        texto = `${porc}% de descuento: ahorras ${formato(parte)}.`;
-      } else if (operacion.value === "incremento") {
-        total = base + parte;
-        texto = `El incremento es de ${formato(parte)}.`;
-      } else {
-        total = parte;
-        texto = `${formato(porc)}% de ${formato(base)} es ${formato(parte)}.`;
-      }
-
-      valor.textContent = formato(total);
-      explicacion.textContent = texto;
+    const numberFormat = new Intl.NumberFormat("es-ES", {
+      maximumFractionDigits: 2
     });
 
-    function formato(numero) {
-      return numero.toLocaleString("es-ES", {
-        maximumFractionDigits: 6
-      });
+    function formatNumber(value) {
+      return numberFormat.format(value);
     }
+
+    function showResult(form, message, isError = false) {
+      const box = form.querySelector(".result");
+      box.classList.toggle("error", isError);
+      box.classList.add("show");
+      box.replaceChildren();
+
+      const text = document.createElement("span");
+      text.textContent = message;
+      box.appendChild(text);
+    }
+
+    function addResult(form, label, value) {
+      const box = form.querySelector(".result");
+      box.replaceChildren();
+
+      const title = document.createElement("span");
+      title.textContent = label;
+
+      const strong = document.createElement("strong");
+      strong.textContent = value;
+
+      box.append(title, strong);
+      box.classList.remove("error");
+      box.classList.add("show");
+    }
+
+    function getNumber(data, key) {
+      return Number(data.get(key));
+    }
+
+    function validFinite(form, values) {
+      if (values.some(value => !Number.isFinite(value))) {
+        showResult(form, "Introduce valores numéricos válidos.", true);
+        return false;
+      }
+      return true;
+    }
+
+    document.querySelectorAll("form[data-calculator]").forEach(form => {
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const data = new FormData(form);
+        const type = form.dataset.calculator;
+
+        if (type === "percentage") {
+          const percent = getNumber(data, "percent");
+          const total = getNumber(data, "total");
+          if (!validFinite(form, [percent, total])) return;
+          addResult(form, percent + "% de " + formatNumber(total) + " es", formatNumber(percent / 100 * total));
+        }
+
+        if (type === "discount") {
+          const price = getNumber(data, "price");
+          const percent = getNumber(data, "percent");
+          if (!validFinite(form, [price, percent])) return;
+          if (price < 0 || percent < 0 || percent > 100) {
+            showResult(form, "El precio debe ser positivo y el descuento debe estar entre 0 y 100%.", true);
+            return;
+          }
+          const saving = price * percent / 100;
+          addResult(form, "Precio final: " + formatNumber(price - saving) + " €", "Ahorras " + formatNumber(saving) + " €");
+        }
+
+        if (type === "vat") {
+          const price = getNumber(data, "price");
+          const rate = getNumber(data, "rate");
+          const mode = data.get("mode");
+          if (!validFinite(form, [price, rate])) return;
+          if (price < 0) {
+            showResult(form, "Introduce un precio igual o superior a cero.", true);
+            return;
+          }
+          if (mode === "add") {
+            const tax = price * rate / 100;
+            addResult(form, "Precio con IVA: " + formatNumber(price + tax) + " €", "IVA: " + formatNumber(tax) + " €");
+          } else {
+            const base = price / (1 + rate / 100);
+            addResult(form, "Precio sin IVA: " + formatNumber(base) + " €", "IVA incluido: " + formatNumber(price - base) + " €");
+          }
+        }
+
+        if (type === "rule") {
+          const a = getNumber(data, "a");
+          const b = getNumber(data, "b");
+          const c = getNumber(data, "c");
+          if (!validFinite(form, [a, b, c])) return;
+          if (a === 0) {
+            showResult(form, "El primer valor no puede ser cero.", true);
+            return;
+          }
+          addResult(form, "El resultado de X es", formatNumber(b * c / a));
+        }
+
+        if (type === "increase") {
+          const value = getNumber(data, "value");
+          const percent = getNumber(data, "percent");
+          if (!validFinite(form, [value, percent])) return;
+          if (percent < 0) {
+            showResult(form, "El aumento porcentual no puede ser negativo.", true);
+            return;
+          }
+          const increase = value * percent / 100;
+          addResult(form, "Nuevo valor: " + formatNumber(value + increase), "Aumento: " + formatNumber(increase));
+        }
+
+        if (type === "age") {
+          const birth = data.get("birth");
+          const birthDate = new Date(birth + "T00:00:00");
+          const now = new Date();
+          now.setHours(0, 0, 0, 0);
+
+          if (!birth || Number.isNaN(birthDate.getTime()) || birthDate > now) {
+            showResult(form, "Introduce una fecha de nacimiento válida.", true);
+            return;
+          }
+
+          let years = now.getFullYear() - birthDate.getFullYear();
+          let months = now.getMonth() - birthDate.getMonth();
+          let days = now.getDate() - birthDate.getDate();
+
+          if (days < 0) {
+            months--;
+            const previousMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            days += previousMonthDays;
+          }
+
+          if (months < 0) {
+            years--;
+            months += 12;
+          }
+
+          addResult(form, "Tu edad es", years + " años, " + months + " meses y " + days + " días");
+        }
+      });
+    });
   </script>
 </body>
 </html>
