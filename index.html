@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calcula porcentajes, descuentos e incrementos gratis. Obtén resultados rápidos y aprende cómo se calculan.">
+  <meta name="theme-color" content="#2563eb">
+  <title>Calculadora de porcentajes gratis | CalculaFácil</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #172033;
+      background: #f5f7fb;
+      line-height: 1.6;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 18px 20px;
+    }
+
+    nav, main, footer {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    nav a, footer a {
+      color: #475569;
+      text-decoration: none;
+    }
+
+    main { padding: 42px 20px; }
+
+    .intro { text-align: center; margin-bottom: 28px; }
+
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; }
+
+    .intro p { color: #64748b; }
+
+    .calculator, .info {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 16px 0 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+      background: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: 0;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #1d4ed8; }
+
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #eff6ff;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .result strong {
+      display: block;
+      font-size: 27px;
+      color: #1d4ed8;
+    }
+
+    .error { color: #b91c1c; }
+
+    .info h2 { font-size: 22px; }
+
+    footer {
+      padding: 24px 20px 36px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    footer a { text-decoration: underline; }
+
+    @media (max-width: 500px) {
+      main { padding: 28px 14px; }
+      .calculator, .info { padding: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">CalculaFácil</div>
+      <a href="#calculadora">Calculadoras</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Calculadora de porcentajes</h1>
+      <p>Calcula porcentajes, descuentos e incrementos
+        de forma gratuita y al instante.</p>
+    </section>
+
+    <section class="calculator" id="calculadora">
+      <h2>Calcula tu porcentaje</h2>
+
+      <label for="cantidad">Cantidad inicial (€ o cualquier número)</label>
+      <input id="cantidad" type="number" min="0"
+        step="any" placeholder="Ejemplo: 80">
+
+      <label for="porcentaje">Porcentaje (%)</label>
+      <input id="porcentaje" type="number" min="0"
+        step="any" placeholder="Ejemplo: 25">
+
+      <label for="operacion">¿Qué quieres calcular?</label>
+      <select id="operacion">
+        <option value="parte">Calcular el porcentaje de una cantidad</option>
+        <option value="descuento">Aplicar un descuento</option>
+        <option value="incremento">Aplicar un incremento</option>
+      </select>
+
+      <button id="calcular" type="button">Calcular resultado</button>
+
+      <div class="result" id="resultado" aria-live="polite" hidden>
+        <strong id="valor"></strong>
+        <p id="explicacion"></p>
+      </div>
+    </section>
+
+    <section class="info">
+      <h2>¿Cómo se calcula un porcentaje?</h2>
+      <p>Para calcular un porcentaje de una cantidad,
+        multiplica la cantidad por el porcentaje y divide
+        el resultado entre 100.</p>
+      <p><b>Ejemplo:</b> el 25 % de 80 es 80 × 25 ÷ 100 = 20.</p>
+      <p>Para aplicar un descuento, resta esa cantidad
+        al precio original. Para aplicar un incremento,
+        súmala al valor inicial.</p>
+    </section>
+
+    <section class="info">
+      <h2>Preguntas frecuentes</h2>
+      <h3>¿Es gratuita esta calculadora?</h3>
+      <p>Sí. Puedes utilizarla directamente desde tu navegador.</p>
+      <h3>¿Necesito registrarme?</h3>
+      <p>No necesitas crear una cuenta ni instalar nada.</p>
+      <h3>¿Cómo calculo un descuento?</h3>
+      <p>Introduce el precio inicial, el porcentaje de descuento
+        y selecciona la opción de descuento.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>CalculaFácil · Herramientas gratuitas</p>
+    <p>Los resultados se calculan en tu propio navegador.</p>
+    <p>Proyecto en desarrollo.</p>
+  </footer>
+
+  <script>
+    const cantidad = document.getElementById("cantidad");
+    const porcentaje = document.getElementById("porcentaje");
+    const operacion = document.getElementById("operacion");
+    const resultado = document.getElementById("resultado");
+    const valor = document.getElementById("valor");
+    const explicacion = document.getElementById("explicacion");
+
+    document.getElementById("calcular").addEventListener("click", () => {
+      const base = cantidad.value.trim() === "" ? NaN : Number(cantidad.value);
+      const porc = porcentaje.value.trim() === "" ? NaN : Number(porcentaje.value);
+
+      resultado.hidden = false;
+      valor.classList.remove("error");
+
+      if (!Number.isFinite(base) || !Number.isFinite(porc) ||
+          base < 0 || porc < 0) {
+        valor.textContent = "Datos no válidos";
+        valor.classList.add("error");
+        explicacion.textContent =
+          "Introduce dos números válidos, iguales o mayores que cero.";
+        return;
+      }
+
+      const parte = base * porc / 100;
+      let total;
+      let texto;
+
+      if (operacion.value === "descuento") {
+        total = base - parte;
+        texto = `${porc}% de descuento: ahorras ${formato(parte)}.`;
+      } else if (operacion.value === "incremento") {
+        total = base + parte;
+        texto = `El incremento es de ${formato(parte)}.`;
+      } else {
+        total = parte;
+        texto = `${formato(porc)}% de ${formato(base)} es ${formato(parte)}.`;
+      }
+
+      valor.textContent = formato(total);
+      explicacion.textContent = texto;
+    });
+
+    function formato(numero) {
+      return numero.toLocaleString("es-ES", {
+        maximumFractionDigits: 6
+      });
+    }
+  </script>
+</body>
+</html>
