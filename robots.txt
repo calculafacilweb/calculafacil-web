@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://calculafacilweb.github.io/calculafacil-web/sitemap.xml
-
