@@ -1,1 +1,200 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Descubre qué nota necesitas para aprobar una asignatura. Aprende a calcular la nota necesaria con ejemplos sencillos y una calculadora gratuita.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffffff">
+  <title>¿Qué Nota Necesito para Aprobar? | CalculaFácil</title>
+  <style>
+    :root{--purple:#6246e5;--dark:#4d35c5;--light:#f0edff;--text:#201b35;--muted:#77738b;--border:#e9e5f4;--green:#168653}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);line-height:1.7}
+    a{color:var(--purple);text-decoration:none}
+    a:hover{text-decoration:underline}
+    nav{border-bottom:1px solid var(--border);background:#fff}
+    .nav-inner{width:min(950px,90%);margin:auto;min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+    .logo{font-size:23px;font-weight:850;color:var(--text);letter-spacing:-1px}
+    .logo span{color:var(--purple)}
+    .nav-link{font-size:14px;font-weight:700}
+    header{padding:65px 20px 48px;text-align:center;background:radial-gradient(ellipse at top,#f0edff,#fff 70%)}
+    .pill{display:inline-block;padding:6px 13px;background:white;border:1px solid var(--border);border-radius:25px;color:var(--purple);font-size:12px;font-weight:800}
+    h1{max-width:760px;margin:20px auto 12px;font-size:clamp(34px,6vw,54px);line-height:1.13;letter-spacing:-1.8px}
+    header p{max-width:620px;margin:auto;color:var(--muted);font-size:17px}
+    .btn{display:inline-block;margin-top:22px;padding:12px 18px;background:var(--purple);color:#fff;border-radius:10px;font-weight:750}
+    .btn:hover{background:var(--dark);text-decoration:none}
+    main{width:min(780px,90%);margin:auto}
+    section{padding:30px 0}
+    h2{font-size:27px;line-height:1.3;letter-spacing:-.7px;margin:0 0 13px}
+    h3{font-size:19px;margin:22px 0 7px}
+    p,li{font-size:16px}
+    .muted{color:var(--muted)}
+    .example,.calculator,.tip{padding:22px;border:1px solid var(--border);border-radius:15px;margin:18px 0;background:#fff}
+    .example{background:#faf9ff}
+    .formula{font-size:21px;font-weight:800;color:var(--purple);overflow-wrap:anywhere}
+    label{display:block;font-size:14px;font-weight:700;margin:14px 0 5px}
+    input{width:100%;padding:12px;border:1px solid #dcd6eb;border-radius:9px;font:inherit}
+    input:focus{outline:2px solid #d6ccff;border-color:var(--purple)}
+    button{width:100%;margin-top:18px;padding:13px;background:var(--purple);border:0;border-radius:9px;color:white;font:inherit;font-weight:800;cursor:pointer}
+    button:hover{background:var(--dark)}
+    .result{display:none;margin-top:16px;padding:15px;background:var(--light);border-radius:10px;overflow-wrap:anywhere}
+    .result.show{display:block}
+    .result strong{display:block;font-size:25px;color:var(--purple)}
+    .result.error{background:#fff0f1;color:#b42336}
+    .tip{background:#f0faf4;border-color:#d5efdf}
+    .tip strong{color:var(--green)}
+    footer{margin-top:35px;padding:28px 15px;text-align:center;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+    @media(max-width:600px){header{padding:48px 18px 35px}h2{font-size:24px}.example,.calculator,.tip{padding:17px}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="./">Calcula<span>Fácil</span></a>
+      <a class="nav-link" href="./#calculadoras">Todas las calculadoras →</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="pill">GUÍA PARA ESTUDIANTES · GRATIS</div>
+    <h1>¿Qué nota necesito para aprobar?</h1>
+    <p>Calcula qué nota necesitas en el próximo examen para alcanzar tu objetivo final. Te lo explicamos paso a paso.</p>
+    <a class="btn" href="#calculadora">Calcular mi nota necesaria ↓</a>
+  </header>
+
+  <main>
+    <section>
+      <h2>¿Cómo calcular la nota que necesitas?</h2>
+      <p>Para saber qué nota necesitas, tienes que conocer tres datos: tu media actual, el porcentaje de la asignatura que ya se ha evaluado y la nota final que quieres conseguir.</p>
+      <p>La nota que necesitas depende de cuánto cuenta lo que ya has hecho y cuánto cuenta lo que todavía te queda por evaluar.</p>
+    </section>
+
+    <section>
+      <h2>La fórmula para calcular la nota necesaria</h2>
+      <div class="example">
+        <p>Si tu nota actual corresponde a una parte de la nota final, puedes usar esta fórmula:</p>
+        <p class="formula">Nota necesaria = (Objetivo − Nota actual × Porcentaje evaluado) ÷ Porcentaje restante</p>
+        <p class="muted">Utiliza los porcentajes en forma decimal: por ejemplo, 40% = 0,40 y 60% = 0,60.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Ejemplo práctico</h2>
+      <p>Imagina que tienes un 4 de media, ya has completado el 40% de la evaluación y quieres terminar con un 5.</p>
+      <div class="example">
+        <p><strong>1.</strong> Multiplica tu nota actual por el porcentaje evaluado:</p>
+        <p class="formula">4 × 0,40 = 1,6</p>
+        <p><strong>2.</strong> Resta esa puntuación al objetivo final:</p>
+        <p class="formula">5 − 1,6 = 3,4</p>
+        <p><strong>3.</strong> Divide por el porcentaje restante, que es el 60%:</p>
+        <p class="formula">3,4 ÷ 0,60 = 5,67</p>
+        <p>En este ejemplo, necesitarías aproximadamente un <strong>5,67 sobre 10</strong> en el porcentaje que queda.</p>
+      </div>
+    </section>
+
+    <section id="calculadora">
+      <h2>Calculadora de nota necesaria</h2>
+      <p>Introduce tus datos y calcula qué media necesitas en la parte restante de la evaluación.</p>
+      <div class="calculator">
+        <form id="grade-form">
+          <label for="current">¿Qué nota media tienes ahora? (0–10)</label>
+          <input id="current" type="number" min="0" max="10" step="any" placeholder="Ej. 4" required>
+          <label for="completed">¿Qué porcentaje ya está evaluado? (0–100)</label>
+          <input id="completed" type="number" min="0" max="100" step="any" placeholder="Ej. 40" required>
+          <label for="target">¿Qué nota final quieres conseguir? (0–10)</label>
+          <input id="target" type="number" min="0" max="10" step="any" placeholder="Ej. 5" required>
+          <button type="submit">Calcular nota necesaria</button>
+          <div class="result" id="result" aria-live="polite"></div>
+        </form>
+      </div>
+      <p class="muted">El resultado supone que los porcentajes se combinan de forma proporcional. Comprueba si tu centro aplica mínimos por examen, redondeos u otras condiciones.</p>
+    </section>
+
+    <section>
+      <h2>¿Y si necesito más de un 10?</h2>
+      <p>Si el resultado es superior a 10, matemáticamente no podrías alcanzar tu objetivo solo con el porcentaje que queda. En ese caso, revisa los criterios de evaluación de tu asignatura y pregunta a tu profesor qué opciones tienes.</p>
+      <div class="tip"><strong>Consejo:</strong> calcula cuánto necesitas con tiempo y organiza el estudio por temas. Saber tu objetivo puede ayudarte a preparar mejor los próximos exámenes.</div>
+    </section>
+
+    <section>
+      <h2>Otras calculadoras que pueden ayudarte</h2>
+      <p>En CalculaFácil también puedes utilizar estas herramientas gratuitas:</p>
+      <ul>
+        <li><a href="./media.html">Calculadora de media de notas</a>: calcula la media de tus asignaturas.</li>
+        <li><a href="./#calculadoras">Calculadora de nota ponderada</a>: combina notas con distintos porcentajes.</li>
+        <li><a href="./#calculadoras">Calculadora de porcentajes</a>: calcula porcentajes de una cantidad.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Preguntas frecuentes</h2>
+      <h3>¿Qué nota necesito para aprobar con un 5?</h3>
+      <p>Depende de tu nota actual y del porcentaje que ya esté evaluado. Introduce esos datos en la calculadora para estimar la nota necesaria.</p>
+      <h3>¿Qué pasa si ya tengo evaluado el 100%?</h3>
+      <p>Si ya se ha evaluado todo, no queda una parte pendiente para aplicar esta fórmula. Tendrás que consultar tu nota final y los criterios de tu centro.</p>
+      <h3>¿Esta calculadora es gratuita?</h3>
+      <p>Sí. Puedes utilizarla gratis desde el navegador, tanto en el móvil como en el ordenador.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="./"><strong>CalculaFácil</strong></a> · Herramientas gratuitas para estudiantes.
+  </footer>
+
+  <script>
+    const form = document.getElementById("grade-form");
+    const result = document.getElementById("result");
+    const format = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 2 });
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const current = Number(document.getElementById("current").value);
+      const completed = Number(document.getElementById("completed").value);
+      const target = Number(document.getElementById("target").value);
+
+      result.className = "result show";
+
+      if (![current, completed, target].every(Number.isFinite) ||
+          current < 0 || current > 10 ||
+          target < 0 || target > 10 ||
+          completed < 0 || completed > 100) {
+        result.classList.add("error");
+        result.textContent = "Comprueba los datos: las notas deben estar entre 0 y 10 y el porcentaje entre 0 y 100.";
+        return;
+      }
+
+      if (completed === 100) {
+        result.classList.add("error");
+        result.textContent = "Ya está evaluado el 100%. No queda porcentaje pendiente para calcular.";
+        return;
+      }
+
+      const needed = (target - current * completed / 100) / (1 - completed / 100);
+      result.replaceChildren();
+
+      const title = document.createElement("span");
+      title.textContent = "La media que necesitas en lo que queda es:";
+      result.appendChild(title);
+
+      const answer = document.createElement("strong");
+      answer.textContent = format.format(Math.max(0, needed)) + " / 10";
+      result.appendChild(answer);
+
+      const detail = document.createElement("p");
+      if (needed > 10) {
+        result.classList.add("error");
+        answer.textContent = format.format(needed) + " / 10";
+        detail.textContent = "El resultado supera el 10, así que no es posible alcanzar ese objetivo solo con el porcentaje restante.";
+      } else if (needed <= 0) {
+        detail.textContent = "Según estos porcentajes, ya has acumulado suficiente puntuación para alcanzar tu objetivo, siempre que los criterios de tu centro lo permitan.";
+      } else {
+        detail.textContent = "Queda por evaluar el " + format.format(100 - completed) + "% de la nota final.";
+      }
+      result.appendChild(detail);
+    });
+  </script>
+</body>
+</html>
