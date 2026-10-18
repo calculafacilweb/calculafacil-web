@@ -2,21 +2,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto | CalculaFácil</title>
-  <meta name="description" content="Contacta con el equipo de CalculaFácil para consultas, sugerencias o avisos de errores.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Contacta con CalculaFácil para enviar sugerencias, consultas o informar de errores.">
+<title>Contacto | CalculaFácil</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#172033;background:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.7}a{color:#3659e3;text-decoration:none}a:hover{text-decoration:underline}.nav,main,.footer{max-width:1050px;margin:auto;padding:22px}.nav{display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid #e8ebf0}.brand{font-size:21px;font-weight:800;color:#172033}.links{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}.links a{color:#596579}main{padding-top:48px;padding-bottom:65px}.tag{font-size:12px;font-weight:800;color:#3659e3;letter-spacing:1.5px}h1{font-size:clamp(38px,6vw,58px);line-height:1.12;letter-spacing:-2px;margin:15px 0}.lead{font-size:19px;color:#596579;max-width:750px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:30px 0}.card{padding:28px;border:1px solid #e6eaf0;border-radius:20px}.icon{width:46px;height:46px;border-radius:14px;background:#eef1ff;color:#3659e3;display:grid;place-items:center;font-size:24px}.card h2{font-size:21px}.button{display:inline-block;background:#3659e3;color:white;padding:12px 19px;border-radius:12px;font-weight:700}.button:hover{background:#2445c4;text-decoration:none}.note{background:#f6f8fb;border-radius:14px;padding:18px;color:#596579}.footer{border-top:1px solid #e8ebf0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#697386;font-size:14px}.footer a{margin-right:12px}@media(max-width:650px){.nav{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}main{padding:30px 18px 45px}.nav,.footer{padding:18px}}
+</style>
 </head>
 <body>
-  <main>
-    <h1>Contacto</h1>
-    <p>¿Tienes alguna sugerencia, has encontrado un error o quieres hacernos una consulta sobre CalculaFácil?</p>
-    <p>Puedes contactar con nosotros por correo electrónico:</p>
-    <p><strong>Correo:</strong> TU_CORREO@EJEMPLO.COM</p>
-    <p>Sustituye la dirección de ejemplo por un correo real que puedas consultar.</p>
-    <p><a href="index.html">Volver a CalculaFácil</a></p>
-    <p><a href="sobre-nosotros.html">Sobre nosotros</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a></p>
-  </main>
+<header class="nav">
+<a class="brand" href="index.html">∑ CalculaFácil</a>
+<nav class="links"><a href="index.html">Inicio</a><a href="sobre-nosotros.html">Sobre nosotros</a><a href="contacto.html">Contacto</a></nav>
+</header>
+<main>
+<span class="tag">ESTAMOS PARA LEERTE</span>
+<h1>Hablemos.</h1>
+<p class="lead">¿Has encontrado un error, tienes una idea para mejorar una herramienta o quieres hacernos una consulta? Puedes ponerte en contacto con CalculaFácil por correo electrónico.</p>
+<div class="grid">
+<section class="card">
+<div class="icon">✉</div>
+<h2>Escríbenos por correo</h2>
+<p>Utiliza esta dirección para consultas, sugerencias y avisos relacionados con el funcionamiento de la web.</p>
+<p><a class="button" href="mailto:calculaf@gmail.com">calculaf@gmail.com</a></p>
+</section>
+<section class="card">
+<div class="icon">✦</div>
+<h2>¿En qué podemos mejorar?</h2>
+<ul>
+<li>Errores en una calculadora o en un resultado.</li>
+<li>Ideas para nuevas herramientas.</li>
+<li>Sugerencias para que la web sea más sencilla.</li>
+<li>Comentarios sobre la experiencia de uso.</li>
+</ul>
+</section>
+</div>
+<div class="note"><strong>Un consejo:</strong> explica brevemente qué estabas intentando hacer y qué ocurrió. No incluyas contraseñas, datos bancarios ni información personal innecesaria.</div>
+<p>Gracias por ayudar a que CalculaFácil siga mejorando.</p>
+<p><a class="button" href="index.html">Volver a las herramientas →</a></p>
+</main>
+<footer class="footer">
+<span>© <span id="year"></span> CalculaFácil</span>
+<nav><a href="sobre-nosotros.html">Sobre nosotros</a><a href="contacto.html">Contacto</a><a href="privacidad.html">Privacidad</a><a href="cookies.html">Cookies</a></nav>
+</footer>
+<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
 </body>
 </html>
 ```
