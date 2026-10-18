@@ -2,1006 +2,666 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101b3d">
-<title>Foro | CalculaFácil</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-* { box-sizing: border-box; }
-
-:root {
-  --blue: #4568f5;
-  --blue-dark: #304ed0;
-  --navy: #101b3d;
-  --bg: #f4f6fc;
-  --text: #18213a;
-  --muted: #73809a;
-  --border: #e6eaf3;
-  --white: #ffffff;
-  --green: #138567;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-header {
-  position: relative;
-  overflow: hidden;
-  color: white;
-  padding: 42px 24px 46px;
-  background:
-    radial-gradient(ellipse at 90% 0%, #5275ff 0%, transparent 36%),
-    linear-gradient(125deg, #101b3d 0%, #1c3273 58%, #304ed0 100%);
-}
-
-header::after {
-  content: "";
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  right: -90px;
-  bottom: -190px;
-  border: 1px solid #ffffff25;
-  border-radius: 50%;
-  box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff06;
-  pointer-events: none;
-}
-
-.header-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1180px;
-  margin: auto;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 24px;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: .3px;
-}
-
-.brand-icon {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  background: #ffffff1c;
-  border: 1px solid #ffffff30;
-  border-radius: 11px;
-  font-size: 20px;
-}
-
-.eyebrow {
-  display: inline-block;
-  padding: 5px 11px;
-  margin-bottom: 12px;
-  border: 1px solid #ffffff35;
-  background: #ffffff12;
-  color: #e0e7ff;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-header h1 {
-  margin: 0;
-  font-size: clamp(32px, 5vw, 49px);
-  font-weight: 850;
-  letter-spacing: -1.8px;
-  line-height: 1.13;
-}
-
-header h1 span {
-  color: #9eb4ff;
-}
-
-header .intro {
-  max-width: 590px;
-  margin: 15px 0 22px;
-  color: #dce5ff;
-  font-size: 16px;
-}
-
-.header-bottom {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  color: white;
-  text-decoration: none;
-  border: 1px solid #ffffff45;
-  border-radius: 11px;
-  background: #ffffff0d;
-  font-size: 14px;
-  font-weight: 700;
-  transition: background .2s, transform .2s;
-}
-
-.back-link:hover {
-  background: #ffffff20;
-  transform: translateY(-1px);
-}
-
-.header-note {
-  color: #dce5ff;
-  font-size: 13px;
-}
-
-main {
-  display: grid;
-  grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr);
-  grid-template-areas:
-    "auth questions"
-    "user questions"
-    "ask questions";
-  align-items: start;
-  gap: 20px;
-  max-width: 1180px;
-  margin: 30px auto;
-  padding: 0 22px 48px;
-}
-
-#auth { grid-area: auth; }
-#userPanel { grid-area: user; }
-#ask { grid-area: ask; }
-#questionCard { grid-area: questions; }
-
-.card {
-  min-width: 0;
-  padding: 25px;
-  margin: 0;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 19px;
-  box-shadow: 0 8px 30px #18213a07;
-}
-
-.card-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.heading-icon {
-  display: grid;
-  place-items: center;
-  flex: 0 0 42px;
-  height: 42px;
-  border-radius: 13px;
-  background: #edf1ff;
-  color: var(--blue);
-  font-size: 20px;
-}
-
-.card h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -.55px;
-  line-height: 1.35;
-}
-
-.card-heading p {
-  margin: 5px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.field-label {
-  display: block;
-  margin: 13px 0 5px;
-  color: #45516a;
-  font-size: 12px;
-  font-weight: 750;
-}
-
-input, textarea, select, button {
-  width: 100%;
-  margin: 6px 0;
-  padding: 12px 13px;
-  border-radius: 11px;
-  font: inherit;
-}
-
-input, textarea, select {
-  color: var(--text);
-  background: #fbfcff;
-  border: 1px solid #dfe5f0;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s;
-}
-
-input::placeholder, textarea::placeholder {
-  color: #a0a9ba;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px #4568f51a;
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-button {
-  border: 0;
-  cursor: pointer;
-  font-weight: 750;
-  transition: background .18s, transform .18s, box-shadow .18s;
-}
-
-button:focus-visible, a:focus-visible {
-  outline: 3px solid #91a8ff;
-  outline-offset: 3px;
-}
-
-button:active {
-  transform: scale(.99);
-}
-
-button.primary, #signup, #publish {
-  color: white;
-  background: linear-gradient(135deg, #4568f5, #3454df);
-  box-shadow: 0 5px 13px #4568f526;
-}
-
-button.primary:hover, #signup:hover, #publish:hover {
-  background: var(--blue-dark);
-  box-shadow: 0 6px 17px #4568f535;
-}
-
-button.secondary {
-  color: #3b56ca;
-  background: #edf1ff;
-}
-
-button.secondary:hover {
-  background: #e1e8ff;
-}
-
-#authMsg, #publishMsg, .status {
-  overflow-wrap: anywhere;
-}
-
-.small {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-#authMsg {
-  margin: 13px 0 0;
-  line-height: 1.5;
-}
-
-#userPanel {
-  background: linear-gradient(135deg, #ffffff, #f7f9ff);
-}
-
-#welcome {
-  margin: 0 0 12px;
-  font-weight: 750;
-  overflow-wrap: anywhere;
-}
-
-.account-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 8px;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #21ad83;
-}
-
-.question-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.question-toolbar .card-heading {
-  margin: 0;
-}
-
-.question-count {
-  display: inline-block;
-  padding: 5px 9px;
-  background: #f0f3fb;
-  color: #586783;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-#filter {
-  margin: 0 0 10px;
-}
-
-#refresh {
-  margin: 0 0 8px;
-}
-
-#questions {
-  min-width: 0;
-}
-
-.question {
-  padding: 22px 0;
-  border-top: 1px solid var(--border);
-  overflow-wrap: anywhere;
-}
-
-.question h3 {
-  margin: 10px 0;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -.4px;
-  line-height: 1.4;
-}
-
-.question-body {
-  color: #45516a;
-  font-size: 14px;
-  line-height: 1.75;
-}
-
-.question-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.subject-tag {
-  display: inline-block;
-  padding: 4px 9px;
-  color: #3454c9;
-  background: #edf1ff;
-  border-radius: 7px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.replies {
-  margin-top: 17px;
-  padding-top: 13px;
-  border-top: 1px dashed #e3e8f2;
-}
-
-.replies h4 {
-  margin: 0 0 9px;
-  font-size: 13px;
-  color: #46516a;
-}
-
-.reply {
-  padding: 12px 14px;
-  margin: 8px 0;
-  color: #45516a;
-  background: #f6f8fd;
-  border: 1px solid #e8edf6;
-  border-radius: 11px;
-  font-size: 13px;
-  line-height: 1.65;
-  overflow-wrap: anywhere;
-}
-
-.replyForm {
-  margin-top: 12px;
-  padding: 13px;
-  background: #fafbff;
-  border: 1px solid #e8edf6;
-  border-radius: 13px;
-}
-
-.replyForm textarea {
-  min-height: 75px;
-  background: white;
-}
-
-.replyForm button {
-  width: auto;
-  min-width: 115px;
-  padding: 10px 15px;
-}
-
-.replyForm .status {
-  margin-bottom: 0;
-}
-
-.empty-state {
-  padding: 28px 16px;
-  text-align: center;
-  color: var(--muted);
-  background: #f8faff;
-  border: 1px dashed #dce4f2;
-  border-radius: 13px;
-  font-size: 14px;
-}
-
-.empty-icon {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 28px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-footer {
-  padding: 23px 20px;
-  text-align: center;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  font-size: 12px;
-}
-
-footer a {
-  color: var(--blue);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-@media (max-width: 760px) {
-  header {
-    padding: 30px 19px 34px;
-  }
-
-  .brand {
-    margin-bottom: 22px;
-  }
-
-  header h1 {
-    letter-spacing: -1.2px;
-  }
-
-  header .intro {
-    font-size: 14px;
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 19px auto;
-    padding: 0 13px 30px;
-  }
-
-  main > section {
-    width: 100%;
-  }
-
-  .card {
-    padding: 19px;
-    border-radius: 15px;
-  }
-
-  .question-toolbar {
-    align-items: flex-start;
-  }
-
-  .question-count {
-    margin-top: 4px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7565e8">
+  <meta name="description" content="Pregunta, comparte dudas y ayuda a otros estudiantes en el foro de CalculaFácil.">
+  <title>Foro de estudiantes | CalculaFácil</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg: #f7f6ff;
+      --surface: #fff;
+      --text: #211d35;
+      --muted: #77738d;
+      --primary: #7565e8;
+      --primary-dark: #5e4cd2;
+      --border: #e9e5f5;
+      --soft: #f0edff;
+      --shadow: 0 12px 40px rgba(64, 47, 130, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    .topbar {
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(14px);
+    }
+    .nav {
+      max-width: 1120px;
+      margin: auto;
+      padding: 15px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand { font-size: 1.15rem; font-weight: 850; letter-spacing: -.5px; }
+    .brand span { color: var(--primary); }
+    .back {
+      color: var(--muted);
+      font-weight: 650;
+      font-size: .92rem;
+    }
+    .back:hover { color: var(--primary); }
+    .hero {
+      padding: 62px 22px 72px;
+      color: white;
+      background: radial-gradient(ellipse at 85% 15%, rgba(255,255,255,.22), transparent 34%),
+                  linear-gradient(125deg, #5545c6, #8270f3 60%, #a59aff);
+    }
+    .hero-inner { max-width: 1076px; margin: auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border: 1px solid rgba(255,255,255,.3);
+      background: rgba(255,255,255,.12);
+      border-radius: 30px;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.65rem);
+      line-height: 1.08;
+      letter-spacing: -1.8px;
+      max-width: 700px;
+      margin: 18px 0 14px;
+    }
+    .hero p { max-width: 600px; margin: 0; color: #f0edff; font-size: 1.06rem; }
+    .layout {
+      max-width: 1076px;
+      margin: -28px auto 0;
+      padding: 0 22px 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 22px;
+      align-items: start;
+    }
+    .maincol, .sidecol { display: grid; gap: 20px; min-width: 0; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .card h2 { font-size: 1.15rem; margin: 0 0 5px; letter-spacing: -.3px; }
+    .subtext { color: var(--muted); font-size: .91rem; margin: 0 0 20px; }
+    .field { display: grid; gap: 7px; margin: 14px 0; }
+    label { font-weight: 700; font-size: .9rem; }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #e2deef;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(117,101,232,.12);
+    }
+    textarea { resize: vertical; min-height: 110px; }
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-weight: 750;
+      background: var(--primary);
+      color: white;
+      transition: transform .15s, background .15s;
+    }
+    .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn:disabled { opacity: .6; cursor: wait; transform: none; }
+    .btn-secondary { color: var(--primary-dark); background: var(--soft); }
+    .btn-secondary:hover { background: #e5e0ff; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+    .message { font-size: .88rem; color: var(--muted); overflow-wrap: anywhere; }
+    .message.error { color: #b42345; }
+    .message.success { color: #18794e; }
+    .hidden { display: none !important; }
+    .userbox {
+      padding: 13px 15px;
+      background: var(--soft);
+      border-radius: 13px;
+      margin-bottom: 15px;
+      overflow-wrap: anywhere;
+    }
+    .userbox strong { display: block; }
+    .filterrow { display: flex; gap: 10px; margin: 18px 0; }
+    .filterrow select { flex: 1; min-width: 0; }
+    .count { color: var(--muted); font-size: .86rem; margin: 0 0 12px; }
+    .question {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 14px;
+      background: white;
+      overflow-wrap: anywhere;
+    }
+    .question-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .tag {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 30px;
+      background: var(--soft);
+      color: var(--primary-dark);
+      font-size: .77rem;
+      font-weight: 800;
+    }
+    .date { color: var(--muted); font-size: .78rem; }
+    .question h3 { font-size: 1.13rem; line-height: 1.4; margin: 8px 0; }
+    .question-body { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+    .replies { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border); }
+    .replies h4 { margin: 0 0 12px; font-size: .9rem; }
+    .reply {
+      padding: 12px 14px;
+      background: #f8f7ff;
+      border-radius: 10px;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: .92rem;
+    }
+    .reply-form { margin-top: 12px; }
+    .reply-form textarea { min-height: 76px; }
+    .empty {
+      padding: 28px 15px;
+      text-align: center;
+      color: var(--muted);
+      background: #faf9ff;
+      border: 1px dashed #dcd6f2;
+      border-radius: 14px;
+      margin-top: 15px;
+    }
+    .tip {
+      background: linear-gradient(135deg, #f1eeff, #faf9ff);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 17px;
+      font-size: .91rem;
+    }
+    .tip strong { display: block; margin-bottom: 5px; }
+    .tip p { margin: 0; color: var(--muted); }
+    footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 0 20px 28px; }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidecol { grid-row: 1; }
+      .hero { padding-top: 45px; }
+    }
+    @media (max-width: 480px) {
+      .nav { padding: 13px 16px; }
+      .layout { padding-left: 14px; padding-right: 14px; }
+      .hero { padding-left: 18px; padding-right: 18px; }
+      .card { padding: 19px; border-radius: 16px; }
+      .filterrow { flex-direction: column; }
+      .btn-row > .btn { flex: 1; }
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <span class="brand-icon">∑</span>
-      <span>CalculaFácil</span>
-    </div>
-    <div class="eyebrow">Comunidad educativa</div>
-    <h1>Aprende más.<br><span>Pregunta sin miedo.</span></h1>
-    <p class="intro">Un espacio para resolver dudas, compartir conocimientos y ayudar a otros estudiantes a entender lo que están aprendiendo.</p>
-    <div class="header-bottom">
-      <a class="back-link" href="index.html">← Volver a CalculaFácil</a>
-      <span class="header-note">Comparte dudas. Aprende en comunidad.</span>
-    </div>
+  <div class="topbar">
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="brand" href="index.html">Calcula<span>Fácil</span></a>
+      <a class="back" href="index.html">← Volver a la web</a>
+    </nav>
   </div>
-</header>
 
-<main>
-  <section class="card" id="auth">
-    <div class="card-heading">
-      <div class="heading-icon">♙</div>
-      <div>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">✦ Comunidad de estudiantes</span>
+      <h1>Una duda menos.<br>Un paso más.</h1>
+      <p>Pregunta lo que no entiendas, comparte tus conocimientos y ayuda a otros estudiantes a avanzar.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <div class="maincol">
+      <section class="card" id="auth">
+        <h2>Entra en la comunidad</h2>
+        <p class="subtext">Crea una cuenta o inicia sesión para publicar dudas y responder.</p>
+        <div class="field">
+          <label for="name">Nombre visible</label>
+          <input id="name" autocomplete="nickname" maxlength="40" placeholder="¿Cómo te llamamos?">
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" type="email" autocomplete="email" placeholder="tu@correo.com">
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres">
+        </div>
+        <div class="btn-row">
+          <button class="btn" id="signup">Crear cuenta</button>
+          <button class="btn btn-secondary" id="login">Iniciar sesión</button>
+        </div>
+        <p id="authMsg" class="message" role="status">Al registrarte, puede que tengas que confirmar tu correo electrónico.</p>
+      </section>
+
+      <section class="card hidden" id="userPanel">
         <h2>Tu cuenta</h2>
-        <p>Entra para publicar preguntas y responder.</p>
-      </div>
-    </div>
+        <p class="subtext">Ya formas parte de CalculaFácil.</p>
+        <div class="userbox"><strong id="welcome">Sesión iniciada</strong><span class="message">Puedes publicar preguntas y responder a otras.</span></div>
+        <button class="btn btn-secondary" id="logout">Cerrar sesión</button>
+      </section>
 
-    <label class="field-label" for="name">Nombre visible</label>
-    <input id="name" maxlength="40" autocomplete="nickname" placeholder="¿Cómo te llamamos?">
-
-    <label class="field-label" for="email">Correo electrónico</label>
-    <input id="email" type="email" autocomplete="email" placeholder="tu@correo.com">
-
-    <label class="field-label" for="password">Contraseña</label>
-    <input id="password" type="password" minlength="6" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
-
-    <button id="signup">Crear cuenta</button>
-    <button id="login" class="secondary">Iniciar sesión</button>
-    <p id="authMsg" class="small" aria-live="polite">Al registrarte, puede que tengas que confirmar tu correo electrónico.</p>
-  </section>
-
-  <section class="card hidden" id="userPanel">
-    <div class="account-status"><span class="status-dot"></span> Sesión activa</div>
-    <p id="welcome"></p>
-    <button id="logout" class="secondary">Cerrar sesión</button>
-  </section>
-
-  <section class="card hidden" id="ask">
-    <div class="card-heading">
-      <div class="heading-icon">✎</div>
-      <div>
-        <h2>Publicar una pregunta</h2>
-        <p>Explica tu duda para que otros puedan ayudarte.</p>
-      </div>
-    </div>
-
-    <label class="field-label" for="subject">Asignatura</label>
-    <select id="subject">
-      <option value="Matemáticas">Matemáticas</option>
-      <option value="Lengua">Lengua</option>
-      <option value="Gallego">Gallego</option>
-      <option value="Inglés">Inglés</option>
-      <option value="Historia">Historia</option>
-      <option value="Economía">Economía</option>
-      <option value="Filosofía">Filosofía</option>
-      <option value="Física y Química">Física y Química</option>
-      <option value="Otras">Otras</option>
-    </select>
-
-    <label class="field-label" for="title">Título de la duda</label>
-    <input id="title" maxlength="120" placeholder="Ej. ¿Cómo se calcula la media?">
-
-    <label class="field-label" for="body">Explica tu pregunta</label>
-    <textarea id="body" rows="4" maxlength="5000" placeholder="Añade el contexto y lo que no entiendes..."></textarea>
-
-    <button id="publish">Publicar pregunta</button>
-    <p id="publishMsg" class="small" aria-live="polite"></p>
-  </section>
-
-  <section class="card" id="questionCard">
-    <div class="question-toolbar">
-      <div class="card-heading">
-        <div class="heading-icon">☰</div>
-        <div>
-          <h2>Preguntas de estudiantes</h2>
-          <p>Dudas compartidas por la comunidad.</p>
+      <section class="card hidden" id="ask">
+        <h2>¿Qué necesitas resolver?</h2>
+        <p class="subtext">Explica tu duda para que otros estudiantes puedan ayudarte.</p>
+        <div class="field">
+          <label for="subject">Asignatura</label>
+          <select id="subject">
+            <option>Matemáticas</option>
+            <option>Lengua Castellana</option>
+            <option>Gallego</option>
+            <option>Inglés</option>
+            <option>Historia</option>
+            <option>Economía</option>
+            <option>Filosofía</option>
+            <option>Física y Química</option>
+            <option>Biología</option>
+            <option>Otras</option>
+          </select>
         </div>
-      </div>
-      <span class="question-count">Comunidad</span>
+        <div class="field">
+          <label for="title">Título de la pregunta</label>
+          <input id="title" maxlength="120" placeholder="Ej. No entiendo las ecuaciones de segundo grado">
+        </div>
+        <div class="field">
+          <label for="body">Explica tu duda</label>
+          <textarea id="body" maxlength="5000" placeholder="¿Qué has intentado? ¿En qué parte te has atascado?"></textarea>
+        </div>
+        <button class="btn" id="publish">Publicar pregunta ↗</button>
+        <p id="publishMsg" class="message" role="status"></p>
+      </section>
+
+      <section class="card" id="discussion">
+        <h2>Preguntas de estudiantes</h2>
+        <p class="subtext">Encuentra una duda parecida a la tuya o echa una mano a alguien.</p>
+        <div class="filterrow">
+          <select id="filter" aria-label="Filtrar por asignatura">
+            <option value="">Todas las asignaturas</option>
+            <option>Matemáticas</option>
+            <option>Lengua Castellana</option>
+            <option>Gallego</option>
+            <option>Inglés</option>
+            <option>Historia</option>
+            <option>Economía</option>
+            <option>Filosofía</option>
+            <option>Física y Química</option>
+            <option>Biología</option>
+            <option>Otras</option>
+          </select>
+          <button class="btn btn-secondary" id="refresh">↻ Actualizar</button>
+        </div>
+        <p class="count" id="questionCount">Cargando preguntas…</p>
+        <div id="questions" aria-live="polite">
+          <div class="empty">Cargando la comunidad…</div>
+        </div>
+      </section>
     </div>
 
-    <label class="field-label" for="filter">Filtrar por asignatura</label>
-    <select id="filter">
-      <option value="">Todas las asignaturas</option>
-      <option>Matemáticas</option>
-      <option>Lengua</option>
-      <option>Gallego</option>
-      <option>Inglés</option>
-      <option>Historia</option>
-      <option>Economía</option>
-      <option>Filosofía</option>
-      <option>Física y Química</option>
-      <option>Otras</option>
-    </select>
+    <aside class="sidecol">
+      <section class="card">
+        <h2>Cómo funciona</h2>
+        <p class="subtext">Aprender juntos es más fácil.</p>
+        <div class="tip">
+          <strong>01 · Pregunta</strong>
+          <p>Escribe la asignatura, un título claro y qué parte necesitas entender.</p>
+        </div>
+        <div class="tip" style="margin-top:10px">
+          <strong>02 · Comparte</strong>
+          <p>Responde a otras dudas con explicaciones respetuosas y útiles.</p>
+        </div>
+        <div class="tip" style="margin-top:10px">
+          <strong>03 · Aprende</strong>
+          <p>Usa las respuestas para comprender el proceso, no solo copiar el resultado.</p>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Un buen ambiente</h2>
+        <p class="subtext" style="margin-bottom:0">Respeta a los demás, no compartas datos personales y publica contenido relacionado con el estudio. No incluyas contraseñas, teléfonos ni información privada.</p>
+      </section>
+    </aside>
+  </main>
 
-    <button id="refresh" class="secondary">↻ Actualizar preguntas</button>
-    <div id="questions" aria-live="polite">
-      <div class="empty-state">Cargando preguntas...</div>
-    </div>
-  </section>
-</main>
+  <footer>© CalculaFácil · Aprende a tu ritmo.</footer>
 
-<footer>
-  <p>Hecho para aprender en comunidad · <a href="index.html">CalculaFácil</a></p>
-</footer>
+  <script>
+    const SUPABASE_URL = 'https://kimgbvzxeeyheaaqqldz.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_W-CDVj04WWHXU3dLNUThPw_8Qde0lZb';
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-<script>
-const SUPABASE_URL = 'https://kimgbvzxeeyheaaqqldz.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_W-CDVj04WWHXU3dLNUThPw_8Qde0lZb';
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const $ = id => document.getElementById(id);
+    let currentUser = null;
+    let loadVersion = 0;
 
-const $ = id => document.getElementById(id);
-let currentUser = null;
-let loadingQuestions = false;
-
-function message(id, text) {
-  $(id).textContent = text;
-}
-
-function safe(text) {
-  return String(text ?? '').replace(/[&<>"']/g, c => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  }[c]));
-}
-
-function updateUI() {
-  $('auth').classList.toggle('hidden', !!currentUser);
-  $('userPanel').classList.toggle('hidden', !currentUser);
-  $('ask').classList.toggle('hidden', !currentUser);
-
-  if (currentUser) {
-    $('welcome').textContent =
-      'Hola, ' + (currentUser.user_metadata?.display_name || currentUser.email || 'estudiante') + ' 👋';
-  }
-}
-
-async function loadUser() {
-  const { data, error } = await db.auth.getUser();
-
-  if (error) {
-    currentUser = null;
-  } else {
-    currentUser = data.user;
-  }
-
-  updateUI();
-}
-
-$('signup').onclick = async () => {
-  const email = $('email').value.trim();
-  const password = $('password').value;
-  const name = $('name').value.trim();
-
-  if (!name) {
-    return message('authMsg', 'Escribe el nombre que verán los demás.');
-  }
-
-  if (name.length > 40) {
-    return message('authMsg', 'El nombre no puede superar los 40 caracteres.');
-  }
-
-  if (!email) {
-    return message('authMsg', 'Escribe tu correo electrónico.');
-  }
-
-  if (password.length < 6) {
-    return message('authMsg', 'La contraseña debe tener al menos 6 caracteres.');
-  }
-
-  $('signup').disabled = true;
-  message('authMsg', 'Creando tu cuenta...');
-
-  try {
-    const { data, error } = await db.auth.signUp({
-      email,
-      password,
-      options: { data: { display_name: name } }
-    });
-
-    if (error) {
-      return message('authMsg', error.message);
+    function setMessage(id, text, type = '') {
+      const el = $(id);
+      el.textContent = text;
+      el.className = 'message' + (type ? ' ' + type : '');
     }
 
-    if (data.session && data.user) {
-      currentUser = data.user;
+    function safe(text) {
+      return String(text ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function displayName(user) {
+      return user?.user_metadata?.display_name || user?.email || 'Estudiante';
+    }
+
+    function updateUI() {
+      $('auth').classList.toggle('hidden', !!currentUser);
+      $('userPanel').classList.toggle('hidden', !currentUser);
+      $('ask').classList.toggle('hidden', !currentUser);
+      if (currentUser) $('welcome').textContent = '¡Hola, ' + displayName(currentUser) + '!';
+    }
+
+    async function loadUser() {
+      const { data, error } = await db.auth.getUser();
+      if (error) console.warn('No se pudo comprobar la sesión:', error.message);
+      currentUser = data?.user || null;
       updateUI();
-      message('authMsg', 'Cuenta creada correctamente.');
+    }
+
+    $('signup').addEventListener('click', async () => {
+      const email = $('email').value.trim();
+      const password = $('password').value;
+      const name = $('name').value.trim();
+
+      if (!name) return setMessage('authMsg', 'Escribe el nombre que verán los demás.', 'error');
+      if (!email) return setMessage('authMsg', 'Escribe tu correo electrónico.', 'error');
+      if (password.length < 6) return setMessage('authMsg', 'La contraseña debe tener al menos 6 caracteres.', 'error');
+
+      $('signup').disabled = true;
+      setMessage('authMsg', 'Creando tu cuenta…');
+      try {
+        const { data, error } = await db.auth.signUp({
+          email,
+          password,
+          options: { data: { display_name: name } }
+        });
+        if (error) throw error;
+
+        if (data.session && data.user) {
+          currentUser = data.user;
+          updateUI();
+          setMessage('authMsg', 'Cuenta creada correctamente.', 'success');
+        } else {
+          setMessage('authMsg', 'Revisa tu correo para confirmar la cuenta y después inicia sesión.', 'success');
+        }
+      } catch (error) {
+        setMessage('authMsg', 'No se pudo crear la cuenta: ' + error.message, 'error');
+      } finally {
+        $('signup').disabled = false;
+      }
+    });
+
+    $('login').addEventListener('click', async () => {
+      const email = $('email').value.trim();
+      const password = $('password').value;
+      if (!email || !password) return setMessage('authMsg', 'Introduce tu correo y contraseña.', 'error');
+
+      $('login').disabled = true;
+      setMessage('authMsg', 'Iniciando sesión…');
+      try {
+        const { data, error } = await db.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        currentUser = data.user;
+        updateUI();
+        setMessage('authMsg', 'Has iniciado sesión correctamente.', 'success');
+        await loadQuestions();
+      } catch (error) {
+        setMessage('authMsg', 'No se pudo iniciar sesión: ' + error.message, 'error');
+      } finally {
+        $('login').disabled = false;
+      }
+    });
+
+    $('logout').addEventListener('click', async () => {
+      const { error } = await db.auth.signOut();
+      if (error) return alert('No se pudo cerrar sesión: ' + error.message);
+      currentUser = null;
+      updateUI();
       await loadQuestions();
-    } else {
-      message('authMsg', 'Cuenta creada. Revisa tu correo para confirmar la cuenta y después inicia sesión.');
-    }
-  } catch (error) {
-    message('authMsg', 'No se pudo crear la cuenta. Comprueba tu conexión e inténtalo de nuevo.');
-  } finally {
-    $('signup').disabled = false;
-  }
-};
-
-$('login').onclick = async () => {
-  const email = $('email').value.trim();
-  const password = $('password').value;
-
-  if (!email || !password) {
-    return message('authMsg', 'Escribe tu correo y contraseña.');
-  }
-
-  $('login').disabled = true;
-  message('authMsg', 'Iniciando sesión...');
-
-  try {
-    const { data, error } = await db.auth.signInWithPassword({
-      email,
-      password
     });
 
-    if (error) {
-      return message('authMsg', 'No se pudo iniciar sesión. Comprueba el correo y la contraseña.');
-    }
+    $('publish').addEventListener('click', async () => {
+      if (!currentUser) return;
+      const title = $('title').value.trim();
+      const body = $('body').value.trim();
 
-    currentUser = data.user;
-    updateUI();
-    message('authMsg', '');
-    await loadQuestions();
-  } catch (error) {
-    message('authMsg', 'Error de conexión. Inténtalo de nuevo.');
-  } finally {
-    $('login').disabled = false;
-  }
-};
+      if (title.length < 8) return setMessage('publishMsg', 'El título debe tener al menos 8 caracteres.', 'error');
+      if (body.length < 10) return setMessage('publishMsg', 'Explica un poco más tu duda (mínimo 10 caracteres).', 'error');
 
-$('logout').onclick = async () => {
-  $('logout').disabled = true;
+      $('publish').disabled = true;
+      setMessage('publishMsg', 'Publicando pregunta…');
+      try {
+        const { error } = await db.from('forum_questions').insert({
+          subject: $('subject').value,
+          title,
+          body,
+          user_id: currentUser.id
+        });
+        if (error) throw error;
 
-  try {
-    const { error } = await db.auth.signOut();
-
-    if (error) {
-      message('welcome', 'No se pudo cerrar la sesión. Inténtalo de nuevo.');
-      return;
-    }
-
-    currentUser = null;
-    updateUI();
-    await loadQuestions();
-  } catch (error) {
-    message('welcome', 'Error al cerrar sesión.');
-  } finally {
-    $('logout').disabled = false;
-  }
-};
-
-$('publish').onclick = async () => {
-  if (!currentUser) {
-    return message('publishMsg', 'Inicia sesión para publicar.');
-  }
-
-  const title = $('title').value.trim();
-  const body = $('body').value.trim();
-
-  if (title.length < 8 || body.length < 10) {
-    return message('publishMsg', 'El título debe tener al menos 8 caracteres y el texto 10.');
-  }
-
-  $('publish').disabled = true;
-  message('publishMsg', 'Publicando tu pregunta...');
-
-  try {
-    const { error } = await db.from('forum_questions').insert({
-      subject: $('subject').value,
-      title,
-      body,
-      user_id: currentUser.id
+        $('title').value = '';
+        $('body').value = '';
+        setMessage('publishMsg', '¡Pregunta publicada!', 'success');
+        await loadQuestions();
+      } catch (error) {
+        setMessage('publishMsg', 'No se pudo publicar: ' + error.message, 'error');
+      } finally {
+        $('publish').disabled = false;
+      }
     });
 
-    if (error) {
-      return message('publishMsg', 'No se pudo publicar la pregunta. Comprueba los permisos e inténtalo de nuevo.');
-    }
+    async function loadQuestions() {
+      const version = ++loadVersion;
+      const filter = $('filter').value;
+      $('questions').innerHTML = '<div class="empty">Cargando preguntas…</div>';
+      $('questionCount').textContent = 'Buscando preguntas…';
 
-    $('title').value = '';
-    $('body').value = '';
-    message('publishMsg', '¡Pregunta publicada correctamente!');
-    await loadQuestions();
-  } catch (error) {
-    message('publishMsg', 'Error de conexión. Inténtalo de nuevo.');
-  } finally {
-    $('publish').disabled = false;
-  }
-};
+      try {
+        let query = db.from('forum_questions')
+          .select('id,subject,title,body,user_id,created_at')
+          .order('created_at', { ascending: false })
+          .limit(100);
 
-async function loadQuestions() {
-  if (loadingQuestions) return;
-  loadingQuestions = true;
+        if (filter) query = query.eq('subject', filter);
+        const { data, error } = await query;
+        if (version !== loadVersion) return;
+        if (error) throw error;
 
-  const filter = $('filter').value;
-  const container = $('questions');
-  container.innerHTML = '<div class="empty-state">Cargando preguntas...</div>';
+        const questions = data || [];
+        $('questionCount').textContent =
+          questions.length + (questions.length === 1 ? ' pregunta' : ' preguntas');
 
-  try {
-    let query = db.from('forum_questions')
-      .select('id,subject,title,body,user_id,created_at')
-      .order('created_at', { ascending: false })
-      .limit(100);
-
-    if (filter) {
-      query = query.eq('subject', filter);
-    }
-
-    const { data, error } = await query;
-
-    if (error) {
-      container.innerHTML = '';
-      const errorBox = document.createElement('div');
-      errorBox.className = 'empty-state';
-      errorBox.textContent = 'No se pudieron cargar las preguntas. Prueba a actualizar la página.';
-      container.appendChild(errorBox);
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      container.innerHTML = '';
-      const empty = document.createElement('div');
-      empty.className = 'empty-state';
-      empty.innerHTML = '<span class="empty-icon">✎</span><strong>Todavía no hay preguntas</strong><br>Sé el primero en compartir una duda en esta categoría.';
-      container.appendChild(empty);
-      return;
-    }
-
-    container.innerHTML = '';
-
-    for (const q of data) {
-      const div = document.createElement('article');
-      div.className = 'question';
-
-      const date = q.created_at
-        ? new Date(q.created_at).toLocaleString('es-ES', {
-            dateStyle: 'medium',
-            timeStyle: 'short'
-          })
-        : '';
-
-      div.innerHTML = `
-        <div class="question-meta">
-          <span class="subject-tag">${safe(q.subject)}</span>
-          <span>${safe(date)}</span>
-        </div>
-        <h3>${safe(q.title)}</h3>
-        <div class="question-body" style="white-space:pre-wrap">${safe(q.body)}</div>
-        <div class="replies" id="replies-${safe(q.id)}">
-          <span class="small">Cargando respuestas...</span>
-        </div>
-        <form class="replyForm ${currentUser ? '' : 'hidden'}" data-id="${safe(q.id)}">
-          <label class="field-label">Tu respuesta</label>
-          <textarea name="reply" rows="2" maxlength="3000" placeholder="Ayuda a resolver esta duda..." required></textarea>
-          <button type="submit" class="primary">Enviar respuesta</button>
-          <p class="small status" aria-live="polite"></p>
-        </form>
-        ${currentUser ? '' : '<p class="small">Inicia sesión para responder a esta pregunta.</p>'}
-      `;
-
-      container.appendChild(div);
-      loadReplies(q.id);
-    }
-
-    container.querySelectorAll('.replyForm').forEach(form => {
-      form.onsubmit = async e => {
-        e.preventDefault();
-
-        if (!currentUser) {
-          form.querySelector('.status').textContent = 'Inicia sesión para responder.';
+        if (!questions.length) {
+          $('questions').innerHTML = '<div class="empty">Todavía no hay preguntas en esta categoría. ¡Puedes ser el primero en publicar una!</div>';
           return;
         }
 
-        const text = form.elements.reply.value.trim();
+        $('questions').innerHTML = '';
+        for (const q of questions) {
+          const article = document.createElement('article');
+          article.className = 'question';
 
-        if (text.length < 2) {
-          form.querySelector('.status').textContent = 'Escribe una respuesta un poco más larga.';
-          return;
-        }
+          const top = document.createElement('div');
+          top.className = 'question-top';
 
-        const button = form.querySelector('button');
-        const status = form.querySelector('.status');
-        button.disabled = true;
-        status.textContent = 'Enviando respuesta...';
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.textContent = q.subject || 'Otras';
 
-        try {
-          const { error } = await db.from('forum_replies').insert({
-            question_id: form.dataset.id,
-            user_id: currentUser.id,
-            body: text
-          });
+          const date = document.createElement('span');
+          date.className = 'date';
+          const parsedDate = new Date(q.created_at);
+          date.textContent = Number.isNaN(parsedDate.getTime())
+            ? '' : parsedDate.toLocaleString('es-ES');
 
-          if (error) {
-            status.textContent = 'No se pudo enviar la respuesta. Inténtalo de nuevo.';
+          top.append(tag, date);
+
+          const heading = document.createElement('h3');
+          heading.textContent = q.title;
+
+          const body = document.createElement('p');
+          body.className = 'question-body';
+          body.textContent = q.body;
+
+          const replies = document.createElement('div');
+          replies.className = 'replies';
+          replies.id = 'replies-' + q.id;
+          replies.textContent = 'Cargando respuestas…';
+
+          article.append(top, heading, body, replies);
+
+          if (currentUser) {
+            const form = document.createElement('form');
+            form.className = 'reply-form';
+            const textarea = document.createElement('textarea');
+            textarea.name = 'reply';
+            textarea.maxLength = 3000;
+            textarea.required = true;
+            textarea.minLength = 2;
+            textarea.placeholder = 'Escribe una respuesta útil…';
+
+            const submit = document.createElement('button');
+            submit.className = 'btn';
+            submit.type = 'submit';
+            submit.textContent = 'Responder';
+
+            const status = document.createElement('p');
+            status.className = 'message';
+            status.setAttribute('role', 'status');
+
+            form.append(textarea, submit, status);
+            form.addEventListener('submit', async event => {
+              event.preventDefault();
+              const text = textarea.value.trim();
+              if (text.length < 2) {
+                status.textContent = 'Escribe una respuesta un poco más larga.';
+                return;
+              }
+
+              submit.disabled = true;
+              status.textContent = 'Publicando respuesta…';
+              try {
+                const { error } = await db.from('forum_replies').insert({
+                  question_id: q.id,
+                  user_id: currentUser.id,
+                  body: text
+                });
+                if (error) throw error;
+                textarea.value = '';
+                status.textContent = '¡Respuesta publicada!';
+                status.className = 'message success';
+                await loadReplies(q.id);
+              } catch (error) {
+                status.textContent = 'No se pudo responder: ' + error.message;
+                status.className = 'message error';
+              } finally {
+                submit.disabled = false;
+              }
+            });
+            article.appendChild(form);
           } else {
-            form.elements.reply.value = '';
-            status.textContent = '¡Respuesta publicada!';
-            await loadReplies(form.dataset.id);
+            const loginHint = document.createElement('p');
+            loginHint.className = 'message';
+            loginHint.textContent = 'Inicia sesión para responder a esta pregunta.';
+            article.appendChild(loginHint);
           }
-        } catch (error) {
-          status.textContent = 'Error de conexión. Inténtalo de nuevo.';
-        } finally {
-          button.disabled = false;
+
+          $('questions').appendChild(article);
+          loadReplies(q.id);
         }
-      };
+      } catch (error) {
+        if (version !== loadVersion) return;
+        $('questionCount').textContent = 'No se pudieron cargar las preguntas.';
+        $('questions').innerHTML = '';
+        const errorBox = document.createElement('div');
+        errorBox.className = 'empty';
+        errorBox.textContent = 'Error al cargar el foro. Comprueba la conexión y la configuración de la base de datos. Detalle: ' + error.message;
+        $('questions').appendChild(errorBox);
+      }
+    }
+
+    async function loadReplies(questionId) {
+      const target = $('replies-' + questionId);
+      if (!target) return;
+
+      const { data, error } = await db.from('forum_replies')
+        .select('id,body,created_at')
+        .eq('question_id', questionId)
+        .order('created_at', { ascending: true });
+
+      if (!target.isConnected) return;
+      if (error) {
+        target.textContent = 'No se pudieron cargar las respuestas.';
+        return;
+      }
+
+      const replies = data || [];
+      target.innerHTML = '';
+      const heading = document.createElement('h4');
+      heading.textContent = 'Respuestas (' + replies.length + ')';
+      target.appendChild(heading);
+
+      if (!replies.length) {
+        const none = document.createElement('p');
+        none.className = 'message';
+        none.textContent = 'Todavía no hay respuestas. ¡Anímate a ayudar!';
+        target.appendChild(none);
+      }
+
+      for (const reply of replies) {
+        const p = document.createElement('p');
+        p.className = 'reply';
+        p.textContent = reply.body;
+        target.appendChild(p);
+      }
+    }
+
+    $('refresh').addEventListener('click', loadQuestions);
+    $('filter').addEventListener('change', loadQuestions);
+
+    db.auth.onAuthStateChange((_event, session) => {
+      currentUser = session?.user || null;
+      updateUI();
     });
-  } catch (error) {
-    container.innerHTML = '';
-    const errorBox = document.createElement('div');
-    errorBox.className = 'empty-state';
-    errorBox.textContent = 'Ha ocurrido un error al cargar las preguntas. Inténtalo de nuevo.';
-    container.appendChild(errorBox);
-  } finally {
-    loadingQuestions = false;
-  }
-}
 
-async function loadReplies(questionId) {
-  const target = $('replies-' + questionId);
-  if (!target) return;
-
-  try {
-    const { data, error } = await db.from('forum_replies')
-      .select('id,body,created_at')
-      .eq('question_id', questionId)
-      .order('created_at', { ascending: true });
-
-    if (error) {
-      target.textContent = 'No se pudieron cargar las respuestas.';
-      return;
-    }
-
-    target.innerHTML = '<h4>Respuestas (' + (data ? data.length : 0) + ')</h4>';
-
-    for (const r of (data || [])) {
-      const p = document.createElement('p');
-      p.className = 'reply';
-      p.style.whiteSpace = 'pre-wrap';
-      p.textContent = r.body;
-      target.appendChild(p);
-    }
-  } catch (error) {
-    target.textContent = 'No se pudieron cargar las respuestas.';
-  }
-}
-
-$('refresh').onclick = loadQuestions;
-$('filter').onchange = loadQuestions;
-
-db.auth.onAuthStateChange((_event, session) => {
-  currentUser = session?.user || null;
-  updateUI();
-});
-
-(async () => {
-  await loadUser();
-  await loadQuestions();
-})();
-</script>
+    (async () => {
+      await loadUser();
+      await loadQuestions();
+    })();
+  </script>
 </body>
 </html>
