@@ -1,25 +1,11 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/sobre-nosotros.html</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/contacto.html</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/privacidad.html</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/cookies.html</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/media.html</loc>
-  </url>
-  <url>
-    <loc>https://calculafacilweb.github.io/calculafacil-web/nota-necesaria.html</loc>
-  </url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/sobre-nosotros.html</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/contacto.html</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/privacidad.html</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/cookies.html</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/media.html</loc></url>
+  <url><loc>https://calculafacilweb.github.io/calculafacil-web/nota-necesaria.html</loc></url>
 </urlset>
