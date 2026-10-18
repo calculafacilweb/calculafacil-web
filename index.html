@@ -2,1903 +2,997 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
-  <meta name="description" content="CalculaFácil: calculadoras de notas, medias, porcentajes, regla de tres y herramientas para organizar tus estudios.">
-  <meta name="keywords" content="calculadora de notas, media, nota necesaria, porcentajes, regla de tres, estudiar, planificador de exámenes">
-  <meta name="author" content="Chocks Studio">
-  <title>CalculaFácil — Calculadoras y herramientas de estudio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6757e8">
+<meta name="description" content="CalculaFácil: calculadoras de notas, medias, porcentajes, descuentos, IVA, interés compuesto y herramientas gratuitas para estudiar mejor.">
+<meta name="keywords" content="calculadora de notas, calcular media, nota necesaria, porcentajes, regla de tres, IVA, descuentos, interés compuesto, estudiantes ESO, Bachillerato">
+<meta name="author" content="CalculaFácil">
+<meta property="og:title" content="CalculaFácil — Calcula, aprende y mejora">
+<meta property="og:description" content="Calculadoras gratuitas y herramientas de estudio para estudiantes de ESO y Bachillerato.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://calculafacilweb.github.io/calculafacil-web/">
+<title>CalculaFácil — Calculadoras y herramientas de estudio</title>
 
-  <meta property="og:title" content="CalculaFácil">
-  <meta property="og:description" content="Calcula tus notas y organiza tus estudios en un solo lugar.">
-  <meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CalculaFácil",
+  "url": "https://calculafacilweb.github.io/calculafacil-web/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any",
+  "description": "Calculadoras gratuitas y herramientas de estudio para estudiantes."
+}
+</script>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "CalculaFácil",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Any",
-    "description": "Calculadoras académicas y herramientas gratuitas de estudio."
-  }
-  </script>
-
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0b1020;
-      --panel: #141c30;
-      --panel2: #1c2740;
-      --text: #f3f6ff;
-      --muted: #aab6d0;
-      --accent: #7c9cff;
-      --accent2: #9c7cff;
-      --border: #2c3855;
-      --good: #55d6a5;
-      --bad: #ff8585;
-      --shadow: 0 12px 32px #0003;
-    }
-
-    body.light {
-      color-scheme: light;
-      --bg: #f3f6fc;
-      --panel: #ffffff;
-      --panel2: #edf1fa;
-      --text: #172039;
-      --muted: #59657e;
-      --accent: #365de7;
-      --accent2: #7650dc;
-      --border: #d8deec;
-      --good: #087f5b;
-      --bad: #c92a2a;
-      --shadow: 0 12px 32px #26365b12;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      transition: background .2s, color .2s;
-    }
-
-    button, input, select, textarea { font: inherit; }
-
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      color: white;
-      background: var(--accent);
-      font-weight: 650;
-      transition: transform .15s, opacity .15s;
-    }
-
-    button:hover { opacity: .9; transform: translateY(-1px); }
-    button.secondary { background: var(--panel2); color: var(--text); border: 1px solid var(--border); }
-    button.danger { background: #b83246; }
-    button.small { padding: 6px 10px; font-size: .88rem; }
-
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 11px 12px;
-      min-width: 0;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: 2px solid var(--accent);
-      outline-offset: 1px;
-    }
-
-    textarea { resize: vertical; }
-
-    a { color: var(--accent); }
-
-    .container { width: min(1120px, 92%); margin: auto; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: color-mix(in srgb, var(--bg) 90%, transparent);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      min-height: 70px;
-    }
-
-    .brand {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -.7px;
-    }
-
-    .brand span { color: var(--accent); }
-
-    .navlinks { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
-    .navlinks a { text-decoration: none; font-size: .92rem; color: var(--muted); }
-
-    .hero { padding: 60px 0 36px; text-align: center; }
-
-    .eyebrow {
-      color: var(--accent);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: .76rem;
-    }
-
-    h1 {
-      font-size: clamp(2.2rem, 6vw, 4.3rem);
-      line-height: 1.08;
-      letter-spacing: -2px;
-      margin: 14px 0;
-    }
-
-    h1 span {
-      background: linear-gradient(100deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p { color: var(--muted); max-width: 650px; margin: 0 auto 24px; }
-
-    .hero-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 30px auto 0;
-      max-width: 700px;
-    }
-
-    .stat {
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel);
-    }
-
-    .stat strong { display: block; font-size: 1.5rem; }
-    .stat span { color: var(--muted); font-size: .85rem; }
-
-    section { padding: 32px 0; scroll-margin-top: 90px; }
-
-    .section-heading { margin-bottom: 20px; }
-
-    .section-heading h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 5px; }
-    .section-heading p { margin: 0; color: var(--muted); }
-
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-
-    .card {
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      min-width: 0;
-    }
-
-    .card h3 { margin: 0 0 6px; font-size: 1.16rem; }
-    .card > p { color: var(--muted); margin: 0 0 18px; font-size: .93rem; }
-
-    .field { display: grid; gap: 6px; margin-bottom: 13px; }
-    .field label { font-weight: 650; font-size: .9rem; }
-    .hint { color: var(--muted); font-size: .82rem; }
-
-    .row { display: flex; gap: 10px; align-items: center; }
-    .row > * { flex: 1; min-width: 0; }
-
-    .result {
-      background: var(--panel2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px;
-      margin-top: 14px;
-      overflow-wrap: anywhere;
-    }
-
-    .result strong { font-size: 1.35rem; }
-    .result .muted { color: var(--muted); font-size: .88rem; }
-    .good { color: var(--good); }
-    .bad { color: var(--bad); }
-
-    .button-row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .button-row button { flex: 0 1 auto; }
-
-    .list { display: grid; gap: 9px; margin-top: 14px; }
-
-    .list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      background: var(--panel2);
-      border: 1px solid var(--border);
-      padding: 11px 12px;
-      border-radius: 11px;
-      overflow-wrap: anywhere;
-    }
-
-    .list-item small { display: block; color: var(--muted); }
-    .list-item .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
-
-    .empty { color: var(--muted); font-size: .9rem; padding: 10px 0; }
-
-    .tool-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-    .tool-tabs button.active { background: var(--accent2); }
-
-    .tab-panel[hidden] { display: none; }
-
-    .flashcard {
-      min-height: 180px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 24px;
-      background: var(--panel2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin: 12px 0;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .flashcard strong { font-size: 1.2rem; }
-
-    .timer {
-      font-size: clamp(3rem, 9vw, 5rem);
-      text-align: center;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.3;
-      padding: 16px 0;
-    }
-
-    .timer-label { text-align: center; color: var(--muted); }
-
-    .progress {
-      height: 9px;
-      background: var(--panel2);
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 12px 0;
-    }
-
-    .progress div { height: 100%; background: var(--accent); width: 0%; transition: width .2s; }
-
-    .resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-
-    .resource {
-      display: block;
-      padding: 17px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .resource strong { display: block; margin-bottom: 5px; }
-    .resource span { color: var(--muted); font-size: .88rem; }
-
-    details {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-    }
-
-    summary { cursor: pointer; font-weight: 700; }
-    details p { color: var(--muted); margin-bottom: 0; }
-
-    footer { margin-top: 30px; border-top: 1px solid var(--border); padding: 25px 0; color: var(--muted); font-size: .9rem; }
-    footer .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-
-    .notice { color: var(--muted); font-size: .84rem; margin-top: 12px; }
-    .hidden { display: none !important; }
-
-    @media (max-width: 760px) {
-      .grid { grid-template-columns: 1fr; }
-      .resource-grid { grid-template-columns: 1fr; }
-      .nav { padding: 12px 0; align-items: flex-start; }
-      .navlinks { justify-content: flex-end; }
-      .navlinks a { font-size: .82rem; }
-      .hero { padding-top: 42px; }
-    }
-
-    @media (max-width: 430px) {
-      .stats { grid-template-columns: 1fr; }
-      .stat { display: flex; justify-content: space-between; align-items: center; }
-      .row { flex-direction: column; align-items: stretch; }
-      .card { padding: 17px; }
-      .navlinks { gap: 8px; }
-    }
-  </style>
+<style>
+:root {
+  --bg: #f6f7fc;
+  --surface: #ffffff;
+  --surface2: #f0efff;
+  --text: #202139;
+  --muted: #777991;
+  --primary: #6757e8;
+  --primary-dark: #5141cf;
+  --border: #e7e7f1;
+  --green: #15966a;
+  --red: #dc4b61;
+  --shadow: 0 10px 35px rgba(37, 33, 88, .07);
+  --radius: 18px;
+}
+body.dark {
+  --bg: #10111a;
+  --surface: #191a27;
+  --surface2: #24233b;
+  --text: #f3f2ff;
+  --muted: #a3a4bc;
+  --primary: #9688ff;
+  --primary-dark: #8170f4;
+  --border: #303145;
+  --green: #4bd5a0;
+  --red: #ff7187;
+  --shadow: 0 10px 35px rgba(0, 0, 0, .17);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  transition: background .2s, color .2s;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { width: min(1120px, calc(100% - 36px)); margin: auto; }
+header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  min-height: 72px; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 900; letter-spacing: -.7px; color: var(--text); }
+.logo {
+  display: grid; place-items: center; width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--primary), #9b6cf4);
+  color: white; border-radius: 13px; font-size: 22px;
+}
+.navlinks { display: flex; align-items: center; gap: 22px; }
+.navlinks a { color: var(--muted); font-size: .9rem; font-weight: 650; }
+.navlinks a:hover { color: var(--primary); text-decoration: none; }
+.icon-btn {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  width: 42px; height: 42px; border-radius: 13px; font-size: 19px;
+}
+.hero { padding: 65px 0 40px; text-align: center; }
+.pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 13px; border-radius: 99px; background: var(--surface2);
+  color: var(--primary); font-size: .82rem; font-weight: 750;
+}
+h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); line-height: 1.08; letter-spacing: -2px; margin: 20px 0 16px; }
+.gradient { color: var(--primary); }
+.hero p { max-width: 640px; margin: 0 auto 25px; color: var(--muted); font-size: 1.08rem; }
+.search {
+  display: flex; align-items: center; gap: 10px; max-width: 560px;
+  margin: 25px auto 0; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 15px; padding: 6px 14px; box-shadow: var(--shadow);
+}
+.search input { border: 0; outline: none; background: transparent; color: var(--text); padding: 10px 0; width: 100%; }
+.search span { font-size: 19px; }
+.stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.stat { border: 1px solid var(--border); border-radius: 12px; padding: 8px 13px; background: var(--surface); font-size: .84rem; color: var(--muted); }
+.stat strong { color: var(--text); }
+section { padding: 35px 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 23px; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -.8px; line-height: 1.2; margin: 0 0 7px; }
+.section-head p, .muted { color: var(--muted); margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+.tool-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px; box-shadow: var(--shadow); transition: transform .18s, border-color .18s;
+}
+.tool-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+.tool-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.tool-icon { width: 48px; height: 48px; border-radius: 15px; display: grid; place-items: center; font-size: 24px; background: var(--surface2); }
+.tag { font-size: .7rem; padding: 4px 8px; background: var(--surface2); color: var(--primary); border-radius: 8px; font-weight: 800; }
+.tool-card h3 { margin: 0 0 5px; font-size: 1.08rem; }
+.tool-card p { margin: 0 0 17px; font-size: .88rem; color: var(--muted); min-height: 42px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--primary); color: white; border: 0; border-radius: 11px;
+  padding: 11px 16px; font-weight: 750; font-size: .9rem; transition: background .15s;
+}
+.btn:hover { background: var(--primary-dark); text-decoration: none; color: white; }
+.btn.secondary { background: var(--surface2); color: var(--primary); }
+.btn.secondary:hover { filter: brightness(.96); }
+.btn.danger { background: #ffe8ec; color: #c4314c; }
+.btn.small { padding: 8px 11px; font-size: .82rem; }
+.btn.full { width: 100%; }
+.calculator-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); min-width: 0; }
+.panel h3 { margin: 0 0 5px; }
+.field { margin-top: 16px; }
+.field label { display: block; font-weight: 700; font-size: .87rem; margin-bottom: 7px; }
+.field input, .field select, .field textarea {
+  width: 100%; min-width: 0; padding: 12px 13px; border-radius: 11px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 14%, transparent); }
+.field textarea { resize: vertical; min-height: 95px; }
+.field .hint { font-size: .78rem; color: var(--muted); margin-top: 5px; }
+.row-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.result {
+  margin-top: 18px; padding: 18px; border-radius: 14px;
+  background: var(--surface2); display: none;
+}
+.result.show { display: block; animation: fade .22s ease; }
+.result-label { color: var(--muted); font-size: .85rem; }
+.result-value { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -1px; color: var(--primary); overflow-wrap: anywhere; }
+.result-note { font-size: .85rem; color: var(--muted); }
+@keyframes fade { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 18px; }
+.tab { border: 1px solid var(--border); background: var(--surface); color: var(--muted); border-radius: 10px; padding: 9px 12px; font-size: .85rem; font-weight: 750; }
+.tab.active { background: var(--primary); border-color: var(--primary); color: white; }
+.hidden { display: none !important; }
+.notice { padding: 13px 15px; border: 1px solid var(--border); border-radius: 12px; font-size: .86rem; color: var(--muted); background: var(--surface); }
+.study-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.list { display: grid; gap: 9px; margin-top: 15px; }
+.list-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 11px; }
+.list-item .grow { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.list-item small { color: var(--muted); display: block; }
+.list-item button { flex-shrink: 0; }
+.checkline { display: flex; align-items: center; gap: 9px; }
+.checkline input { width: auto; }
+.progress { height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; margin: 12px 0; }
+.progress-bar { height: 100%; width: 0; background: var(--primary); transition: width .2s; }
+.flashcard {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 16px;
+  min-height: 150px; padding: 22px; display: grid; place-items: center;
+  text-align: center; font-size: 1.15rem; font-weight: 750; cursor: pointer;
+}
+.flashcard small { display: block; font-size: .75rem; font-weight: 600; color: var(--muted); margin-bottom: 10px; }
+.timer { font-size: 3rem; text-align: center; font-weight: 900; letter-spacing: -2px; margin: 15px 0; font-variant-numeric: tabular-nums; }
+.timer-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; }
+.faq { border: 1px solid var(--border); border-radius: 13px; background: var(--surface); margin-top: 10px; padding: 15px 17px; }
+.faq summary { cursor: pointer; font-weight: 750; }
+.faq p { color: var(--muted); margin-bottom: 0; }
+footer { margin-top: 40px; padding: 35px 0; border-top: 1px solid var(--border); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+footer p { color: var(--muted); font-size: .85rem; margin: 5px 0; }
+.empty { text-align: center; color: var(--muted); padding: 18px; }
+.toast {
+  position: fixed; bottom: 22px; left: 50%; transform: translate(-50%, 20px);
+  opacity: 0; pointer-events: none; z-index: 100; background: var(--text); color: var(--surface);
+  padding: 12px 18px; border-radius: 12px; box-shadow: var(--shadow); transition: .2s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 850px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .navlinks { gap: 12px; }
+  .calculator-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .container { width: min(100% - 24px, 1120px); }
+  .nav { min-height: 62px; }
+  .navlinks a { display: none; }
+  .hero { padding: 42px 0 25px; }
+  h1 { letter-spacing: -1.2px; }
+  .grid, .study-grid { grid-template-columns: 1fr; }
+  .tool-card p { min-height: 0; }
+  .section-head { align-items: flex-start; flex-direction: column; }
+  .panel { padding: 18px; }
+  .row-fields { grid-template-columns: 1fr; gap: 0; }
+  section { padding: 25px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
 </head>
-
 <body>
 <header>
   <div class="container nav">
-    <a class="brand" href="#" aria-label="CalculaFácil inicio">Calcula<span>Fácil</span></a>
+    <a href="#" class="brand" aria-label="CalculaFácil, inicio">
+      <span class="logo">∑</span> CalculaFácil
+    </a>
     <nav class="navlinks" aria-label="Navegación principal">
       <a href="#calculadoras">Calculadoras</a>
       <a href="#estudio">Zona de estudio</a>
-      <a href="#recursos">Recursos</a>
-      <button class="secondary small" id="themeToggle" type="button" aria-label="Cambiar tema">☀️ Tema</button>
+      <a href="#faq">Preguntas frecuentes</a>
     </nav>
+    <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
   </div>
 </header>
 
 <main>
-  <div class="container">
-    <section class="hero">
-      <div class="eyebrow">Estudia de forma inteligente</div>
-      <h1>Tus estudios,<br><span>más fáciles.</span></h1>
-      <p>Calcula notas, descubre qué necesitas para aprobar y organiza tus exámenes con herramientas gratuitas en una sola página.</p>
-      <div class="hero-actions">
-        <a href="#calculadoras"><button type="button">Empezar a calcular →</button></a>
-        <a href="#estudio"><button class="secondary" type="button">Organizar mi estudio</button></a>
-      </div>
-      <div class="stats">
-        <div class="stat"><strong>8</strong><span>Herramientas de cálculo</span></div>
-        <div class="stat"><strong>100%</strong><span>Gratis</span></div>
-        <div class="stat"><strong>24/7</strong><span>Disponible online</span></div>
-      </div>
-    </section>
+  <div class="container hero">
+    <span class="pill">✦ Tu compañero de estudio</span>
+    <h1>Entiende más.<br><span class="gradient">Calcula mejor.</span></h1>
+    <p>Las calculadoras que necesitas para clase y las herramientas que te ayudan a organizarte. Gratis, rápidas y fáciles de usar.</p>
+    <a class="btn" href="#calculadoras">Explorar calculadoras ↓</a>
+    <div class="search">
+      <span>⌕</span>
+      <input id="searchInput" type="search" placeholder="Buscar calculadora: media, IVA, descuento..." aria-label="Buscar calculadora">
+    </div>
+    <div class="stats">
+      <div class="stat">🧮 <strong>10+</strong> calculadoras</div>
+      <div class="stat">📚 Herramientas de estudio</div>
+      <div class="stat">🔒 Sin registro</div>
+    </div>
+  </div>
 
-    <section id="calculadoras">
-      <div class="section-heading">
-        <h2>🧮 Calculadoras</h2>
-        <p>Introduce tus datos y obtén el resultado al instante.</p>
-      </div>
-
-      <div class="grid">
-        <article class="card">
-          <h3>📊 Calculadora de media</h3>
-          <p>Calcula la media aritmética de tus notas.</p>
-          <div class="field">
-            <label for="averageInput">Tus notas</label>
-            <textarea id="averageInput" rows="3" placeholder="Ejemplo: 7,5; 8; 6,25"></textarea>
-            <span class="hint">Separa las notas con espacios o punto y coma. Puedes usar decimales con coma.</span>
-          </div>
-          <button type="button" id="averageBtn">Calcular media</button>
-          <div id="averageResult" class="result" aria-live="polite">Tu resultado aparecerá aquí.</div>
-        </article>
-
-        <article class="card">
-          <h3>🎯 ¿Qué nota necesito?</h3>
-          <p>Calcula la nota que necesitas en el próximo examen para alcanzar tu objetivo.</p>
-          <div class="field">
-            <label for="currentGrade">Nota actual</label>
-            <input id="currentGrade" type="number" min="0" max="10" step="any" placeholder="Ej. 6,5">
-          </div>
-          <div class="field">
-            <label for="currentWeight">Porcentaje que ya tienes (%)</label>
-            <input id="currentWeight" type="number" min="0" max="99.99" step="any" value="60">
-          </div>
-          <div class="field">
-            <label for="targetGrade">Nota final que quieres</label>
-            <input id="targetGrade" type="number" min="0" max="10" step="any" value="5">
-          </div>
-          <button type="button" id="neededBtn">Calcular nota necesaria</button>
-          <div id="neededResult" class="result" aria-live="polite">Introduce tus datos.</div>
-        </article>
-
-        <article class="card">
-          <h3>⚖️ Media ponderada</h3>
-          <p>Calcula una nota cuando dos evaluaciones tienen pesos diferentes.</p>
-          <div class="row">
-            <div class="field">
-              <label for="weightedGrade1">Nota 1</label>
-              <input id="weightedGrade1" type="number" min="0" max="10" step="any" placeholder="7">
-            </div>
-            <div class="field">
-              <label for="weightedWeight1">Peso de la nota 1 (%)</label>
-              <input id="weightedWeight1" type="number" min="0" max="100" step="any" value="60">
-            </div>
-          </div>
-          <div class="field">
-            <label for="weightedGrade2">Nota 2</label>
-            <input id="weightedGrade2" type="number" min="0" max="10" step="any" placeholder="8">
-          </div>
-          <button type="button" id="weightedBtn">Calcular media ponderada</button>
-          <div id="weightedResult" class="result" aria-live="polite">Introduce tus datos.</div>
-          <p class="notice">El porcentaje restante se asigna a la segunda nota.</p>
-        </article>
-
-        <article class="card">
-          <h3>💯 Calculadora de porcentajes</h3>
-          <p>Calcula cuánto representa un porcentaje de una cantidad.</p>
-          <div class="row">
-            <div class="field">
-              <label for="percentValue">Cantidad</label>
-              <input id="percentValue" type="number" step="any" placeholder="200">
-            </div>
-            <div class="field">
-              <label for="percentRate">Porcentaje (%)</label>
-              <input id="percentRate" type="number" step="any" placeholder="15">
-            </div>
-          </div>
-          <button type="button" id="percentBtn">Calcular porcentaje</button>
-          <div id="percentResult" class="result" aria-live="polite">Introduce los datos.</div>
-        </article>
-
-        <article class="card">
-          <h3>🔢 Regla de tres</h3>
-          <p>Resuelve proporciones sencillas.</p>
-          <div class="row">
-            <div class="field">
-              <label for="ruleA">A</label>
-              <input id="ruleA" type="number" step="any" placeholder="4">
-            </div>
-            <div class="field">
-              <label for="ruleB">B</label>
-              <input id="ruleB" type="number" step="any" placeholder="12">
-            </div>
-          </div>
-          <div class="row">
-            <div class="field">
-              <label for="ruleC">C</label>
-              <input id="ruleC" type="number" step="any" placeholder="7">
-            </div>
-            <div class="field">
-              <label for="ruleX">X</label>
-              <input id="ruleX" type="text" value="?" disabled>
-            </div>
-          </div>
-          <p class="hint">A corresponde a B, y C corresponde a X.</p>
-          <button type="button" id="ruleBtn">Calcular X</button>
-          <div id="ruleResult" class="result" aria-live="polite">Introduce A, B y C.</div>
-        </article>
-
-        <article class="card">
-          <h3>➗ Conversor de fracciones</h3>
-          <p>Convierte una fracción en decimal y porcentaje.</p>
-          <div class="row">
-            <div class="field">
-              <label for="fractionNumerator">Numerador</label>
-              <input id="fractionNumerator" type="number" step="1" placeholder="3">
-            </div>
-            <div class="field">
-              <label for="fractionDenominator">Denominador</label>
-              <input id="fractionDenominator" type="number" step="1" placeholder="4">
-            </div>
-          </div>
-          <button type="button" id="fractionBtn">Convertir fracción</button>
-          <div id="fractionResult" class="result" aria-live="polite">Ejemplo: 3/4 = 0,75 = 75%.</div>
-        </article>
-
-        <article class="card">
-          <h3>🔄 Conversor de escalas</h3>
-          <p>Convierte una puntuación entre diferentes escalas.</p>
-          <div class="row">
-            <div class="field">
-              <label for="scaleScore">Tu puntuación</label>
-              <input id="scaleScore" type="number" step="any" placeholder="7">
-            </div>
-            <div class="field">
-              <label for="scaleFrom">Escala original</label>
-              <input id="scaleFrom" type="number" min="0.000001" step="any" value="10">
-            </div>
-          </div>
-          <div class="field">
-            <label for="scaleTo">Escala de destino</label>
-            <input id="scaleTo" type="number" min="0.000001" step="any" value="100">
-          </div>
-          <button type="button" id="scaleBtn">Convertir escala</button>
-          <div id="scaleResult" class="result" aria-live="polite">Introduce los datos.</div>
-        </article>
-
-        <article class="card">
-          <h3>📝 Media de una lista de notas</h3>
-          <p>Añade notas una por una y consulta la media, la mayor y la menor.</p>
-          <div class="row">
-            <div class="field">
-              <label for="gradeName">Asignatura (opcional)</label>
-              <input id="gradeName" type="text" placeholder="Ej. Matemáticas">
-            </div>
-            <div class="field">
-              <label for="gradeValue">Nota (0–10)</label>
-              <input id="gradeValue" type="number" min="0" max="10" step="any" placeholder="8">
-            </div>
-          </div>
-          <button type="button" id="addGradeBtn">Añadir nota</button>
-          <div id="gradeStats" class="result">Todavía no has añadido notas.</div>
-          <div id="gradeList" class="list"></div>
-          <button type="button" id="clearGradesBtn" class="secondary small">Borrar todas las notas</button>
-        </article>
-      </div>
-    </section>
-
-    <section id="estudio">
-      <div class="section-heading">
-        <h2>📚 Tu zona de estudio</h2>
-        <p>Organiza exámenes, crea tarjetas y estudia con sesiones enfocadas.</p>
-      </div>
-
-      <div class="tool-tabs" role="tablist" aria-label="Herramientas de estudio">
-        <button type="button" class="active" data-tab="examsPanel" role="tab" aria-selected="true">📅 Exámenes</button>
-        <button type="button" data-tab="flashPanel" role="tab" aria-selected="false">🗂️ Tarjetas</button>
-        <button type="button" data-tab="quizPanel" role="tab" aria-selected="false">❓ Test</button>
-        <button type="button" data-tab="pomodoroPanel" role="tab" aria-selected="false">⏱️ Pomodoro</button>
-        <button type="button" data-tab="tasksPanel" role="tab" aria-selected="false">✅ Tareas</button>
-        <button type="button" data-tab="goalsPanel" role="tab" aria-selected="false">🎯 Objetivo</button>
-        <button type="button" data-tab="sciencePanel" role="tab" aria-selected="false">🧪 Científica</button>
-      </div>
-
-      <div class="tab-panel" id="examsPanel">
-        <div class="card">
-          <h3>📅 Planificador de exámenes</h3>
-          <p>Apunta las fechas de tus exámenes para tenerlos organizados.</p>
-          <div class="row">
-            <div class="field">
-              <label for="examSubject">Asignatura</label>
-              <input id="examSubject" type="text" placeholder="Historia">
-            </div>
-            <div class="field">
-              <label for="examDate">Fecha del examen</label>
-              <input id="examDate" type="date">
-            </div>
-          </div>
-          <div class="field">
-            <label for="examNotes">Temas o notas (opcional)</label>
-            <input id="examNotes" type="text" placeholder="Tema 1, tema 2...">
-          </div>
-          <button type="button" id="addExamBtn">Añadir examen</button>
-          <div id="examList" class="list"></div>
+  <section id="calculadoras">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Calculadoras</h2>
+          <p>Selecciona una herramienta y empieza a calcular.</p>
         </div>
       </div>
+      <div class="grid" id="toolGrid">
+        <article class="tool-card" data-search="media promedio notas aritmetica">
+          <div class="tool-top"><div class="tool-icon">📊</div><span class="tag">Estudios</span></div>
+          <h3>Media de notas</h3><p>Calcula la media de tus exámenes y trabajos.</p>
+          <button class="btn full" onclick="openCalc('media')">Calcular media</button>
+        </article>
+        <article class="tool-card" data-search="nota necesaria aprobar examen final">
+          <div class="tool-top"><div class="tool-icon">🎯</div><span class="tag">Estudios</span></div>
+          <h3>Nota necesaria</h3><p>Descubre qué nota necesitas para alcanzar tu objetivo.</p>
+          <button class="btn full" onclick="openCalc('necesaria')">Calcular nota</button>
+        </article>
+        <article class="tool-card" data-search="media ponderada pesos porcentajes evaluacion">
+          <div class="tool-top"><div class="tool-icon">⚖️</div><span class="tag">Estudios</span></div>
+          <h3>Media ponderada</h3><p>Calcula una nota cuando cada examen tiene un peso diferente.</p>
+          <button class="btn full" onclick="openCalc('ponderada')">Calcular media</button>
+        </article>
+        <article class="tool-card" data-search="porcentaje calcular tanto por ciento">
+          <div class="tool-top"><div class="tool-icon">％</div><span class="tag">Matemáticas</span></div>
+          <h3>Porcentajes</h3><p>Calcula un porcentaje de cualquier cantidad.</p>
+          <button class="btn full" onclick="openCalc('porcentaje')">Calcular porcentaje</button>
+        </article>
+        <article class="tool-card" data-search="regla tres proporcionalidad directa inversa">
+          <div class="tool-top"><div class="tool-icon">🔢</div><span class="tag">Matemáticas</span></div>
+          <h3>Regla de tres</h3><p>Resuelve proporciones directas de forma sencilla.</p>
+          <button class="btn full" onclick="openCalc('regla')">Resolver proporción</button>
+        </article>
+        <article class="tool-card" data-search="descuento precio rebaja ahorro">
+          <div class="tool-top"><div class="tool-icon">🏷️</div><span class="tag">Dinero</span></div>
+          <h3>Descuentos</h3><p>Calcula el precio final y cuánto te ahorras.</p>
+          <button class="btn full" onclick="openCalc('descuento')">Calcular descuento</button>
+        </article>
+        <article class="tool-card" data-search="iva impuesto precio base incluido">
+          <div class="tool-top"><div class="tool-icon">🧾</div><span class="tag">Dinero</span></div>
+          <h3>Calculadora de IVA</h3><p>Añade IVA o calcula la base a partir del precio final.</p>
+          <button class="btn full" onclick="openCalc('iva')">Calcular IVA</button>
+        </article>
+        <article class="tool-card" data-search="interes compuesto inversion ahorro capital tiempo">
+          <div class="tool-top"><div class="tool-icon">📈</div><span class="tag">Finanzas</span></div>
+          <h3>Interés compuesto</h3><p>Simula cómo evoluciona un capital con el tiempo.</p>
+          <button class="btn full" onclick="openCalc('interes')">Simular crecimiento</button>
+        </article>
+        <article class="tool-card" data-search="ecuaciones primer grado algebra x">
+          <div class="tool-top"><div class="tool-icon">✏️</div><span class="tag">Matemáticas</span></div>
+          <h3>Ecuaciones sencillas</h3><p>Resuelve ecuaciones de primer grado del tipo ax + b = c.</p>
+          <button class="btn full" onclick="openCalc('ecuacion')">Resolver ecuación</button>
+        </article>
+        <article class="tool-card" data-search="fracciones decimal fraccion simplificar">
+          <div class="tool-top"><div class="tool-icon">½</div><span class="tag">Matemáticas</span></div>
+          <h3>Fracciones y decimales</h3><p>Convierte fracciones a decimales y simplifica fracciones.</p>
+          <button class="btn full" onclick="openCalc('fraccion')">Convertir fracción</button>
+        </article>
+        <article class="tool-card" data-search="nota escala puntuacion examen sobre diez">
+          <div class="tool-top"><div class="tool-icon">📝</div><span class="tag">Estudios</span></div>
+          <h3>Escala de notas</h3><p>Convierte una puntuación a una escala sobre 10.</p>
+          <button class="btn full" onclick="openCalc('escala')">Convertir nota</button>
+        </article>
+        <article class="tool-card" data-search="lista notas calcular varias calificaciones">
+          <div class="tool-top"><div class="tool-icon">📋</div><span class="tag">Estudios</span></div>
+          <h3>Lista de notas</h3><p>Pega varias notas y calcula su media, máxima y mínima.</p>
+          <button class="btn full" onclick="openCalc('lista')">Analizar notas</button>
+        </article>
+      </div>
+      <p id="noResults" class="notice hidden" style="margin-top:15px">No se encontraron calculadoras. Prueba con otra palabra.</p>
+    </div>
+  </section>
 
-      <div class="tab-panel" id="flashPanel" hidden>
-        <div class="card">
-          <h3>🗂️ Tarjetas de memoria</h3>
-          <p>Crea preguntas con sus respuestas para repasar.</p>
-          <div class="field">
-            <label for="flashQuestion">Pregunta</label>
-            <textarea id="flashQuestion" rows="2" placeholder="¿Qué es el capital humano?"></textarea>
+  <section id="calculadora-activa" class="hidden">
+    <div class="container">
+      <div class="section-head">
+        <div><h2 id="calcTitle">Calculadora</h2><p id="calcDesc">Introduce los datos para obtener el resultado.</p></div>
+        <button class="btn secondary" onclick="closeCalc()">✕ Cerrar</button>
+      </div>
+      <div class="calculator-layout">
+        <div class="panel" id="calcForm"></div>
+        <div class="panel">
+          <h3>Tu resultado</h3>
+          <p class="muted">El resultado aparecerá aquí.</p>
+          <div id="calcResult" class="result" aria-live="polite">
+            <div class="result-label" id="resultLabel">Resultado</div>
+            <div class="result-value" id="resultValue">—</div>
+            <p class="result-note" id="resultNote"></p>
+            <button class="btn secondary small" id="copyResult">Copiar resultado</button>
           </div>
-          <div class="field">
-            <label for="flashAnswer">Respuesta</label>
-            <textarea id="flashAnswer" rows="2" placeholder="Conocimientos y habilidades de las personas."></textarea>
-          </div>
-          <button type="button" id="addFlashBtn">Guardar tarjeta</button>
-          <div id="flashStudy" class="flashcard">
-            <div>
-              <strong id="flashDisplay">Aún no tienes tarjetas.</strong>
-              <p id="flashCounter" class="hint"></p>
-            </div>
-          </div>
-          <div class="button-row">
-            <button type="button" id="flipFlashBtn" class="secondary">Mostrar respuesta</button>
-            <button type="button" id="prevFlashBtn" class="secondary">← Anterior</button>
-            <button type="button" id="nextFlashBtn">Siguiente →</button>
-          </div>
-          <div id="flashList" class="list"></div>
+          <div id="calcPlaceholder" class="notice" style="margin-top:16px">Rellena los campos y pulsa el botón de calcular.</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="tab-panel" id="quizPanel" hidden>
-        <div class="card">
-          <h3>❓ Creador de test</h3>
-          <p>Crea tus propias preguntas tipo test y comprueba tus respuestas.</p>
-          <div class="field">
-            <label for="quizQuestion">Pregunta</label>
-            <textarea id="quizQuestion" rows="2" placeholder="¿Cuál es la capital de Francia?"></textarea>
-          </div>
-          <div class="field">
-            <label for="quizOption1">Opción A</label>
-            <input id="quizOption1" type="text" placeholder="Madrid">
-          </div>
-          <div class="field">
-            <label for="quizOption2">Opción B</label>
-            <input id="quizOption2" type="text" placeholder="París">
-          </div>
-          <div class="field">
-            <label for="quizOption3">Opción C</label>
-            <input id="quizOption3" type="text" placeholder="Roma">
-          </div>
-          <div class="field">
-            <label for="quizCorrect">Respuesta correcta</label>
-            <select id="quizCorrect">
-              <option value="0">A</option>
-              <option value="1">B</option>
-              <option value="2">C</option>
-            </select>
-          </div>
-          <button type="button" id="addQuizBtn">Añadir pregunta</button>
-          <div class="result" id="quizStatus">Añade preguntas para empezar.</div>
-          <div id="quizPlay" class="hidden">
-            <h3 id="quizPlayQuestion"></h3>
-            <div id="quizPlayOptions" class="list"></div>
-            <div id="quizFeedback" class="result" aria-live="polite"></div>
-            <div class="button-row" style="margin-top:12px">
-              <button type="button" id="nextQuizBtn">Siguiente pregunta</button>
-              <button type="button" id="restartQuizBtn" class="secondary">Reiniciar test</button>
-            </div>
-          </div>
-          <div id="quizList" class="list"></div>
-        </div>
+  <section id="estudio">
+    <div class="container">
+      <div class="section-head">
+        <div><h2>Tu zona de estudio</h2><p>Organiza tus tareas y aprovecha mejor el tiempo.</p></div>
       </div>
+      <div class="study-grid">
+        <div class="panel">
+          <h3>✅ Lista de tareas</h3>
+          <p class="muted">Añade lo que tienes pendiente. Se guarda en este navegador.</p>
+          <form id="taskForm">
+            <div class="field"><label for="taskInput">Nueva tarea</label><input id="taskInput" required maxlength="150" placeholder="Ej. Estudiar economía"></div>
+            <div style="margin-top:12px"><button class="btn" type="submit">+ Añadir tarea</button></div>
+          </form>
+          <div class="progress"><div class="progress-bar" id="taskProgress"></div></div>
+          <small id="taskCount" class="muted">0 tareas completadas</small>
+          <div class="list" id="taskList"></div>
+        </div>
 
-      <div class="tab-panel" id="pomodoroPanel" hidden>
-        <div class="card">
+        <div class="panel">
           <h3>⏱️ Temporizador Pomodoro</h3>
-          <p>Estudia durante un tiempo concreto y descansa entre sesiones.</p>
-          <div class="row">
-            <div class="field">
-              <label for="studyMinutes">Minutos de estudio</label>
-              <input id="studyMinutes" type="number" min="1" max="180" value="25">
-            </div>
-            <div class="field">
-              <label for="breakMinutes">Minutos de descanso</label>
-              <input id="breakMinutes" type="number" min="1" max="60" value="5">
-            </div>
+          <p class="muted">Estudia con concentración y haz pausas regulares.</p>
+          <div class="tabs">
+            <button class="tab active" data-minutes="25">Estudio · 25 min</button>
+            <button class="tab" data-minutes="5">Pausa · 5 min</button>
+            <button class="tab" data-minutes="15">Pausa larga · 15 min</button>
           </div>
           <div class="timer" id="timerDisplay">25:00</div>
-          <div class="timer-label" id="timerLabel">Sesión de estudio</div>
-          <div class="progress"><div id="timerProgress"></div></div>
-          <div class="button-row">
-            <button type="button" id="startTimerBtn">▶ Empezar</button>
-            <button type="button" id="pauseTimerBtn" class="secondary">⏸ Pausar</button>
-            <button type="button" id="resetTimerBtn" class="secondary">↺ Reiniciar</button>
+          <div class="timer-controls">
+            <button class="btn" id="timerStart">▶ Empezar</button>
+            <button class="btn secondary" id="timerReset">↻ Reiniciar</button>
           </div>
-          <p class="notice">El temporizador funciona mientras esta página esté abierta.</p>
+          <p class="muted" id="timerMessage" style="text-align:center;margin-top:14px">Un paso cada vez. ¡Tú puedes!</p>
         </div>
-      </div>
 
-      <div class="tab-panel" id="tasksPanel" hidden>
-        <div class="card">
-          <h3>✅ Lista de tareas</h3>
-          <p>Organiza lo que tienes que hacer y marca lo que termines.</p>
-          <div class="row">
-            <div class="field">
-              <label for="taskInput">Nueva tarea</label>
-              <input id="taskInput" type="text" placeholder="Repasar tema 3">
-            </div>
-            <div class="field">
-              <label for="taskSubject">Asignatura</label>
-              <input id="taskSubject" type="text" placeholder="Economía">
-            </div>
+        <div class="panel">
+          <h3>🗓️ Planificador de exámenes</h3>
+          <p class="muted">Registra las fechas importantes para organizarte.</p>
+          <form id="examForm">
+            <div class="field"><label for="examName">Asignatura o examen</label><input id="examName" required maxlength="100" placeholder="Ej. Historia"></div>
+            <div class="field"><label for="examDate">Fecha</label><input id="examDate" type="date" required></div>
+            <div style="margin-top:12px"><button class="btn" type="submit">+ Añadir examen</button></div>
+          </form>
+          <div class="list" id="examList"></div>
+        </div>
+
+        <div class="panel">
+          <h3>🧠 Tarjetas de memoria</h3>
+          <p class="muted">Crea tarjetas de pregunta y respuesta para repasar.</p>
+          <form id="flashForm">
+            <div class="field"><label for="flashQuestion">Pregunta</label><input id="flashQuestion" required maxlength="200" placeholder="¿Qué es el capital humano?"></div>
+            <div class="field"><label for="flashAnswer">Respuesta</label><textarea id="flashAnswer" required maxlength="500" placeholder="Conocimientos, habilidades y experiencia..."></textarea></div>
+            <div style="margin-top:12px"><button class="btn" type="submit">+ Crear tarjeta</button></div>
+          </form>
+          <div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="Mostrar respuesta">
+            <div><small>PRIMERA TARJETA</small>Aún no has creado tarjetas.</div>
           </div>
-          <button type="button" id="addTaskBtn">Añadir tarea</button>
-          <div id="taskStats" class="result">No tienes tareas todavía.</div>
-          <div id="taskList" class="list"></div>
-          <button type="button" id="clearTasksBtn" class="secondary small">Borrar tareas completadas</button>
+          <div class="timer-controls" style="margin-top:12px">
+            <button class="btn secondary small" id="flashPrev">← Anterior</button>
+            <button class="btn secondary small" id="flashFlip">Ver respuesta</button>
+            <button class="btn secondary small" id="flashNext">Siguiente →</button>
+          </div>
+          <p class="muted" id="flashCount" style="text-align:center;margin-top:8px">0 tarjetas</p>
+          <div class="list" id="flashList"></div>
         </div>
-      </div>
 
-      <div class="tab-panel" id="goalsPanel" hidden>
-        <div class="card">
+        <div class="panel">
           <h3>🎯 Objetivo semanal</h3>
-          <p>Define cuántas horas quieres estudiar esta semana y registra tu progreso.</p>
-          <div class="row">
-            <div class="field">
-              <label for="goalHours">Objetivo (horas)</label>
-              <input id="goalHours" type="number" min="1" max="100" step="1" value="10">
-            </div>
-            <div class="field">
-              <label for="completedHours">Horas completadas</label>
-              <input id="completedHours" type="number" min="0" max="100" step="0.5" value="0">
-            </div>
+          <p class="muted">Define un objetivo de horas de estudio y registra tu progreso.</p>
+          <div class="row-fields">
+            <div class="field"><label for="goalTarget">Objetivo (horas)</label><input id="goalTarget" type="number" min="1" max="100" value="10"></div>
+            <div class="field"><label for="goalDone">Horas realizadas</label><input id="goalDone" type="number" min="0" max="100" value="0"></div>
           </div>
-          <button type="button" id="saveGoalBtn">Guardar objetivo</button>
-          <div id="goalResult" class="result">Configura tu objetivo.</div>
-          <div class="progress"><div id="goalProgress"></div></div>
+          <button class="btn" id="saveGoal" style="margin-top:14px">Guardar objetivo</button>
+          <div class="progress"><div class="progress-bar" id="goalProgress"></div></div>
+          <p id="goalMessage" class="muted">Tu progreso aparecerá aquí.</p>
+        </div>
+
+        <div class="panel">
+          <h3>🔐 Tus datos</h3>
+          <p class="muted">Tus tareas, exámenes y tarjetas se guardan localmente en este navegador. No se sincronizan entre dispositivos.</p>
+          <div class="notice">Consejo: no borres los datos del sitio si quieres conservar tu planificación. Si usas un dispositivo compartido, evita guardar información personal.</div>
+          <button class="btn danger" id="clearData" style="margin-top:15px">Borrar mis datos guardados</button>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="tab-panel" id="sciencePanel" hidden>
-        <div class="card">
-          <h3>🧪 Calculadora científica</h3>
-          <p>Operaciones básicas, potencias, raíces y funciones trigonométricas en radianes.</p>
-          <div class="field">
-            <label for="scienceInput">Expresión matemática</label>
-            <input id="scienceInput" type="text" placeholder="Ej. sqrt(25) + 2^3" autocomplete="off">
-            <span class="hint">Usa +, -, *, /, ^, paréntesis, sqrt(), abs(), pi, sin(), cos() y tan().</span>
-          </div>
-          <button type="button" id="scienceBtn">Calcular</button>
-          <div id="scienceResult" class="result" aria-live="polite">El resultado aparecerá aquí.</div>
-          <div class="button-row" style="margin-top:10px">
-            <button type="button" class="secondary small scienceExample" data-value="sqrt(25)">√25</button>
-            <button type="button" class="secondary small scienceExample" data-value="2^8">2⁸</button>
-            <button type="button" class="secondary small scienceExample" data-value="sin(pi/2)">sin(π/2)</button>
-            <button type="button" class="secondary small scienceExample" data-value="(3+4)*5">(3+4)×5</button>
-          </div>
-        </div>
+  <section id="recursos">
+    <div class="container">
+      <div class="section-head"><div><h2>Recursos para aprender</h2><p>Más sitios útiles para estudiar y practicar.</p></div></div>
+      <div class="grid">
+        <article class="tool-card"><div class="tool-icon">📖</div><h3>Khan Academy</h3><p>Lecciones y ejercicios de matemáticas, ciencias y más.</p><a class="btn secondary full" href="https://es.khanacademy.org/" target="_blank" rel="noopener noreferrer">Visitar recurso ↗</a></article>
+        <article class="tool-card"><div class="tool-icon">🎓</div><h3>Educación en abierto</h3><p>Busca materiales y recursos educativos para tus asignaturas.</p><a class="btn secondary full" href="https://intef.es/" target="_blank" rel="noopener noreferrer">Visitar INTEF ↗</a></article>
+        <article class="tool-card"><div class="tool-icon">🧠</div><h3>PhET Simulaciones</h3><p>Aprende ciencias y matemáticas con simulaciones interactivas.</p><a class="btn secondary full" href="https://phet.colorado.edu/es/" target="_blank" rel="noopener noreferrer">Explorar simulaciones ↗</a></article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="recursos">
-      <div class="section-heading">
-        <h2>🌐 Recursos útiles</h2>
-        <p>Enlaces externos para seguir aprendiendo.</p>
-      </div>
-      <div class="resource-grid">
-        <a class="resource" href="https://www.khanacademy.org/" target="_blank" rel="noopener noreferrer">
-          <strong>📘 Khan Academy</strong>
-          <span>Lecciones y ejercicios de distintas asignaturas.</span>
-        </a>
-        <a class="resource" href="https://www.wolframalpha.com/" target="_blank" rel="noopener noreferrer">
-          <strong>🔬 Wolfram Alpha</strong>
-          <span>Ayuda para operaciones y problemas matemáticos.</span>
-        </a>
-        <a class="resource" href="https://quizlet.com/" target="_blank" rel="noopener noreferrer">
-          <strong>🗂️ Quizlet</strong>
-          <span>Tarjetas y actividades para memorizar conceptos.</span>
-        </a>
-        <a class="resource" href="https://www.geogebra.org/" target="_blank" rel="noopener noreferrer">
-          <strong>📐 GeoGebra</strong>
-          <span>Geometría, funciones y visualización matemática.</span>
-        </a>
-        <a class="resource" href="https://www.desmos.com/calculator?lang=es" target="_blank" rel="noopener noreferrer">
-          <strong>📈 Desmos</strong>
-          <span>Calculadora gráfica interactiva.</span>
-        </a>
-        <a class="resource" href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">
-          <strong>📚 Wikipedia</strong>
-          <span>Consulta información y encuentra referencias.</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="faq">
-      <div class="section-heading">
-        <h2>❔ Preguntas frecuentes</h2>
-        <p>Respuestas rápidas sobre CalculaFácil.</p>
-      </div>
-
-      <details>
-        <summary>¿CalculaFácil es gratis?</summary>
-        <p>Sí. Todas las herramientas incluidas en esta página son gratuitas.</p>
-      </details>
-
-      <details>
-        <summary>¿Se guardan mis datos?</summary>
-        <p>Las notas, tarjetas, tareas y exámenes se guardan en el almacenamiento local de tu navegador. No se sincronizan automáticamente con otros dispositivos. Si borras los datos del navegador, puedes perderlos.</p>
-      </details>
-
-      <details>
-        <summary>¿Cómo se calcula la nota necesaria?</summary>
-        <p>La calculadora usa la media ponderada: divide la nota objetivo menos la contribución de la nota actual entre el porcentaje que queda por evaluar.</p>
-      </details>
-
-      <details>
-        <summary>¿Puedo utilizar la página desde el móvil?</summary>
-        <p>Sí. El diseño se adapta a móviles, tabletas y ordenadores.</p>
-      </details>
-
-      <details>
-        <summary>¿Las calculadoras garantizan la nota final de mi asignatura?</summary>
-        <p>Los resultados dependen de los porcentajes que introduzcas. Si tu profesor utiliza reglas especiales, recuperaciones o mínimos por examen, tendrás que tenerlos en cuenta aparte.</p>
-      </details>
-    </section>
-  </div>
+  <section id="faq">
+    <div class="container">
+      <div class="section-head"><div><h2>Preguntas frecuentes</h2><p>Lo esencial para empezar.</p></div></div>
+      <details class="faq"><summary>¿CalculaFácil es gratis?</summary><p>Sí. Las calculadoras y herramientas incluidas en esta página se pueden utilizar gratuitamente y no requieren crear una cuenta.</p></details>
+      <details class="faq"><summary>¿Cómo se calcula la media de varias notas?</summary><p>Suma todas las notas y divide el resultado entre el número de notas. Si los exámenes tienen pesos diferentes, utiliza la calculadora de media ponderada.</p></details>
+      <details class="faq"><summary>¿Se guardan mis datos?</summary><p>Las herramientas de estudio guardan algunos datos en el almacenamiento local del navegador. No se envían a una cuenta ni se sincronizan automáticamente entre dispositivos.</p></details>
+      <details class="faq"><summary>¿Puedo usar la web desde el móvil?</summary><p>Sí. La página adapta su diseño a móviles, tabletas y ordenadores.</p></details>
+      <details class="faq"><summary>¿Los resultados sustituyen a los de clase?</summary><p>Las calculadoras ofrecen resultados matemáticos orientativos. Comprueba siempre las instrucciones, criterios de evaluación y redondeos que use tu profesor.</p></details>
+    </div>
+  </section>
 </main>
 
 <footer>
   <div class="container footer-inner">
-    <span>© <span id="year"></span> CalculaFácil · Chocks Studio</span>
-    <span>Hecho para que estudiar sea más fácil.</span>
+    <div><a href="#" class="brand"><span class="logo">∑</span> CalculaFácil</a><p>Herramientas sencillas para aprender y avanzar.</p></div>
+    <div><p>© <span id="year"></span> CalculaFácil</p><p>Hecho para estudiantes · <a href="#calculadoras">Volver arriba ↑</a></p></div>
   </div>
 </footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 
-const $ = id => document.getElementById(id);
-
-function numberFrom(id) {
+const $ = (id) => document.getElementById(id);
+const fmt = (n, digits = 2) => Number(n).toLocaleString("es-ES", {
+  maximumFractionDigits: digits,
+  minimumFractionDigits: 0
+});
+const num = (id) => {
   const raw = $(id).value.trim().replace(",", ".");
-  if (raw === "") return NaN;
-  return Number(raw);
+  if (raw === "") throw new Error("Rellena todos los campos.");
+  const value = Number(raw);
+  if (!Number.isFinite(value)) throw new Error("Introduce un número válido.");
+  return value;
+};
+const positive = (n, label, allowZero = true) => {
+  if (allowZero ? n < 0 : n <= 0) throw new Error(label + (allowZero ? " no puede ser negativo." : " debe ser mayor que cero."));
+};
+const bounded = (n, min, max, label) => {
+  if (n < min || n > max) throw new Error(label + " debe estar entre " + min + " y " + max + ".");
+};
+let toastTimeout;
+function toast(message) {
+  const el = $("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove("show"), 2500);
 }
 
-function formatNumber(value, digits = 2) {
-  if (!Number.isFinite(value)) return "No definido";
-  return new Intl.NumberFormat("es-ES", {
-    maximumFractionDigits: digits
-  }).format(value);
-}
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-function setResult(id, html) {
-  $(id).innerHTML = html;
-}
-
-function showError(id, message) {
-  setResult(id, `<span class="bad">${escapeHTML(message)}</span>`);
-}
-
-function validRange(value, min, max) {
-  return Number.isFinite(value) && value >= min && value <= max;
-}
-
-// Tema claro/oscuro
-const savedTheme = localStorage.getItem("cf-theme");
-if (savedTheme === "light") document.body.classList.add("light");
-
-$("themeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("light");
-  localStorage.setItem(
-    "cf-theme",
-    document.body.classList.contains("light") ? "light" : "dark"
-  );
-});
-
-// Navegación de herramientas de estudio
-document.querySelectorAll("[data-tab]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-tab]").forEach(item => {
-      item.classList.remove("active");
-      item.setAttribute("aria-selected", "false");
-    });
-
-    document.querySelectorAll(".tab-panel").forEach(panel => {
-      panel.hidden = true;
-    });
-
-    button.classList.add("active");
-    button.setAttribute("aria-selected", "true");
-    $(button.dataset.tab).hidden = false;
-  });
-});
-
-// 1. Media aritmética
-$("averageBtn").addEventListener("click", () => {
-  const raw = $("averageInput").value.trim();
-
-  if (!raw) {
-    showError("averageResult", "Introduce al menos una nota.");
-    return;
-  }
-
-  const parts = raw.split(/[;\s]+/).filter(Boolean);
-  const grades = parts.map(part => Number(part.replace(",", ".")));
-
-  if (grades.some(n => !Number.isFinite(n) || n < 0 || n > 10)) {
-    showError("averageResult", "Revisa las notas. Deben ser números entre 0 y 10.");
-    return;
-  }
-
-  const average = grades.reduce((sum, n) => sum + n, 0) / grades.length;
-
-  setResult("averageResult", `
-    <div class="muted">Media de ${grades.length} nota(s)</div>
-    <strong>${formatNumber(average, 4)} / 10</strong>
-    <div class="${average >= 5 ? "good" : "bad"}">
-      ${average >= 5 ? "Media de aprobado" : "Media inferior a 5"}
-    </div>
-  `);
-});
-
-// 2. Nota necesaria
-$("neededBtn").addEventListener("click", () => {
-  const current = numberFrom("currentGrade");
-  const weight = numberFrom("currentWeight");
-  const target = numberFrom("targetGrade");
-
-  if (!validRange(current, 0, 10) ||
-      !validRange(weight, 0, 99.99) ||
-      !validRange(target, 0, 10)) {
-    showError("neededResult", "Introduce una nota actual y una nota objetivo entre 0 y 10, y un porcentaje entre 0 y 99,99.");
-    return;
-  }
-
-  const remaining = 100 - weight;
-  const needed = (target - current * weight / 100) / (remaining / 100);
-
-  if (needed <= 0) {
-    setResult("neededResult", `
-      <div class="good">¡Ya has alcanzado tu objetivo!</div>
-      <strong>Necesitas un 0</strong>
-      <div class="muted">Según los porcentajes introducidos.</div>
-    `);
-  } else if (needed > 10) {
-    setResult("neededResult", `
-      <div class="bad">No es posible alcanzar esa nota solo con la evaluación restante.</div>
-      <strong>Necesitarías un ${formatNumber(needed, 2)}</strong>
-    `);
-  } else {
-    setResult("neededResult", `
-      <div class="muted">Nota necesaria en el porcentaje restante (${formatNumber(remaining)}%)</div>
-      <strong>${formatNumber(needed, 2)} / 10</strong>
-      <div class="good">Objetivo final: ${formatNumber(target)} / 10</div>
-    `);
-  }
-});
-
-// 3. Media ponderada
-$("weightedBtn").addEventListener("click", () => {
-  const n1 = numberFrom("weightedGrade1");
-  const w1 = numberFrom("weightedWeight1");
-  const n2 = numberFrom("weightedGrade2");
-
-  if (!validRange(n1, 0, 10) ||
-      !validRange(n2, 0, 10) ||
-      !validRange(w1, 0, 100)) {
-    showError("weightedResult", "Introduce notas entre 0 y 10 y un peso entre 0 y 100.");
-    return;
-  }
-
-  const w2 = 100 - w1;
-  const result = (n1 * w1 + n2 * w2) / 100;
-
-  setResult("weightedResult", `
-    <div class="muted">Peso: ${formatNumber(w1)}% + ${formatNumber(w2)}%</div>
-    <strong>${formatNumber(result, 4)} / 10</strong>
-  `);
-});
-
-// 4. Porcentajes
-$("percentBtn").addEventListener("click", () => {
-  const value = numberFrom("percentValue");
-  const rate = numberFrom("percentRate");
-
-  if (!Number.isFinite(value) || !Number.isFinite(rate)) {
-    showError("percentResult", "Introduce una cantidad y un porcentaje válidos.");
-    return;
-  }
-
-  const result = value * rate / 100;
-
-  setResult("percentResult", `
-    <div class="muted">${formatNumber(rate)}% de ${formatNumber(value, 4)}</div>
-    <strong>${formatNumber(result, 6)}</strong>
-  `);
-});
-
-// 5. Regla de tres
-$("ruleBtn").addEventListener("click", () => {
-  const a = numberFrom("ruleA");
-  const b = numberFrom("ruleB");
-  const c = numberFrom("ruleC");
-
-  if (![a, b, c].every(Number.isFinite)) {
-    showError("ruleResult", "Completa los tres campos.");
-    return;
-  }
-
-  if (a === 0) {
-    showError("ruleResult", "A no puede ser cero.");
-    return;
-  }
-
-  const result = b * c / a;
-
-  setResult("ruleResult", `
-    <div class="muted">X = (B × C) ÷ A</div>
-    <strong>X = ${formatNumber(result, 6)}</strong>
-  `);
-});
-
-// 6. Fracciones
-$("fractionBtn").addEventListener("click", () => {
-  const numerator = numberFrom("fractionNumerator");
-  const denominator = numberFrom("fractionDenominator");
-
-  if (!Number.isInteger(numerator) || !Number.isInteger(denominator)) {
-    showError("fractionResult", "El numerador y el denominador deben ser enteros.");
-    return;
-  }
-
-  if (denominator === 0) {
-    showError("fractionResult", "El denominador no puede ser cero.");
-    return;
-  }
-
-  const decimal = numerator / denominator;
-
-  setResult("fractionResult", `
-    <div class="muted">${numerator} / ${denominator}</div>
-    <strong>${formatNumber(decimal, 8)}</strong>
-    <div>${formatNumber(decimal * 100, 4)}%</div>
-  `);
-});
-
-// 7. Conversor de escalas
-$("scaleBtn").addEventListener("click", () => {
-  const score = numberFrom("scaleScore");
-  const from = numberFrom("scaleFrom");
-  const to = numberFrom("scaleTo");
-
-  if (![score, from, to].every(Number.isFinite) || from <= 0 || to <= 0) {
-    showError("scaleResult", "Introduce números válidos y escalas mayores que cero.");
-    return;
-  }
-
-  if (score < 0 || score > from) {
-    showError("scaleResult", "La puntuación debe estar entre 0 y la escala original.");
-    return;
-  }
-
-  const result = score / from * to;
-
-  setResult("scaleResult", `
-    <div class="muted">${formatNumber(score)} / ${formatNumber(from)}</div>
-    <strong>${formatNumber(result, 4)} / ${formatNumber(to)}</strong>
-  `);
-});
-
-// 8. Lista de notas
-let grades = JSON.parse(localStorage.getItem("cf-grades") || "[]");
-
-function saveGrades() {
-  localStorage.setItem("cf-grades", JSON.stringify(grades));
-}
-
-function drawGrades() {
-  const list = $("gradeList");
-  list.innerHTML = "";
-
-  if (grades.length === 0) {
-    $("gradeStats").textContent = "Todavía no has añadido notas.";
-    list.innerHTML = '<div class="empty">Tu lista está vacía.</div>';
-    return;
-  }
-
-  const values = grades.map(item => item.value);
-  const average = values.reduce((sum, value) => sum + value, 0) / values.length;
-
-  $("gradeStats").innerHTML = `
-    <div class="muted">Número de notas: ${grades.length}</div>
-    <strong>Media: ${formatNumber(average, 3)} / 10</strong>
-    <div>Mayor: ${formatNumber(Math.max(...values))} · Menor: ${formatNumber(Math.min(...values))}</div>
-  `;
-
-  grades.forEach((item, index) => {
-    const element = document.createElement("div");
-    element.className = "list-item";
-    element.innerHTML = `
-      <div>${escapeHTML(item.name || "Sin asignatura")}
-        <small>Nota: ${formatNumber(item.value)}</small>
-      </div>
-      <div class="item-actions">
-        <button type="button" class="danger small" aria-label="Eliminar nota" data-delete-grade="${index}">Eliminar</button>
-      </div>
-    `;
-    list.appendChild(element);
-  });
-}
-
-$("addGradeBtn").addEventListener("click", () => {
-  const value = numberFrom("gradeValue");
-  const name = $("gradeName").value.trim();
-
-  if (!validRange(value, 0, 10)) {
-    alert("Introduce una nota entre 0 y 10.");
-    return;
-  }
-
-  grades.push({ name, value });
-  saveGrades();
-  drawGrades();
-  $("gradeValue").value = "";
-  $("gradeName").value = "";
-});
-
-$("gradeList").addEventListener("click", event => {
-  const button = event.target.closest("[data-delete-grade]");
-  if (!button) return;
-
-  grades.splice(Number(button.dataset.deleteGrade), 1);
-  saveGrades();
-  drawGrades();
-});
-
-$("clearGradesBtn").addEventListener("click", () => {
-  if (!grades.length || !confirm("¿Quieres borrar todas las notas?")) return;
-  grades = [];
-  saveGrades();
-  drawGrades();
-});
-
-drawGrades();
-
-// 9. Planificador de exámenes
-let exams = JSON.parse(localStorage.getItem("cf-exams") || "[]");
-
-function saveExams() {
-  localStorage.setItem("cf-exams", JSON.stringify(exams));
-}
-
-function daysUntil(dateString) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const date = new Date(dateString + "T00:00:00");
-  return Math.round((date - today) / 86400000);
-}
-
-function drawExams() {
-  const list = $("examList");
-  list.innerHTML = "";
-
-  if (!exams.length) {
-    list.innerHTML = '<div class="empty">Todavía no tienes exámenes programados.</div>';
-    return;
-  }
-
-  exams.sort((a, b) => a.date.localeCompare(b.date));
-
-  exams.forEach((exam, index) => {
-    const days = daysUntil(exam.date);
-    let countdown;
-
-    if (days < 0) countdown = `Hace ${Math.abs(days)} día(s)`;
-    else if (days === 0) countdown = "¡Es hoy!";
-    else countdown = `Quedan ${days} día(s)`;
-
-    const element = document.createElement("div");
-    element.className = "list-item";
-    element.innerHTML = `
-      <div>
-        <strong>${escapeHTML(exam.subject)}</strong>
-        <small>${escapeHTML(exam.date)} · ${escapeHTML(countdown)}</small>
-        ${exam.notes ? `<small>${escapeHTML(exam.notes)}</small>` : ""}
-      </div>
-      <button type="button" class="danger small" data-delete-exam="${index}">Eliminar</button>
-    `;
-    list.appendChild(element);
-  });
-}
-
-$("addExamBtn").addEventListener("click", () => {
-  const subject = $("examSubject").value.trim();
-  const date = $("examDate").value;
-  const notes = $("examNotes").value.trim();
-
-  if (!subject || !date) {
-    alert("Introduce la asignatura y la fecha.");
-    return;
-  }
-
-  exams.push({ subject, date, notes });
-  saveExams();
-  drawExams();
-  $("examSubject").value = "";
-  $("examDate").value = "";
-  $("examNotes").value = "";
-});
-
-$("examList").addEventListener("click", event => {
-  const button = event.target.closest("[data-delete-exam]");
-  if (!button) return;
-
-  exams.splice(Number(button.dataset.deleteExam), 1);
-  saveExams();
-  drawExams();
-});
-
-drawExams();
-
-// 10. Tarjetas de memoria
-let flashcards = JSON.parse(localStorage.getItem("cf-flashcards") || "[]");
-let flashIndex = 0;
-let flashShowingAnswer = false;
-
-function saveFlashcards() {
-  localStorage.setItem("cf-flashcards", JSON.stringify(flashcards));
-}
-
-function drawFlashcard() {
-  const display = $("flashDisplay");
-  const counter = $("flashCounter");
-
-  if (!flashcards.length) {
-    display.textContent = "Aún no tienes tarjetas.";
-    counter.textContent = "";
-    $("flashList").innerHTML = "";
-    return;
-  }
-
-  flashIndex = (flashIndex + flashcards.length) % flashcards.length;
-  const card = flashcards[flashIndex];
-
-  display.textContent = flashShowingAnswer ? card.answer : card.question;
-  counter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
-
-  $("flashList").innerHTML = "";
-
-  flashcards.forEach((item, index) => {
-    const element = document.createElement("div");
-    element.className = "list-item";
-    element.innerHTML = `
-      <div>${escapeHTML(item.question)}
-        <small>Tarjeta ${index + 1}</small>
-      </div>
-      <button type="button" class="danger small" data-delete-flash="${index}">Eliminar</button>
-    `;
-    $("flashList").appendChild(element);
-  });
-}
-
-$("addFlashBtn").addEventListener("click", () => {
-  const question = $("flashQuestion").value.trim();
-  const answer = $("flashAnswer").value.trim();
-
-  if (!question || !answer) {
-    alert("Escribe una pregunta y una respuesta.");
-    return;
-  }
-
-  flashcards.push({ question, answer });
-  flashIndex = flashcards.length - 1;
-  flashShowingAnswer = false;
-  saveFlashcards();
-  drawFlashcard();
-
-  $("flashQuestion").value = "";
-  $("flashAnswer").value = "";
-});
-
-$("flipFlashBtn").addEventListener("click", () => {
-  if (!flashcards.length) return;
-  flashShowingAnswer = !flashShowingAnswer;
-  drawFlashcard();
-});
-
-$("nextFlashBtn").addEventListener("click", () => {
-  if (!flashcards.length) return;
-  flashIndex++;
-  flashShowingAnswer = false;
-  drawFlashcard();
-});
-
-$("prevFlashBtn").addEventListener("click", () => {
-  if (!flashcards.length) return;
-  flashIndex--;
-  flashShowingAnswer = false;
-  drawFlashcard();
-});
-
-$("flashList").addEventListener("click", event => {
-  const button = event.target.closest("[data-delete-flash]");
-  if (!button) return;
-
-  flashcards.splice(Number(button.dataset.deleteFlash), 1);
-  flashIndex = Math.min(flashIndex, flashcards.length - 1);
-  flashShowingAnswer = false;
-  saveFlashcards();
-  drawFlashcard();
-});
-
-drawFlashcard();
-
-// 11. Creador de test
-let quizQuestions = JSON.parse(localStorage.getItem("cf-quiz") || "[]");
-let quizIndex = 0;
-let quizScore = 0;
-let quizAnswered = false;
-
-function saveQuiz() {
-  localStorage.setItem("cf-quiz", JSON.stringify(quizQuestions));
-}
-
-function drawQuizList() {
-  const list = $("quizList");
-  list.innerHTML = "";
-
-  if (!quizQuestions.length) {
-    $("quizStatus").textContent = "Añade preguntas para empezar.";
-    list.innerHTML = '<div class="empty">No hay preguntas guardadas.</div>';
-    $("quizPlay").classList.add("hidden");
-    return;
-  }
-
-  $("quizStatus").textContent = `Tienes ${quizQuestions.length} pregunta(s) guardada(s).`;
-
-  quizQuestions.forEach((question, index) => {
-    const element = document.createElement("div");
-    element.className = "list-item";
-    element.innerHTML = `
-      <div>${escapeHTML(question.question)}
-        <small>${question.options.length} opciones</small>
-      </div>
-      <button type="button" class="danger small" data-delete-quiz="${index}">Eliminar</button>
-    `;
-    list.appendChild(element);
-  });
-}
-
-function startQuiz() {
-  if (!quizQuestions.length) return;
-
-  quizIndex = 0;
-  quizScore = 0;
-  quizAnswered = false;
-  $("quizPlay").classList.remove("hidden");
-  drawQuizQuestion();
-}
-
-function drawQuizQuestion() {
-  if (!quizQuestions.length) {
-    $("quizPlay").classList.add("hidden");
-    return;
-  }
-
-  if (quizIndex >= quizQuestions.length) {
-    $("quizPlayQuestion").textContent = "¡Test terminado!";
-    $("quizPlayOptions").innerHTML = "";
-    $("quizFeedback").innerHTML = `
-      <strong>Resultado: ${quizScore} / ${quizQuestions.length}</strong>
-      <div>${formatNumber(quizScore / quizQuestions.length * 100)}% de aciertos</div>
-    `;
-    $("nextQuizBtn").textContent = "Ver resultado";
-    $("nextQuizBtn").disabled = true;
-    return;
-  }
-
-  const question = quizQuestions[quizIndex];
-  quizAnswered = false;
-
-  $("quizPlayQuestion").textContent =
-    `Pregunta ${quizIndex + 1}/${quizQuestions.length}: ${question.question}`;
-
-  $("quizPlayOptions").innerHTML = "";
-
-  question.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "secondary";
-    button.style.textAlign = "left";
-    button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
-
-    button.addEventListener("click", () => {
-      if (quizAnswered) return;
-      quizAnswered = true;
-
-      const correct = index === question.correct;
-      if (correct) quizScore++;
-
-      $("quizFeedback").innerHTML = correct
-        ? '<span class="good"><strong>¡Correcto!</strong></span>'
-        : `<span class="bad">Incorrecto.</span> La respuesta correcta es: <strong>${escapeHTML(question.options[question.correct])}</strong>`;
-
-      Array.from($("quizPlayOptions").children).forEach((item, itemIndex) => {
-        item.disabled = true;
-        if (itemIndex === question.correct) {
-          item.style.borderColor = "var(--good)";
-        } else if (itemIndex === index && !correct) {
-          item.style.borderColor = "var(--bad)";
-        }
-      });
-
-      $("nextQuizBtn").textContent =
-        quizIndex === quizQuestions.length - 1 ? "Terminar test" : "Siguiente pregunta";
-    });
-
-    $("quizPlayOptions").appendChild(button);
-  });
-
-  $("quizFeedback").textContent = "Selecciona una respuesta.";
-  $("nextQuizBtn").disabled = false;
-  $("nextQuizBtn").textContent = "Siguiente pregunta";
-}
-
-$("addQuizBtn").addEventListener("click", () => {
-  const question = $("quizQuestion").value.trim();
-  const options = [
-    $("quizOption1").value.trim(),
-    $("quizOption2").value.trim(),
-    $("quizOption3").value.trim()
-  ];
-  const correct = Number($("quizCorrect").value);
-
-  if (!question || options.some(option => !option)) {
-    alert("Completa la pregunta y las tres opciones.");
-    return;
-  }
-
-  quizQuestions.push({ question, options, correct });
-  saveQuiz();
-  drawQuizList();
-
-  $("quizQuestion").value = "";
-  $("quizOption1").value = "";
-  $("quizOption2").value = "";
-  $("quizOption3").value = "";
-
-  startQuiz();
-});
-
-$("quizList").addEventListener("click", event => {
-  const button = event.target.closest("[data-delete-quiz]");
-  if (!button) return;
-
-  quizQuestions.splice(Number(button.dataset.deleteQuiz), 1);
-  saveQuiz();
-  drawQuizList();
-  startQuiz();
-});
-
-$("nextQuizBtn").addEventListener("click", () => {
-  if (quizIndex >= quizQuestions.length) return;
-  if (!quizAnswered) {
-    $("quizFeedback").textContent = "Selecciona una respuesta antes de continuar.";
-    return;
-  }
-
-  quizIndex++;
-  drawQuizQuestion();
-});
-
-$("restartQuizBtn").addEventListener("click", startQuiz);
-
-drawQuizList();
-
-// 12. Pomodoro
-let timerInterval = null;
-let timerMode = "study";
-let timerRemaining = 25 * 60;
-let timerRunning = false;
-let timerTotal = 25 * 60;
-
-function getStudySeconds() {
-  const minutes = Number($("studyMinutes").value);
-  return validRange(minutes, 1, 180) ? Math.floor(minutes * 60) : 25 * 60;
-}
-
-function getBreakSeconds() {
-  const minutes = Number($("breakMinutes").value);
-  return validRange(minutes, 1, 60) ? Math.floor(minutes * 60) : 5 * 60;
-}
-
-function drawTimer() {
-  const minutes = Math.floor(timerRemaining / 60);
-  const seconds = timerRemaining % 60;
-
-  $("timerDisplay").textContent =
-    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-
-  $("timerLabel").textContent =
-    timerMode === "study" ? "Sesión de estudio" : "Tiempo de descanso";
-
-  const elapsed = timerTotal > 0 ? 1 - timerRemaining / timerTotal : 0;
-  $("timerProgress").style.width = `${Math.min(100, Math.max(0, elapsed * 100))}%`;
-}
-
-function stopTimer() {
-  if (timerInterval !== null) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-  timerRunning = false;
-}
-
-function resetTimer() {
-  stopTimer();
-  timerMode = "study";
-  timerTotal = getStudySeconds();
-  timerRemaining = timerTotal;
-  drawTimer();
-}
-
-function startTimer() {
-  if (timerRunning) return;
-
-  if (timerRemaining <= 0) resetTimer();
-
-  timerRunning = true;
-  timerInterval = setInterval(() => {
-    timerRemaining--;
-    drawTimer();
-
-    if (timerRemaining <= 0) {
-      stopTimer();
-
-      if (timerMode === "study") {
-        alert("¡Sesión terminada! Toca descansar.");
-        timerMode = "break";
-        timerTotal = getBreakSeconds();
-      } else {
-        alert("Descanso terminado. ¡A seguir!");
-        timerMode = "study";
-        timerTotal = getStudySeconds();
-      }
-
-      timerRemaining = timerTotal;
-      drawTimer();
-    }
-  }, 1000);
-}
-
-$("startTimerBtn").addEventListener("click", startTimer);
-$("pauseTimerBtn").addEventListener("click", stopTimer);
-$("resetTimerBtn").addEventListener("click", resetTimer);
-
-$("studyMinutes").addEventListener("change", () => {
-  if (timerMode === "study" && !timerRunning) resetTimer();
-});
-
-$("breakMinutes").addEventListener("change", () => {
-  if (timerMode === "break" && !timerRunning) {
-    timerTotal = getBreakSeconds();
-    timerRemaining = timerTotal;
-    drawTimer();
-  }
-});
-
-drawTimer();
-
-// 13. Lista de tareas
-let tasks = JSON.parse(localStorage.getItem("cf-tasks") || "[]");
-
-function saveTasks() {
-  localStorage.setItem("cf-tasks", JSON.stringify(tasks));
-}
-
-function drawTasks() {
-  const list = $("taskList");
-  list.innerHTML = "";
-
-  const completed = tasks.filter(task => task.done).length;
-  $("taskStats").innerHTML = `
-    <strong>${completed} / ${tasks.length} completadas</strong>
-    <div class="progress"><div style="width:${tasks.length ? completed / tasks.length * 100 : 0}%"></div></div>
-  `;
-
-  if (!tasks.length) {
-    list.innerHTML = '<div class="empty">No tienes tareas todavía.</div>';
-    return;
-  }
-
-  tasks.forEach((task, index) => {
-    const element = document.createElement("div");
-    element.className = "list-item";
-    element.innerHTML = `
-      <div>
-        <label style="display:flex;align-items:center;gap:9px">
-          <input type="checkbox" data-task-check="${index}" ${task.done ? "checked" : ""} style="width:auto">
-          <span style="${task.done ? "text-decoration:line-through;opacity:.65" : ""}">${escapeHTML(task.title)}</span>
-        </label>
-        ${task.subject ? `<small>${escapeHTML(task.subject)}</small>` : ""}
-      </div>
-      <button type="button" class="danger small" data-delete-task="${index}">Eliminar</button>
-    `;
-    list.appendChild(element);
-  });
-}
-
-$("addTaskBtn").addEventListener("click", () => {
-  const title = $("taskInput").value.trim();
-  const subject = $("taskSubject").value.trim();
-
-  if (!title) {
-    alert("Escribe una tarea.");
-    return;
-  }
-
-  tasks.push({ title, subject, done: false });
-  saveTasks();
-  drawTasks();
-
-  $("taskInput").value = "";
-  $("taskSubject").value = "";
-});
-
-$("taskList").addEventListener("change", event => {
-  const checkbox = event.target.closest("[data-task-check]");
-  if (!checkbox) return;
-
-  tasks[Number(checkbox.dataset.taskCheck)].done = checkbox.checked;
-  saveTasks();
-  drawTasks();
-});
-
-$("taskList").addEventListener("click", event => {
-  const button = event.target.closest("[data-delete-task]");
-  if (!button) return;
-
-  tasks.splice(Number(button.dataset.deleteTask), 1);
-  saveTasks();
-  drawTasks();
-});
-
-$("clearTasksBtn").addEventListener("click", () => {
-  tasks = tasks.filter(task => !task.done);
-  saveTasks();
-  drawTasks();
-});
-
-drawTasks();
-
-// 14. Objetivo semanal
-const savedGoal = JSON.parse(localStorage.getItem("cf-goal") || "null");
-
-if (savedGoal) {
-  $("goalHours").value = savedGoal.goal;
-  $("completedHours").value = savedGoal.completed;
-}
-
-function drawGoal() {
-  const goal = numberFrom("goalHours");
-  const completed = numberFrom("completedHours");
-
-  if (!validRange(goal, 1, 100) || !validRange(completed, 0, 100)) {
-    $("goalResult").textContent = "Introduce horas válidas.";
-    $("goalProgress").style.width = "0%";
-    return;
-  }
-
-  const percent = completed / goal * 100;
-  const remaining = Math.max(0, goal - completed);
-
-  $("goalResult").innerHTML = `
-    <strong>${formatNumber(Math.min(percent, 100))}% del objetivo</strong>
-    <div>${remaining > 0
-      ? `Te quedan ${formatNumber(remaining)} hora(s) para completar tu objetivo.`
-      : "¡Objetivo semanal completado!"}</div>
-  `;
-
-  $("goalProgress").style.width = `${Math.min(100, percent)}%`;
-}
-
-$("saveGoalBtn").addEventListener("click", () => {
-  const goal = numberFrom("goalHours");
-  const completed = numberFrom("completedHours");
-
-  if (!validRange(goal, 1, 100) || !validRange(completed, 0, 100)) {
-    alert("Introduce un objetivo entre 1 y 100 horas y un progreso entre 0 y 100.");
-    return;
-  }
-
-  localStorage.setItem("cf-goal", JSON.stringify({ goal, completed }));
-  drawGoal();
-});
-
-$("goalHours").addEventListener("input", drawGoal);
-$("completedHours").addEventListener("input", drawGoal);
-drawGoal();
-
-// 15. Calculadora científica con parser seguro
-// No se utiliza eval() ni se ejecuta código introducido por el usuario.
-function tokenize(expression) {
-  const tokens = [];
-  let i = 0;
-
-  while (i < expression.length) {
-    const rest = expression.slice(i);
-
-    if (/^\s+/.test(rest)) {
-      i += rest.match(/^\s+/)[0].length;
-      continue;
-    }
-
-    const number = rest.match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?/i);
-    if (number) {
-      tokens.push({ type: "number", value: Number(number[0]) });
-      i += number[0].length;
-      continue;
-    }
-
-    const identifier = rest.match(/^[a-z]+/i);
-    if (identifier) {
-      tokens.push({ type: "identifier", value: identifier[0].toLowerCase() });
-      i += identifier[0].length;
-      continue;
-    }
-
-    const char = expression[i];
-
-    if ("+-*/^()".includes(char)) {
-      tokens.push({ type: char, value: char });
-      i++;
-      continue;
-    }
-
-    throw new Error(`Carácter no válido: ${char}`);
-  }
-
-  return tokens;
-}
-
-function calculateScientific(expression) {
-  const tokens = tokenize(expression);
-  let position = 0;
-
-  function peek() {
-    return tokens[position];
-  }
-
-  function consume(type) {
-    const token = peek();
-    if (!token || token.type !== type) {
-      throw new Error("La expresión matemática no está completa.");
-    }
-    position++;
-    return token;
-  }
-
-  function parseExpression() {
-    let value = parseTerm();
-
-    while (peek() && (peek().type === "+" || peek().type === "-")) {
-      const operator = tokens[position++].type;
-      const right = parseTerm();
-      value = operator === "+" ? value + right : value - right;
-    }
-
-    return value;
-  }
-
-  function parseTerm() {
-    let value = parseUnary();
-
-    while (peek() && (peek().type === "*" || peek().type === "/")) {
-      const operator = tokens[position++].type;
-      const right = parseUnary();
-
-      if (operator === "/" && right === 0) {
-        throw new Error("No se puede dividir entre cero.");
-      }
-
-      value = operator === "*" ? value * right : value / right;
-    }
-
-    return value;
-  }
-
-  function parseUnary() {
-    if (peek() && peek().type === "+") {
-      position++;
-      return parseUnary();
-    }
-
-    if (peek() && peek().type === "-") {
-      position++;
-      return -parseUnary();
-    }
-
-    return parsePower();
-  }
-
-  function parsePower() {
-    let value = parsePrimary();
-
-    if (peek() && peek().type === "^") {
-      position++;
-      const exponent = parseUnary();
-      value = Math.pow(value, exponent);
-    }
-
-    return value;
-  }
-
-  function parsePrimary() {
-    const token = peek();
-
-    if (!token) throw new Error("Falta un número.");
-
-    if (token.type === "number") {
-      position++;
-      return token.value;
-    }
-
-    if (token.type === "(") {
-      position++;
-      const value = parseExpression();
-      consume(")");
-      return value;
-    }
-
-    if (token.type === "identifier") {
-      position++;
-      const name = token.value;
-
-      if (name === "pi") return Math.PI;
-      if (name === "e") return Math.E;
-
-      const allowed = ["sqrt", "abs", "sin", "cos", "tan", "log", "ln"];
-
-      if (!allowed.includes(name)) {
-        throw new Error(`Función no reconocida: ${name}`);
-      }
-
-      consume("(");
-      const argument = parseExpression();
-      consume(")");
-
-      if (name === "sqrt") {
-        if (argument < 0) throw new Error("La raíz cuadrada de un número negativo no es real.");
-        return Math.sqrt(argument);
-      }
-
-      if (name === "abs") return Math.abs(argument);
-
-      if (name === "sin") return Math.sin(argument);
-      if (name === "cos") return Math.cos(argument);
-
-      if (name === "tan") {
-        if (Math.abs(Math.cos(argument)) < 1e-12) {
-          throw new Error("La tangente no está definida para ese ángulo.");
-        }
-        return Math.tan(argument);
-      }
-
-      if (name === "log") {
-        if (argument <= 0) throw new Error("El logaritmo requiere un número positivo.");
-        return Math.log10(argument);
-      }
-
-      if (name === "ln") {
-        if (argument <= 0) throw new Error("El logaritmo requiere un número positivo.");
-        return Math.log(argument);
-      }
-    }
-
-    throw new Error("Expresión no válida.");
-  }
-
-  if (!tokens.length) throw new Error("Escribe una expresión matemática.");
-
-  const result = parseExpression();
-
-  if (position !== tokens.length) {
-    throw new Error("Hay caracteres o símbolos que no se han podido interpretar.");
-  }
-
-  if (!Number.isFinite(result)) {
-    throw new Error("El resultado no es un número finito.");
-  }
-
-  return result;
-}
-
-$("scienceBtn").addEventListener("click", () => {
-  try {
-    const result = calculateScientific($("scienceInput").value);
-    setResult("scienceResult", `<strong>${formatNumber(result, 10)}</strong>`);
-  } catch (error) {
-    showError("scienceResult", error.message);
-  }
-});
-
-$("scienceInput").addEventListener("keydown", event => {
-  if (event.key === "Enter") $("scienceBtn").click();
-});
-
-document.querySelectorAll(".scienceExample").forEach(button => {
-  button.addEventListener("click", () => {
-    $("scienceInput").value = button.dataset.value;
-    $("scienceBtn").click();
-  });
-});
-
-// Año del pie de página
 $("year").textContent = new Date().getFullYear();
+
+/* Tema */
+const savedTheme = localStorage.getItem("cf-theme");
+if (savedTheme === "dark") document.body.classList.add("dark");
+function updateThemeButton() {
+  $("themeBtn").textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+}
+updateThemeButton();
+$("themeBtn").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("cf-theme", document.body.classList.contains("dark") ? "dark" : "light");
+  updateThemeButton();
+});
+
+/* Búsqueda de herramientas */
+$("searchInput").addEventListener("input", () => {
+  const q = $("searchInput").value.trim().toLocaleLowerCase("es");
+  let shown = 0;
+  document.querySelectorAll("#toolGrid .tool-card").forEach(card => {
+    const match = (card.dataset.search + " " + card.innerText).toLocaleLowerCase("es").includes(q);
+    card.classList.toggle("hidden", !match);
+    if (match) shown++;
+  });
+  $("noResults").classList.toggle("hidden", shown > 0);
+});
+
+/* Calculadoras */
+const calculatorInfo = {
+  media: ["Media de notas", "Introduce tus notas separadas por comas o espacios."],
+  necesaria: ["Nota necesaria", "Calcula qué nota necesitas en el próximo examen."],
+  ponderada: ["Media ponderada", "Cada nota se multiplica por su peso."],
+  porcentaje: ["Porcentajes", "Calcula un porcentaje de una cantidad."],
+  regla: ["Regla de tres", "Resuelve una proporción directa."],
+  descuento: ["Descuentos", "Calcula el ahorro y el precio final."],
+  iva: ["Calculadora de IVA", "Añade IVA o extráelo de un precio final."],
+  interes: ["Interés compuesto", "Simula un capital con aportaciones periódicas."],
+  ecuacion: ["Ecuaciones sencillas", "Resuelve ecuaciones de primer grado."],
+  fraccion: ["Fracciones y decimales", "Convierte y simplifica fracciones."],
+  escala: ["Escala de notas", "Convierte una puntuación a una escala sobre 10."],
+  lista: ["Lista de notas", "Analiza una lista de calificaciones."]
+};
+let currentCalc = "";
+function field(id, label, placeholder, type = "number", value = "", hint = "") {
+  return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" placeholder="${placeholder}" value="${value}" ${type === "number" ? 'step="any"' : ""}>${hint ? `<div class="hint">${hint}</div>` : ""}</div>`;
+}
+function calcButton(text = "Calcular") {
+  return `<button type="submit" class="btn full" style="margin-top:18px">${text}</button>`;
+}
+function formHTML(key) {
+  switch (key) {
+    case "media":
+    case "lista":
+      return `<form id="activeForm">
+        <div class="field"><label for="values">Notas</label><textarea id="values" required placeholder="Ej. 7,5; 8; 6,25; 9"></textarea><div class="hint">Separa las notas con comas, espacios o saltos de línea.</div></div>
+        <div class="field"><label class="checkline"><input id="checkGrades" type="checkbox" checked> Las notas deben estar entre 0 y 10</label></div>
+        ${calcButton("Calcular resultados")}
+      </form>`;
+    case "necesaria":
+      return `<form id="activeForm">
+        ${field("currentGrade","Nota actual","Ej. 6")}
+        ${field("currentWeight","Peso de la nota actual (%)","Ej. 60")}
+        ${field("targetGrade","Nota final deseada","Ej. 5")}
+        <div class="field"><label for="remainingWeight">Peso de la próxima evaluación (%)</label><input id="remainingWeight" type="number" step="any" placeholder="40"></div>
+        <div class="hint">Los dos pesos deben sumar 100 %.</div>
+        ${calcButton("Calcular nota necesaria")}
+      </form>`;
+    case "ponderada":
+      return `<form id="activeForm">
+        <div class="field"><label for="weightedGrades">Notas</label><textarea id="weightedGrades" required placeholder="7; 8; 9"></textarea></div>
+        <div class="field"><label for="weightedWeights">Pesos correspondientes (%)</label><textarea id="weightedWeights" required placeholder="20; 30; 50"></textarea><div class="hint">Usa el mismo número de notas y pesos. Los pesos deben sumar 100.</div></div>
+        ${calcButton("Calcular media ponderada")}
+      </form>`;
+    case "porcentaje":
+      return `<form id="activeForm">${field("percentBase","Cantidad total","Ej. 200")}${field("percentValue","Porcentaje (%)","Ej. 15")}${calcButton("Calcular porcentaje")}</form>`;
+    case "regla":
+      return `<form id="activeForm">
+        <p class="muted">Si A corresponde a B, ¿a qué corresponde C?</p>
+        <div class="row-fields">${field("ruleA","A","Ej. 4")}${field("ruleB","B","Ej. 12")}</div>
+        ${field("ruleC","C","Ej. 7")}
+        ${calcButton("Resolver regla de tres")}
+      </form>`;
+    case "descuento":
+      return `<form id="activeForm">${field("originalPrice","Precio original (€)","Ej. 80")}${field("discountRate","Descuento (%)","Ej. 25")}${calcButton("Calcular precio final")}</form>`;
+    case "iva":
+      return `<form id="activeForm">
+        <div class="field"><label for="ivaMode">Operación</label><select id="ivaMode"><option value="add">Añadir IVA al precio base</option><option value="remove">Extraer IVA del precio final</option></select></div>
+        ${field("ivaPrice","Precio (€)","Ej. 100")}
+        <div class="field"><label for="ivaRate">Tipo de IVA</label><select id="ivaRate"><option value="21">21 %</option><option value="10">10 %</option><option value="4">4 %</option><option value="custom">Otro porcentaje</option></select></div>
+        <div id="ivaCustomWrap" class="hidden">${field("ivaCustom","IVA personalizado (%)","Ej. 15")}</div>
+        ${calcButton("Calcular IVA")}
+      </form>`;
+    case "interes":
+      return `<form id="activeForm">
+        ${field("principal","Capital inicial (€)","Ej. 1000")}
+        ${field("annualRate","Interés anual (%)","Ej. 5")}
+        ${field("years","Duración (años)","Ej. 10")}
+        ${field("monthlyContribution","Aportación mensual (€)","Ej. 50")}
+        <div class="field"><label for="compoundFreq">Capitalización</label><select id="compoundFreq"><option value="12">Mensual</option><option value="4">Trimestral</option><option value="2">Semestral</option><option value="1">Anual</option></select></div>
+        <div class="hint">Es una simulación matemática; no garantiza rendimientos reales.</div>
+        ${calcButton("Simular crecimiento")}
+      </form>`;
+    case "ecuacion":
+      return `<form id="activeForm">
+        <p class="muted">Resuelve ax + b = c</p>
+        ${field("eqA","Valor de a (no puede ser 0)","Ej. 2")}
+        ${field("eqB","Valor de b","Ej. 4")}
+        ${field("eqC","Valor de c","Ej. 12")}
+        ${calcButton("Resolver ecuación")}
+      </form>`;
+    case "fraccion":
+      return `<form id="activeForm">
+        <div class="row-fields">${field("fractionNum","Numerador","Ej. 6")}${field("fractionDen","Denominador","Ej. 8")}</div>
+        ${calcButton("Convertir fracción")}
+      </form>`;
+    case "escala":
+      return `<form id="activeForm">
+        ${field("scoreObtained","Puntuación obtenida","Ej. 35")}
+        ${field("scoreMax","Puntuación máxima","Ej. 50")}
+        ${field("scoreScale","Escala deseada","Ej. 10")}
+        ${calcButton("Convertir puntuación")}
+      </form>`;
+    default:
+      return "";
+  }
+}
+function openCalc(key) {
+  if (!calculatorInfo[key]) return;
+  currentCalc = key;
+  $("calcTitle").textContent = calculatorInfo[key][0];
+  $("calcDesc").textContent = calculatorInfo[key][1];
+  $("calcForm").innerHTML = formHTML(key);
+  $("calcResult").classList.remove("show");
+  $("calcPlaceholder").classList.remove("hidden");
+  $("calculadora-activa").classList.remove("hidden");
+  $("activeForm").addEventListener("submit", runCalc);
+  if (key === "iva") {
+    $("ivaRate").addEventListener("change", () => $("ivaCustomWrap").classList.toggle("hidden", $("ivaRate").value !== "custom"));
+  }
+  $("calculadora-activa").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function closeCalc() {
+  $("calculadora-activa").classList.add("hidden");
+  currentCalc = "";
+  $("calculadoras").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function showResult(label, value, note = "") {
+  $("resultLabel").textContent = label;
+  $("resultValue").textContent = value;
+  $("resultNote").textContent = note;
+  $("calcResult").classList.add("show");
+  $("calcPlaceholder").classList.add("hidden");
+  $("copyResult").onclick = () => {
+    const text = label + ": " + value + (note ? "\n" + note : "");
+    copyText(text);
+  };
+}
+function parseNumbers(text) {
+  const tokens = text.trim().split(/[;,\s]+/).filter(Boolean);
+  if (!tokens.length) throw new Error("Introduce al menos un número.");
+  const values = tokens.map(t => Number(t.replace(",", ".")));
+  if (values.some(v => !Number.isFinite(v))) throw new Error("Hay algún valor que no es un número válido.");
+  return values;
+}
+function gcd(a, b) {
+  a = Math.abs(Math.trunc(a)); b = Math.abs(Math.trunc(b));
+  while (b) [a, b] = [b, a % b];
+  return a || 1;
+}
+function runCalc(event) {
+  event.preventDefault();
+  try {
+    let result, note = "";
+    switch (currentCalc) {
+      case "media":
+      case "lista": {
+        const vals = parseNumbers($("values").value);
+        if ($("checkGrades").checked && vals.some(v => v < 0 || v > 10)) throw new Error("Todas las notas deben estar entre 0 y 10.");
+        const mean = vals.reduce((a,b) => a+b, 0) / vals.length;
+        result = fmt(mean) + (currentCalc === "media" ? " / 10" : "");
+        note = `Número de notas: ${vals.length}. Máxima: ${fmt(Math.max(...vals))}. Mínima: ${fmt(Math.min(...vals))}.`;
+        if (currentCalc === "lista") note += ` Suma total: ${fmt(vals.reduce((a,b)=>a+b,0))}.`;
+        break;
+      }
+      case "necesaria": {
+        const current = num("currentGrade"), weight = num("currentWeight"), target = num("targetGrade"), remaining = num("remainingWeight");
+        bounded(current, 0, 10, "La nota actual"); bounded(target, 0, 10, "La nota deseada");
+        bounded(weight, 0, 100, "El peso actual"); bounded(remaining, 0, 100, "El peso restante");
+        if (Math.abs(weight + remaining - 100) > 0.01) throw new Error("Los dos pesos deben sumar 100 %.");
+        if (remaining === 0) {
+          if (current >= target) { result = "Objetivo alcanzado"; note = "No queda ninguna evaluación ponderada."; }
+          else { result = "No es posible"; note = "No queda peso de evaluación para mejorar la nota."; }
+          break;
+        }
+        const needed = (target * 100 - current * weight) / remaining;
+        result = fmt(needed) + " / 10";
+        note = needed <= 0 ? "Ya alcanzarías el objetivo incluso con un 0 en la evaluación restante." : needed > 10 ? "El objetivo no se puede alcanzar solo con esta evaluación." : "Esta es la nota necesaria si los pesos son correctos.";
+        break;
+      }
+      case "ponderada": {
+        const grades = parseNumbers($("weightedGrades").value), weights = parseNumbers($("weightedWeights").value);
+        if (grades.length !== weights.length) throw new Error("Introduce el mismo número de notas y pesos.");
+        if (grades.some(n => n < 0 || n > 10)) throw new Error("Las notas deben estar entre 0 y 10.");
+        if (weights.some(n => n < 0)) throw new Error("Los pesos no pueden ser negativos.");
+        const total = weights.reduce((a,b)=>a+b,0);
+        if (Math.abs(total - 100) > 0.01) throw new Error("Los pesos deben sumar 100 %.");
+        const mean = grades.reduce((s,g,i)=>s+g*weights[i],0)/total;
+        result = fmt(mean) + " / 10";
+        note = "Peso total: " + fmt(total) + " %. ";
+        break;
+      }
+      case "porcentaje": {
+        const base = num("percentBase"), p = num("percentValue");
+        positive(base, "La cantidad"); bounded(p, 0, 1000000, "El porcentaje");
+        result = fmt(base * p / 100);
+        note = fmt(p) + " % de " + fmt(base) + ".";
+        break;
+      }
+      case "regla": {
+        const a = num("ruleA"), b = num("ruleB"), c = num("ruleC");
+        if (a === 0) throw new Error("A no puede ser cero.");
+        result = fmt(b * c / a);
+        note = `${fmt(a)} corresponde a ${fmt(b)}; ${fmt(c)} corresponde a ${result}.`;
+        break;
+      }
+      case "descuento": {
+        const price = num("originalPrice"), rate = num("discountRate");
+        positive(price, "El precio"); bounded(rate, 0, 100, "El descuento");
+        const saving = price * rate / 100, finalPrice = price - saving;
+        result = fmt(finalPrice) + " €";
+        note = "Ahorras " + fmt(saving) + " €. Descuento aplicado: " + fmt(rate) + " %.";
+        break;
+      }
+      case "iva": {
+        const price = num("ivaPrice");
+        positive(price, "El precio");
+        const rate = $("ivaRate").value === "custom" ? num("ivaCustom") : Number($("ivaRate").value);
+        bounded(rate, 0, 1000, "El IVA");
+        if ($("ivaMode").value === "add") {
+          const tax = price * rate / 100;
+          result = fmt(price + tax) + " €";
+          note = "Base imponible: " + fmt(price) + " €. IVA: " + fmt(tax) + " € (" + fmt(rate) + " %).";
+        } else {
+          const base = price / (1 + rate/100), tax = price - base;
+          result = fmt(base) + " €";
+          note = "IVA incluido: " + fmt(tax) + " €. Precio final: " + fmt(price) + " €.";
+        }
+        break;
+      }
+      case "interes": {
+        const principal = num("principal"), rate = num("annualRate"), years = num("years"), monthly = num("monthlyContribution");
+        positive(principal, "El capital"); positive(rate, "El interés"); positive(years, "La duración", false); positive(monthly, "La aportación");
+        bounded(years, 0.01, 100, "La duración"); bounded(rate, 0, 1000, "El interés");
+        const freq = Number($("compoundFreq").value), periods = Math.round(years * 12);
+        const periodicRate = rate / 100 / freq;
+        const totalMonths = Math.min(periods, 1200);
+        if (periods > 1200) throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
+        let balance = principal;
+        for (let month=1; month<=totalMonths; month++) {
+          balance += monthly;
+          if (month % (12/freq) === 0) balance *= (1 + periodicRate);
+        }
+        const contributions = principal + monthly * totalMonths;
+        result = fmt(balance) + " €";
+        note = "Aportaciones totales: " + fmt(contributions) + " €. Diferencia estimada: " + fmt(balance-contributions) + " €. Modelo simplificado, sin impuestos, comisiones ni variaciones de rentabilidad.";
+        break;
+      }
+      case "ecuacion": {
+        const a = num("eqA"), b = num("eqB"), c = num("eqC");
+        if (a === 0) {
+          if (b === c) { result = "Infinitas soluciones"; note = "La igualdad es cierta para cualquier x."; }
+          else { result = "Sin solución"; note = "La igualdad no se cumple para ningún x."; }
+        } else {
+          result = "x = " + fmt((c-b)/a, 6);
+          note = `Ecuación: ${fmt(a)}x + (${fmt(b)}) = ${fmt(c)}.`;
+        }
+        break;
+      }
+      case "fraccion": {
+        let n = num("fractionNum"), d = num("fractionDen");
+        if (!Number.isInteger(n) || !Number.isInteger(d)) throw new Error("Para simplificar, usa numerador y denominador enteros.");
+        if (d === 0) throw new Error("El denominador no puede ser cero.");
+        const originalN = n, originalD = d;
+        if (d < 0) { n = -n; d = -d; }
+        const div = gcd(n,d);
+        result = `${n/div}/${d/div}`;
+        note = `${originalN}/${originalD} en decimal = ${fmt(originalN/originalD, 8)}.`;
+        break;
+      }
+      case "escala": {
+        const obtained = num("scoreObtained"), max = num("scoreMax"), scale = num("scoreScale");
+        if (max <= 0 || scale <= 0) throw new Error("La puntuación máxima y la escala deben ser mayores que cero.");
+        if (obtained < 0 || obtained > max) throw new Error("La puntuación obtenida debe estar entre 0 y la máxima.");
+        result = fmt(obtained/max*scale) + " / " + fmt(scale);
+        note = "Equivale al " + fmt(obtained/max*100) + " % de la puntuación máxima.";
+        break;
+      }
+      default: throw new Error("Calculadora no disponible.");
+    }
+    showResult("Resultado", result, note);
+  } catch (error) {
+    showResult("Revisa los datos", error.message, "");
+  }
+}
+
+/* Copiar al portapapeles */
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    toast("Copiado al portapapeles");
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    try { document.execCommand("copy"); toast("Texto copiado"); }
+    catch { toast("No se pudo copiar automáticamente"); }
+    area.remove();
+  }
+}
+
+/* Almacenamiento local protegido ante errores */
+function loadData(key, fallback) {
+  try {
+    const raw = localStorage.getItem("cf-" + key);
+    return raw === null ? fallback : JSON.parse(raw);
+  } catch { return fallback; }
+}
+function saveData(key, value) {
+  try { localStorage.setItem("cf-" + key, JSON.stringify(value)); }
+  catch { toast("No se pudo guardar. Revisa el espacio disponible del navegador."); }
+}
+
+/* Lista de tareas */
+let tasks = loadData("tasks", []);
+function renderTasks() {
+  const list = $("taskList");
+  list.replaceChildren();
+  tasks.forEach((task, index) => {
+    const item = document.createElement("div");
+    item.className = "list-item";
+    const check = document.createElement("input");
+    check.type = "checkbox"; check.checked = !!task.done;
+    check.setAttribute("aria-label", "Marcar tarea como completada");
+    check.addEventListener("change", () => {
+      tasks[index].done = check.checked; saveData("tasks", tasks); renderTasks();
+    });
+    const content = document.createElement("div"); content.className = "grow";
+    const title = document.createElement("span"); title.textContent = task.text;
+    if (task.done) title.style.textDecoration = "line-through";
+    content.appendChild(title);
+    const remove = document.createElement("button"); remove.className = "btn secondary small"; remove.textContent = "✕"; remove.setAttribute("aria-label", "Eliminar tarea");
+    remove.addEventListener("click", () => { tasks.splice(index,1); saveData("tasks",tasks); renderTasks(); });
+    item.append(check, content, remove); list.appendChild(item);
+  });
+  const done = tasks.filter(t=>t.done).length;
+  $("taskCount").textContent = `${done} de ${tasks.length} tareas completadas`;
+  $("taskProgress").style.width = tasks.length ? (done/tasks.length*100)+"%" : "0%";
+  if (!tasks.length) list.innerHTML = '<div class="empty">Todavía no tienes tareas.</div>';
+}
+$("taskForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const text = $("taskInput").value.trim();
+  if (!text) return;
+  tasks.push({text,done:false}); saveData("tasks",tasks); $("taskInput").value=""; renderTasks(); toast("Tarea añadida");
+});
+renderTasks();
+
+/* Planificador de exámenes */
+let exams = loadData("exams", []);
+function renderExams() {
+  const list = $("examList"); list.replaceChildren();
+  exams.sort((a,b)=>a.date.localeCompare(b.date));
+  exams.forEach((exam,index)=>{
+    const item = document.createElement("div"); item.className="list-item";
+    const content = document.createElement("div"); content.className="grow";
+    const title = document.createElement("strong"); title.textContent=exam.name;
+    const date = document.createElement("small");
+    const parsed = new Date(exam.date+"T12:00:00");
+    date.textContent = parsed.toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
+    content.append(title,date);
+    const remove=document.createElement("button"); remove.className="btn secondary small"; remove.textContent="✕"; remove.setAttribute("aria-label","Eliminar examen");
+    remove.addEventListener("click",()=>{exams.splice(index,1);saveData("exams",exams);renderExams();});
+    item.append(content,remove); list.append(item);
+  });
+  if (!exams.length) list.innerHTML='<div class="empty">Todavía no has añadido exámenes.</div>';
+}
+$("examForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("examName").value.trim(), date=$("examDate").value;
+  if(!name||!date)return;
+  exams.push({name,date});saveData("exams",exams);$("examName").value="";$("examDate").value="";renderExams();toast("Examen guardado");
+});
+renderExams();
+
+/* Tarjetas de memoria */
+let cards=loadData("cards",[]), cardIndex=0, flipped=false;
+function renderFlashcard() {
+  const el=$("flashcard"); el.replaceChildren();
+  if(!cards.length) {
+    const msg=document.createElement("div");msg.textContent="Aún no has creado tarjetas.";el.appendChild(msg);
+    $("flashCount").textContent="0 tarjetas";$("flashList").innerHTML='<div class="empty">Crea tu primera tarjeta arriba.</div>';return;
+  }
+  cardIndex=(cardIndex+cards.length)%cards.length;
+  const wrap=document.createElement("div");
+  const small=document.createElement("small");small.textContent=flipped?"RESPUESTA":"PREGUNTA";
+  const text=document.createElement("div");text.textContent=flipped?cards[cardIndex].answer:cards[cardIndex].question;
+  wrap.append(small,text);el.appendChild(wrap);
+  $("flashCount").textContent=`Tarjeta ${cardIndex+1} de ${cards.length}`;
+  $("flashList").replaceChildren();
+  cards.forEach((card,i)=>{
+    const item=document.createElement("div");item.className="list-item";
+    const content=document.createElement("div");content.className="grow";content.textContent=card.question;
+    const remove=document.createElement("button");remove.className="btn secondary small";remove.textContent="✕";remove.setAttribute("aria-label","Eliminar tarjeta");
+    remove.addEventListener("click",()=>{cards.splice(i,1);cardIndex=Math.max(0,Math.min(cardIndex,cards.length-1));flipped=false;saveData("cards",cards);renderFlashcard();});
+    item.append(content,remove);$("flashList").appendChild(item);
+  });
+}
+function flipCard(){if(cards.length){flipped=!flipped;renderFlashcard();}}
+$("flashForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  cards.push({question:$("flashQuestion").value.trim(),answer:$("flashAnswer").value.trim()});
+  saveData("cards",cards);$("flashQuestion").value="";$("flashAnswer").value="";cardIndex=cards.length-1;flipped=false;renderFlashcard();toast("Tarjeta creada");
+});
+$("flashcard").addEventListener("click",flipCard);
+$("flashcard").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flipCard();}});
+$("flashFlip").addEventListener("click",flipCard);
+$("flashPrev").addEventListener("click",()=>{if(cards.length){cardIndex--;flipped=false;renderFlashcard();}});
+$("flashNext").addEventListener("click",()=>{if(cards.length){cardIndex++;flipped=false;renderFlashcard();}});
+renderFlashcard();
+
+/* Objetivo semanal */
+const goal=loadData("goal",{target:10,done:0});
+$("goalTarget").value=goal.target;
+$("goalDone").value=goal.done;
+function renderGoal(){
+  const target=Math.max(1,Number($("goalTarget").value)||1);
+  const done=Math.max(0,Number($("goalDone").value)||0);
+  const percent=Math.min(100,done/target*100);
+  $("goalProgress").style.width=percent+"%";
+  $("goalMessage").textContent=`${fmt(done)} de ${fmt(target)} horas (${fmt(percent,1)} %). ${done>=target?"¡Objetivo conseguido!":"¡Sigue avanzando!"}`;
+}
+$("saveGoal").addEventListener("click",()=>{
+  const target=Number($("goalTarget").value),done=Number($("goalDone").value);
+  if(!Number.isFinite(target)||!Number.isFinite(done)||target<1||done<0){toast("Introduce horas válidas");return;}
+  saveData("goal",{target,done});renderGoal();toast("Objetivo guardado");
+});
+$("goalTarget").addEventListener("input",renderGoal);
+$("goalDone").addEventListener("input",renderGoal);
+renderGoal();
+
+/* Pomodoro: usa marcas de tiempo para no depender de contar intervalos */
+let timerLength=25*60, timerEnd=0, timerInterval=null, timerRunning=false;
+function displayTimer(seconds){
+  seconds=Math.max(0,Math.ceil(seconds));
+  $("timerDisplay").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
+}
+function stopTimer(){if(timerInterval!==null)clearInterval(timerInterval);timerInterval=null;timerRunning=false;}
+function tickTimer(){
+  const remaining=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));
+  displayTimer(remaining);
+  if(remaining<=0){
+    stopTimer();$("timerMessage").textContent="¡Tiempo terminado! Descansa o empieza otra sesión.";
+    $("timerStart").textContent="▶ Empezar";toast("¡Tiempo terminado!");
+  }
+}
+document.querySelectorAll("[data-minutes]").forEach(btn=>btn.addEventListener("click",()=>{
+  stopTimer();timerLength=Number(btn.dataset.minutes)*60;displayTimer(timerLength);
+  $("timerMessage").textContent="Temporizador preparado.";
+  $("timerStart").textContent="▶ Empezar";
+  document.querySelectorAll("[data-minutes]").forEach(b=>b.classList.toggle("active",b===btn));
+}));
+$("timerStart").addEventListener("click",()=>{
+  if(timerRunning){stopTimer();$("timerStart").textContent="▶ Continuar";$("timerMessage").textContent="Temporizador en pausa.";return;}
+  timerEnd=Date.now()+timerLength*1000;
+  timerRunning=true;$("timerStart").textContent="Ⅱ Pausar";
+  $("timerMessage").textContent="Concéntrate en una sola tarea.";
+  timerInterval=setInterval(()=>{
+    const remaining=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));
+    timerLength=remaining;tickTimer();
+  },250);
+});
+$("timerReset").addEventListener("click",()=>{
+  stopTimer();timerLength=Number(document.querySelector("[data-minutes].active")?.dataset.minutes||25)*60;
+  displayTimer(timerLength);$("timerStart").textContent="▶ Empezar";$("timerMessage").textContent="Temporizador reiniciado.";
+});
+
+/* Borrar únicamente los datos de estudio */
+$("clearData").addEventListener("click",()=>{
+  if(!confirm("¿Seguro que quieres borrar tus tareas, exámenes, tarjetas y objetivo semanal? Esta acción no se puede deshacer."))return;
+  ["tasks","exams","cards","goal"].forEach(k=>localStorage.removeItem("cf-"+k));
+  tasks=[];exams=[];cards=[];cardIndex=0;flipped=false;
+  saveData("goal",{target:10,done:0});
+  $("goalTarget").value=10;$("goalDone").value=0;
+  renderTasks();renderExams();renderFlashcard();renderGoal();toast("Datos de estudio borrados");
+});
 </script>
 </body>
 </html>
