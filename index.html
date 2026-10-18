@@ -2,489 +2,1903 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1020">
-<meta name="description" content="Calculadora de medias y notas para ESO y Bachillerato. Calcula notas ponderadas, porcentajes y mucho más gratis.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://calculafacilweb.github.io/calculafacil-web/">
-<meta property="og:title" content="CalculaFácil | Calculadoras para estudiantes">
-<meta property="og:description" content="Calcula tus notas, alcanza tus objetivos y encuentra recursos para estudiar.">
-<meta property="og:type" content="website">
-<title>CalculaFácil | Calculadoras de notas y estudio</title>
-<style>
-:root{--bg:#0b1020;--panel:#121a30;--panel2:#19233d;--text:#f4f6ff;--muted:#a5b0cb;--line:#293653;--purple:#9b8cff;--cyan:#61e7df;--green:#70e1a1;--red:#ff8294}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:radial-gradient(ellipse at 85% 0,#30245b 0,transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;transition:background .2s,color .2s}
-body.light{--bg:#f4f6ff;--panel:#fff;--panel2:#efedff;--text:#171b32;--muted:#646b84;--line:#dfe3f3}
-a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
-.wrap{width:min(1120px,92%);margin:auto}
-header{position:sticky;top:0;z-index:10;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.logo{font-size:1.35rem;font-weight:950;letter-spacing:-1px}
-.logo span{color:var(--cyan)}
-.navlinks{display:flex;align-items:center;gap:17px}
-.navlinks a{font-size:.88rem;color:var(--muted);font-weight:750}
-.navlinks a:hover{color:var(--cyan)}
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:7px;padding:10px 15px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);font-weight:800;transition:.18s}
-.btn:hover{transform:translateY(-2px);border-color:var(--cyan)}
-.primary{background:linear-gradient(110deg,#7665f5,#48bcd5);color:white;border:0}
-.hero{padding:76px 0 42px}
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:32px}
-.eyebrow{font-size:.78rem;color:var(--cyan);font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
-h1{font-size:clamp(2.8rem,6vw,5rem);line-height:1.04;letter-spacing:-.06em;margin:15px 0}
-.gradient{background:linear-gradient(100deg,var(--purple),var(--cyan));background-clip:text;color:transparent}
-.hero p{font-size:1.1rem;color:var(--muted);max-width:650px}
-.actions,.chips,.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.chip{border:1px solid var(--line);border-radius:99px;padding:5px 10px;font-size:.8rem;color:var(--muted)}
-.preview{padding:25px;background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:24px}
-.preview-number{font-size:4rem;letter-spacing:-4px;font-weight:950;line-height:1.3}
-.muted{color:var(--muted);font-size:.9rem}
-.progress{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:12px 0}
-.progress span{display:block;width:78%;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan))}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.stat{background:var(--bg);padding:14px;border:1px solid var(--line);border-radius:13px}
-.stat strong{display:block;font-size:1.1rem}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px auto}
-.quick a{padding:15px;background:var(--panel);border:1px solid var(--line);border-radius:15px;font-weight:800}
-.quick a:hover{border-color:var(--cyan)}
-section{padding:50px 0}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}
-h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.04em;line-height:1.15;margin:8px 0}
-.section-head p{color:var(--muted);max-width:450px;margin:0}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:22px;min-width:0}
-.card:hover{border-color:#8073df}
-.card-title{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.icon{display:grid;place-items:center;width:45px;height:45px;flex-shrink:0;border-radius:13px;background:var(--panel2);font-size:1.35rem}
-h3{margin:0;font-size:1.12rem}
-.desc{color:var(--muted);font-size:.9rem;margin:0 0 15px}
-label{display:block;font-size:.83rem;font-weight:800;margin:12px 0 6px}
-input,select{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--text)}
-input:focus,select:focus{border-color:var(--cyan)}
-.hint{font-size:.76rem;color:var(--muted);margin:6px 0}
-.card form>.btn,.card>.full-btn{width:100%;margin-top:14px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-.full{grid-column:1/-1}
-.result{display:none;margin-top:14px;padding:14px;border:1px solid #61e7df66;background:#61e7df12;border-radius:12px;overflow-wrap:anywhere}
-.result.show{display:block}
-.result strong{display:block;font-size:1.5rem;line-height:1.5}
-.result small{display:block;color:var(--muted);margin-top:4px}
-.result.error{border-color:#ff829477;background:#ff829412}
-.result.success{border-color:#70e1a177;background:#70e1a112}
-.grade-row{display:grid;grid-template-columns:1fr 105px 40px;gap:8px;align-items:end;margin-bottom:8px}
-.grade-row label{margin-top:0}
-.remove{height:43px;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.tab{padding:8px 13px;border:1px solid var(--line);border-radius:99px;background:var(--panel);color:var(--muted);font-weight:800}
-.tab.active{border-color:var(--purple);background:var(--panel2);color:var(--text)}
-.resources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.resource{display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--line);border-radius:17px;background:var(--panel)}
-.resource p{color:var(--muted);font-size:.86rem;margin:0;flex:1}
-.resource .btn{margin-top:8px}
-.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.feature{padding:20px;border:1px solid var(--line);border-radius:17px;background:var(--panel)}
-.feature p{color:var(--muted);font-size:.88rem}
-.feature .btn{margin-top:10px}
-details{padding:15px 17px;background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-bottom:10px}
-summary{cursor:pointer;font-weight:800}
-details p{color:var(--muted);margin-bottom:0}
-.cta{padding:28px;border-radius:22px;background:linear-gradient(120deg,#5e4ad9,#167d9b);display:flex;justify-content:space-between;align-items:center;gap:20px;color:white}
-.cta p{margin:5px 0;color:#e3e7ff}
-footer{margin-top:40px;border-top:1px solid var(--line);padding:27px 0;color:var(--muted);font-size:.86rem}
-.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px}
-footer strong{color:var(--text)}
-#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);padding:10px 16px;border-radius:99px;z-index:50;transition:.2s}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:800px){.hero-grid{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}.resources{grid-template-columns:repeat(2,minmax(0,1fr))}.features{grid-template-columns:1fr 1fr}.navlinks{gap:10px}.navlinks a:not(.keep){display:none}}
-@media(max-width:560px){.hero{padding:45px 0 25px}.cards,.resources,.features{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:10px}.card{padding:17px}.fields{grid-template-columns:1fr}.full{grid-column:auto}.cta{display:block}.cta .btn{width:100%;margin-top:15px}.nav{min-height:60px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="CalculaFácil: calculadoras de notas, medias, porcentajes, regla de tres y herramientas para organizar tus estudios.">
+  <meta name="keywords" content="calculadora de notas, media, nota necesaria, porcentajes, regla de tres, estudiar, planificador de exámenes">
+  <meta name="author" content="Chocks Studio">
+  <title>CalculaFácil — Calculadoras y herramientas de estudio</title>
+
+  <meta property="og:title" content="CalculaFácil">
+  <meta property="og:description" content="Calcula tus notas y organiza tus estudios en un solo lugar.">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CalculaFácil",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "description": "Calculadoras académicas y herramientas gratuitas de estudio."
+  }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1020;
+      --panel: #141c30;
+      --panel2: #1c2740;
+      --text: #f3f6ff;
+      --muted: #aab6d0;
+      --accent: #7c9cff;
+      --accent2: #9c7cff;
+      --border: #2c3855;
+      --good: #55d6a5;
+      --bad: #ff8585;
+      --shadow: 0 12px 32px #0003;
+    }
+
+    body.light {
+      color-scheme: light;
+      --bg: #f3f6fc;
+      --panel: #ffffff;
+      --panel2: #edf1fa;
+      --text: #172039;
+      --muted: #59657e;
+      --accent: #365de7;
+      --accent2: #7650dc;
+      --border: #d8deec;
+      --good: #087f5b;
+      --bad: #c92a2a;
+      --shadow: 0 12px 32px #26365b12;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      transition: background .2s, color .2s;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: white;
+      background: var(--accent);
+      font-weight: 650;
+      transition: transform .15s, opacity .15s;
+    }
+
+    button:hover { opacity: .9; transform: translateY(-1px); }
+    button.secondary { background: var(--panel2); color: var(--text); border: 1px solid var(--border); }
+    button.danger { background: #b83246; }
+    button.small { padding: 6px 10px; font-size: .88rem; }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 11px 12px;
+      min-width: 0;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    textarea { resize: vertical; }
+
+    a { color: var(--accent); }
+
+    .container { width: min(1120px, 92%); margin: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--bg) 90%, transparent);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      min-height: 70px;
+    }
+
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -.7px;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .navlinks { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .navlinks a { text-decoration: none; font-size: .92rem; color: var(--muted); }
+
+    .hero { padding: 60px 0 36px; text-align: center; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .76rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 4.3rem);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin: 14px 0;
+    }
+
+    h1 span {
+      background: linear-gradient(100deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p { color: var(--muted); max-width: 650px; margin: 0 auto 24px; }
+
+    .hero-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 30px auto 0;
+      max-width: 700px;
+    }
+
+    .stat {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .stat strong { display: block; font-size: 1.5rem; }
+    .stat span { color: var(--muted); font-size: .85rem; }
+
+    section { padding: 32px 0; scroll-margin-top: 90px; }
+
+    .section-heading { margin-bottom: 20px; }
+
+    .section-heading h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 5px; }
+    .section-heading p { margin: 0; color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+    .card {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .card h3 { margin: 0 0 6px; font-size: 1.16rem; }
+    .card > p { color: var(--muted); margin: 0 0 18px; font-size: .93rem; }
+
+    .field { display: grid; gap: 6px; margin-bottom: 13px; }
+    .field label { font-weight: 650; font-size: .9rem; }
+    .hint { color: var(--muted); font-size: .82rem; }
+
+    .row { display: flex; gap: 10px; align-items: center; }
+    .row > * { flex: 1; min-width: 0; }
+
+    .result {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .result strong { font-size: 1.35rem; }
+    .result .muted { color: var(--muted); font-size: .88rem; }
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+
+    .button-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .button-row button { flex: 0 1 auto; }
+
+    .list { display: grid; gap: 9px; margin-top: 14px; }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      padding: 11px 12px;
+      border-radius: 11px;
+      overflow-wrap: anywhere;
+    }
+
+    .list-item small { display: block; color: var(--muted); }
+    .list-item .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .empty { color: var(--muted); font-size: .9rem; padding: 10px 0; }
+
+    .tool-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tool-tabs button.active { background: var(--accent2); }
+
+    .tab-panel[hidden] { display: none; }
+
+    .flashcard {
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin: 12px 0;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .flashcard strong { font-size: 1.2rem; }
+
+    .timer {
+      font-size: clamp(3rem, 9vw, 5rem);
+      text-align: center;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.3;
+      padding: 16px 0;
+    }
+
+    .timer-label { text-align: center; color: var(--muted); }
+
+    .progress {
+      height: 9px;
+      background: var(--panel2);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .progress div { height: 100%; background: var(--accent); width: 0%; transition: width .2s; }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+
+    .resource {
+      display: block;
+      padding: 17px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .resource strong { display: block; margin-bottom: 5px; }
+    .resource span { color: var(--muted); font-size: .88rem; }
+
+    details {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    summary { cursor: pointer; font-weight: 700; }
+    details p { color: var(--muted); margin-bottom: 0; }
+
+    footer { margin-top: 30px; border-top: 1px solid var(--border); padding: 25px 0; color: var(--muted); font-size: .9rem; }
+    footer .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+    .notice { color: var(--muted); font-size: .84rem; margin-top: 12px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .nav { padding: 12px 0; align-items: flex-start; }
+      .navlinks { justify-content: flex-end; }
+      .navlinks a { font-size: .82rem; }
+      .hero { padding-top: 42px; }
+    }
+
+    @media (max-width: 430px) {
+      .stats { grid-template-columns: 1fr; }
+      .stat { display: flex; justify-content: space-between; align-items: center; }
+      .row { flex-direction: column; align-items: stretch; }
+      .card { padding: 17px; }
+      .navlinks { gap: 8px; }
+    }
+  </style>
 </head>
+
 <body>
 <header>
-<nav class="wrap">
-<a class="logo" href="#">Calcula<span>Fácil</span> ✦</a>
-<div class="navlinks">
-<a href="#calculadoras">Calculadoras</a>
-<a href="#recursos">Estudiar</a>
-<a href="#extras">Extras</a>
-<button class="btn" id="theme" type="button" aria-label="Cambiar tema">☀️ / 🌙</button>
-</div>
-</nav>
+  <div class="container nav">
+    <a class="brand" href="#" aria-label="CalculaFácil inicio">Calcula<span>Fácil</span></a>
+    <nav class="navlinks" aria-label="Navegación principal">
+      <a href="#calculadoras">Calculadoras</a>
+      <a href="#estudio">Zona de estudio</a>
+      <a href="#recursos">Recursos</a>
+      <button class="secondary small" id="themeToggle" type="button" aria-label="Cambiar tema">☀️ Tema</button>
+    </nav>
+  </div>
 </header>
 
 <main>
-<div class="hero wrap">
-<div class="hero-grid">
-<div>
-<div class="eyebrow">Tu compañero de estudio</div>
-<h1>Tus notas, tus metas.<br><span class="gradient">Todo bajo control.</span></h1>
-<p>Calcula tus medias, descubre qué necesitas para aprobar y encuentra vídeos para entender cada asignatura. Gratis, rápido y sin registrarte.</p>
-<div class="actions"><a class="btn primary" href="#calculadoras">🚀 Empezar a calcular</a><a class="btn" href="#recursos">🎓 Aprender algo nuevo</a></div>
-<div class="chips"><span class="chip">✓ Gratis</span><span class="chip">✓ Sin registro</span><span class="chip">✓ ESO y Bachillerato</span></div>
-</div>
-<aside class="preview">
-<div class="muted">✨ TU ESPACIO DE ESTUDIO</div>
-<div class="muted">Tu próxima meta</div>
-<div class="preview-number">7,8<span style="font-size:1.1rem;color:var(--muted)"> / 10</span></div>
-<div class="progress"><span></span></div>
-<div class="muted">Cada cálculo te acerca a tenerlo más claro.</div>
-<div class="stats"><div class="stat"><strong>🧮 8</strong><span class="muted">Herramientas</span></div><div class="stat"><strong>📚 Recursos</strong><span class="muted">Por asignatura</span></div></div>
-</aside>
-</div>
-</div>
+  <div class="container">
+    <section class="hero">
+      <div class="eyebrow">Estudia de forma inteligente</div>
+      <h1>Tus estudios,<br><span>más fáciles.</span></h1>
+      <p>Calcula notas, descubre qué necesitas para aprobar y organiza tus exámenes con herramientas gratuitas en una sola página.</p>
+      <div class="hero-actions">
+        <a href="#calculadoras"><button type="button">Empezar a calcular →</button></a>
+        <a href="#estudio"><button class="secondary" type="button">Organizar mi estudio</button></a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>8</strong><span>Herramientas de cálculo</span></div>
+        <div class="stat"><strong>100%</strong><span>Gratis</span></div>
+        <div class="stat"><strong>24/7</strong><span>Disponible online</span></div>
+      </div>
+    </section>
 
-<div class="quick wrap">
-<a href="#media">📊 Calcular mi media</a>
-<a href="#necesaria">🎯 ¿Qué necesito?</a>
-<a href="#ponderada">⚖️ Nota ponderada</a>
-<a href="#recursos">🎥 Vídeos educativos</a>
-</div>
+    <section id="calculadoras">
+      <div class="section-heading">
+        <h2>🧮 Calculadoras</h2>
+        <p>Introduce tus datos y obtén el resultado al instante.</p>
+      </div>
 
-<div class="wrap">
-<section id="calculadoras">
-<div class="section-head"><div><div class="eyebrow">Caja de herramientas</div><h2>Calculadoras para ir a por todas</h2></div><p>Introduce los datos y pulsa calcular. Puedes usar coma o punto en los decimales.</p></div>
-<div class="cards">
+      <div class="grid">
+        <article class="card">
+          <h3>📊 Calculadora de media</h3>
+          <p>Calcula la media aritmética de tus notas.</p>
+          <div class="field">
+            <label for="averageInput">Tus notas</label>
+            <textarea id="averageInput" rows="3" placeholder="Ejemplo: 7,5; 8; 6,25"></textarea>
+            <span class="hint">Separa las notas con espacios o punto y coma. Puedes usar decimales con coma.</span>
+          </div>
+          <button type="button" id="averageBtn">Calcular media</button>
+          <div id="averageResult" class="result" aria-live="polite">Tu resultado aparecerá aquí.</div>
+        </article>
 
-<article class="card" id="media">
-<div class="card-title"><div class="icon">📊</div><h3>Calculadora de media</h3></div>
-<p class="desc">Calcula la media aritmética de tus notas.</p>
-<form id="average-form">
-<label for="average-grades">Tus notas sobre 10</label>
-<input id="average-grades" placeholder="Ej. 7,5; 8; 6,25" required>
-<p class="hint">Separa las notas con punto y coma si usas decimales con coma.</p>
-<button class="btn primary" type="submit">Calcular mi media ✨</button>
-<div class="result" id="average-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>🎯 ¿Qué nota necesito?</h3>
+          <p>Calcula la nota que necesitas en el próximo examen para alcanzar tu objetivo.</p>
+          <div class="field">
+            <label for="currentGrade">Nota actual</label>
+            <input id="currentGrade" type="number" min="0" max="10" step="any" placeholder="Ej. 6,5">
+          </div>
+          <div class="field">
+            <label for="currentWeight">Porcentaje que ya tienes (%)</label>
+            <input id="currentWeight" type="number" min="0" max="99.99" step="any" value="60">
+          </div>
+          <div class="field">
+            <label for="targetGrade">Nota final que quieres</label>
+            <input id="targetGrade" type="number" min="0" max="10" step="any" value="5">
+          </div>
+          <button type="button" id="neededBtn">Calcular nota necesaria</button>
+          <div id="neededResult" class="result" aria-live="polite">Introduce tus datos.</div>
+        </article>
 
-<article class="card" id="necesaria">
-<div class="card-title"><div class="icon">🎯</div><h3>¿Qué nota necesito?</h3></div>
-<p class="desc">Calcula la nota media que necesitas en lo que queda de curso.</p>
-<form id="needed-form">
-<div class="fields">
-<div><label for="current-grade">Nota actual</label><input id="current-grade" type="number" min="0" max="10" step="any" placeholder="4" required></div>
-<div><label for="completed-weight">Evaluado (%)</label><input id="completed-weight" type="number" min="0" max="100" step="any" placeholder="50" required></div>
-<div class="full"><label for="target-grade">Objetivo final</label><input id="target-grade" type="number" min="0" max="10" step="any" placeholder="5" required></div>
-</div>
-<button class="btn primary" type="submit">Calcular objetivo 🎯</button>
-<div class="result" id="needed-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>⚖️ Media ponderada</h3>
+          <p>Calcula una nota cuando dos evaluaciones tienen pesos diferentes.</p>
+          <div class="row">
+            <div class="field">
+              <label for="weightedGrade1">Nota 1</label>
+              <input id="weightedGrade1" type="number" min="0" max="10" step="any" placeholder="7">
+            </div>
+            <div class="field">
+              <label for="weightedWeight1">Peso de la nota 1 (%)</label>
+              <input id="weightedWeight1" type="number" min="0" max="100" step="any" value="60">
+            </div>
+          </div>
+          <div class="field">
+            <label for="weightedGrade2">Nota 2</label>
+            <input id="weightedGrade2" type="number" min="0" max="10" step="any" placeholder="8">
+          </div>
+          <button type="button" id="weightedBtn">Calcular media ponderada</button>
+          <div id="weightedResult" class="result" aria-live="polite">Introduce tus datos.</div>
+          <p class="notice">El porcentaje restante se asigna a la segunda nota.</p>
+        </article>
 
-<article class="card" id="ponderada">
-<div class="card-title"><div class="icon">⚖️</div><h3>Nota ponderada</h3></div>
-<p class="desc">Combina dos notas según el porcentaje que vale cada una.</p>
-<form id="weighted-form">
-<div class="fields">
-<div><label for="grade-one">Primera nota</label><input id="grade-one" type="number" min="0" max="10" step="any" placeholder="7,5" required></div>
-<div><label for="weight-one">Su peso (%)</label><input id="weight-one" type="number" min="0" max="100" step="any" placeholder="40" required></div>
-<div class="full"><label for="grade-two">Segunda nota</label><input id="grade-two" type="number" min="0" max="10" step="any" placeholder="8" required></div>
-</div>
-<p class="hint">La segunda nota cuenta el porcentaje restante.</p>
-<button class="btn primary" type="submit">Calcular nota final ⚖️</button>
-<div class="result" id="weighted-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>💯 Calculadora de porcentajes</h3>
+          <p>Calcula cuánto representa un porcentaje de una cantidad.</p>
+          <div class="row">
+            <div class="field">
+              <label for="percentValue">Cantidad</label>
+              <input id="percentValue" type="number" step="any" placeholder="200">
+            </div>
+            <div class="field">
+              <label for="percentRate">Porcentaje (%)</label>
+              <input id="percentRate" type="number" step="any" placeholder="15">
+            </div>
+          </div>
+          <button type="button" id="percentBtn">Calcular porcentaje</button>
+          <div id="percentResult" class="result" aria-live="polite">Introduce los datos.</div>
+        </article>
 
-<article class="card" id="porcentajes">
-<div class="card-title"><div class="icon">％</div><h3>Porcentajes</h3></div>
-<p class="desc">Calcula qué cantidad corresponde a un porcentaje.</p>
-<form id="percentage-form">
-<div class="fields">
-<div><label for="percentage-value">Porcentaje (%)</label><input id="percentage-value" type="number" min="0" step="any" placeholder="25" required></div>
-<div><label for="percentage-total">Cantidad total</label><input id="percentage-total" type="number" min="0" step="any" placeholder="200" required></div>
-</div>
-<button class="btn primary" type="submit">Calcular porcentaje ➗</button>
-<div class="result" id="percentage-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>🔢 Regla de tres</h3>
+          <p>Resuelve proporciones sencillas.</p>
+          <div class="row">
+            <div class="field">
+              <label for="ruleA">A</label>
+              <input id="ruleA" type="number" step="any" placeholder="4">
+            </div>
+            <div class="field">
+              <label for="ruleB">B</label>
+              <input id="ruleB" type="number" step="any" placeholder="12">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="ruleC">C</label>
+              <input id="ruleC" type="number" step="any" placeholder="7">
+            </div>
+            <div class="field">
+              <label for="ruleX">X</label>
+              <input id="ruleX" type="text" value="?" disabled>
+            </div>
+          </div>
+          <p class="hint">A corresponde a B, y C corresponde a X.</p>
+          <button type="button" id="ruleBtn">Calcular X</button>
+          <div id="ruleResult" class="result" aria-live="polite">Introduce A, B y C.</div>
+        </article>
 
-<article class="card" id="regla-tres">
-<div class="card-title"><div class="icon">🔁</div><h3>Regla de tres</h3></div>
-<p class="desc">Si A corresponde a B, ¿a cuánto corresponde C?</p>
-<form id="rule-form">
-<div class="fields">
-<div><label for="rule-a">A</label><input id="rule-a" type="number" step="any" placeholder="4" required></div>
-<div><label for="rule-b">B</label><input id="rule-b" type="number" step="any" placeholder="10" required></div>
-<div class="full"><label for="rule-c">C</label><input id="rule-c" type="number" step="any" placeholder="6" required></div>
-</div>
-<button class="btn primary" type="submit">Calcular X 🔁</button>
-<div class="result" id="rule-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>➗ Conversor de fracciones</h3>
+          <p>Convierte una fracción en decimal y porcentaje.</p>
+          <div class="row">
+            <div class="field">
+              <label for="fractionNumerator">Numerador</label>
+              <input id="fractionNumerator" type="number" step="1" placeholder="3">
+            </div>
+            <div class="field">
+              <label for="fractionDenominator">Denominador</label>
+              <input id="fractionDenominator" type="number" step="1" placeholder="4">
+            </div>
+          </div>
+          <button type="button" id="fractionBtn">Convertir fracción</button>
+          <div id="fractionResult" class="result" aria-live="polite">Ejemplo: 3/4 = 0,75 = 75%.</div>
+        </article>
 
-<article class="card" id="fracciones">
-<div class="card-title"><div class="icon">🍰</div><h3>Fracciones</h3></div>
-<p class="desc">Convierte una fracción a decimal y porcentaje.</p>
-<form id="fraction-form">
-<div class="fields">
-<div><label for="fraction-num">Numerador</label><input id="fraction-num" type="number" step="1" placeholder="3" required></div>
-<div><label for="fraction-den">Denominador</label><input id="fraction-den" type="number" step="1" placeholder="4" required></div>
-</div>
-<button class="btn primary" type="submit">Convertir fracción 🍰</button>
-<div class="result" id="fraction-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>🔄 Conversor de escalas</h3>
+          <p>Convierte una puntuación entre diferentes escalas.</p>
+          <div class="row">
+            <div class="field">
+              <label for="scaleScore">Tu puntuación</label>
+              <input id="scaleScore" type="number" step="any" placeholder="7">
+            </div>
+            <div class="field">
+              <label for="scaleFrom">Escala original</label>
+              <input id="scaleFrom" type="number" min="0.000001" step="any" value="10">
+            </div>
+          </div>
+          <div class="field">
+            <label for="scaleTo">Escala de destino</label>
+            <input id="scaleTo" type="number" min="0.000001" step="any" value="100">
+          </div>
+          <button type="button" id="scaleBtn">Convertir escala</button>
+          <div id="scaleResult" class="result" aria-live="polite">Introduce los datos.</div>
+        </article>
 
-<article class="card">
-<div class="card-title"><div class="icon">🏁</div><h3>Conversor de notas</h3></div>
-<p class="desc">Convierte una puntuación a otra escala.</p>
-<form id="scale-form">
-<div class="fields">
-<div><label for="scale-score">Puntuación obtenida</label><input id="scale-score" type="number" min="0" step="any" placeholder="18" required></div>
-<div><label for="scale-max">Puntuación máxima</label><input id="scale-max" type="number" min="0.000001" step="any" placeholder="25" required></div>
-<div class="full"><label for="scale-target">Convertir a</label><select id="scale-target"><option value="10">Sobre 10</option><option value="20">Sobre 20</option><option value="100">Sobre 100</option></select></div>
-</div>
-<button class="btn primary" type="submit">Convertir nota 🏁</button>
-<div class="result" id="scale-result" aria-live="polite"></div>
-</form>
-</article>
+        <article class="card">
+          <h3>📝 Media de una lista de notas</h3>
+          <p>Añade notas una por una y consulta la media, la mayor y la menor.</p>
+          <div class="row">
+            <div class="field">
+              <label for="gradeName">Asignatura (opcional)</label>
+              <input id="gradeName" type="text" placeholder="Ej. Matemáticas">
+            </div>
+            <div class="field">
+              <label for="gradeValue">Nota (0–10)</label>
+              <input id="gradeValue" type="number" min="0" max="10" step="any" placeholder="8">
+            </div>
+          </div>
+          <button type="button" id="addGradeBtn">Añadir nota</button>
+          <div id="gradeStats" class="result">Todavía no has añadido notas.</div>
+          <div id="gradeList" class="list"></div>
+          <button type="button" id="clearGradesBtn" class="secondary small">Borrar todas las notas</button>
+        </article>
+      </div>
+    </section>
 
-<article class="card">
-<div class="card-title"><div class="icon">🧩</div><h3>Media personalizada</h3></div>
-<p class="desc">Añade todas las notas que quieras y calcula la media o una media ponderada.</p>
-<div id="grade-list"></div>
-<div class="button-row"><button class="btn" id="add-grade" type="button">＋ Añadir nota</button><button class="btn" id="clear-grades" type="button">↻ Reiniciar</button></div>
-<button class="btn primary full-btn" id="calculate-list" type="button">Calcular media</button>
-<div class="result" id="list-result" aria-live="polite"></div>
-</article>
+    <section id="estudio">
+      <div class="section-heading">
+        <h2>📚 Tu zona de estudio</h2>
+        <p>Organiza exámenes, crea tarjetas y estudia con sesiones enfocadas.</p>
+      </div>
 
-</div>
-</section>
+      <div class="tool-tabs" role="tablist" aria-label="Herramientas de estudio">
+        <button type="button" class="active" data-tab="examsPanel" role="tab" aria-selected="true">📅 Exámenes</button>
+        <button type="button" data-tab="flashPanel" role="tab" aria-selected="false">🗂️ Tarjetas</button>
+        <button type="button" data-tab="quizPanel" role="tab" aria-selected="false">❓ Test</button>
+        <button type="button" data-tab="pomodoroPanel" role="tab" aria-selected="false">⏱️ Pomodoro</button>
+        <button type="button" data-tab="tasksPanel" role="tab" aria-selected="false">✅ Tareas</button>
+        <button type="button" data-tab="goalsPanel" role="tab" aria-selected="false">🎯 Objetivo</button>
+        <button type="button" data-tab="sciencePanel" role="tab" aria-selected="false">🧪 Científica</button>
+      </div>
 
-<section id="recursos">
-<div class="section-head"><div><div class="eyebrow">Aprender también cuenta</div><h2>Recursos para cada asignatura</h2></div><p>Filtra por materia y encuentra vídeos o materiales para repasar.</p></div>
-<div class="tabs" aria-label="Filtrar recursos">
-<button class="tab active" data-filter="todas" type="button">✨ Todas</button>
-<button class="tab" data-filter="mates" type="button">📐 Matemáticas</button>
-<button class="tab" data-filter="lengua" type="button">📖 Lengua</button>
-<button class="tab" data-filter="ciencias" type="button">🧪 Física y Química</button>
-<button class="tab" data-filter="historia" type="button">🏛️ Historia</button>
-<button class="tab" data-filter="filosofia" type="button">💭 Filosofía</button>
-<button class="tab" data-filter="economia" type="button">📈 Economía</button>
-</div>
-<div class="resources" id="resource-grid">
-<article class="resource" data-subject="mates lengua ciencias">
-<div class="icon">🎓</div><h3>Susi Profe</h3><p>Explicaciones de Matemáticas, Lengua y otras asignaturas.</p>
-<a class="btn" href="https://susiprofe.com/" target="_blank" rel="noopener noreferrer">Ver recursos ↗</a>
-</article>
-<article class="resource" data-subject="mates ciencias">
-<div class="icon">🧮</div><h3>Profesor10demates</h3><p>Ejercicios explicados de Matemáticas y Física y Química.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=profesor10demates" target="_blank" rel="noopener noreferrer">Buscar canal ↗</a>
-</article>
-<article class="resource" data-subject="historia">
-<div class="icon">🏛️</div><h3>La cuna de Halicarnaso</h3><p>Historia explicada con contexto y ejemplos.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=La+cuna+de+Halicarnaso" target="_blank" rel="noopener noreferrer">Buscar canal ↗</a>
-</article>
-<article class="resource" data-subject="filosofia">
-<div class="icon">💭</div><h3>Unboxing Philosophy</h3><p>Autores, ideas y corrientes de filosofía.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=Unboxing+Philosophy" target="_blank" rel="noopener noreferrer">Buscar canal ↗</a>
-</article>
-<article class="resource" data-subject="lengua">
-<div class="icon">✍️</div><h3>Pablo Poó</h3><p>Contenidos de Lengua Castellana y Literatura.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=Pablo+Po%C3%B3+Lengua" target="_blank" rel="noopener noreferrer">Buscar vídeos ↗</a>
-</article>
-<article class="resource" data-subject="historia">
-<div class="icon">🌍</div><h3>Academia Play</h3><p>Vídeos visuales para repasar historia y cultura.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=Academia+Play+Historia" target="_blank" rel="noopener noreferrer">Buscar canal ↗</a>
-</article>
-<article class="resource" data-subject="economia">
-<div class="icon">📈</div><h3>Economía de Bachillerato</h3><p>Encuentra explicaciones de conceptos y ejercicios de Economía.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=econom%C3%ADa+1+bachillerato+explicada" target="_blank" rel="noopener noreferrer">Buscar vídeos ↗</a>
-</article>
-<article class="resource" data-subject="mates">
-<div class="icon">📐</div><h3>Derivando</h3><p>Ideas matemáticas explicadas de forma visual y entretenida.</p>
-<a class="btn" href="https://www.youtube.com/results?search_query=Derivando+matem%C3%A1ticas" target="_blank" rel="noopener noreferrer">Buscar canal ↗</a>
-</article>
-<article class="resource" data-subject="mates lengua ciencias historia filosofia economia">
-<div class="icon">🏫</div><h3>Recursos INTEF</h3><p>Materiales educativos para explorar distintas materias.</p>
-<a class="btn" href="https://intef.es/recursos-2/profes-en-casa/" target="_blank" rel="noopener noreferrer">Explorar recursos ↗</a>
-</article>
-</div>
-<p class="hint">Los enlaces llevan a recursos externos. Comprueba que el contenido se ajusta al temario de tu curso.</p>
-</section>
+      <div class="tab-panel" id="examsPanel">
+        <div class="card">
+          <h3>📅 Planificador de exámenes</h3>
+          <p>Apunta las fechas de tus exámenes para tenerlos organizados.</p>
+          <div class="row">
+            <div class="field">
+              <label for="examSubject">Asignatura</label>
+              <input id="examSubject" type="text" placeholder="Historia">
+            </div>
+            <div class="field">
+              <label for="examDate">Fecha del examen</label>
+              <input id="examDate" type="date">
+            </div>
+          </div>
+          <div class="field">
+            <label for="examNotes">Temas o notas (opcional)</label>
+            <input id="examNotes" type="text" placeholder="Tema 1, tema 2...">
+          </div>
+          <button type="button" id="addExamBtn">Añadir examen</button>
+          <div id="examList" class="list"></div>
+        </div>
+      </div>
 
-<section id="extras">
-<div class="section-head"><div><div class="eyebrow">Pequeños extras</div><h2>Organiza tu estudio</h2></div><p>Herramientas sencillas para concentrarte y decidir qué hacer a continuación.</p></div>
-<div class="features">
-<article class="feature">
-<div class="icon">⏱️</div><h3>Temporizador Pomodoro</h3><p>25 minutos de concentración y luego un descanso.</p>
-<div id="timer-display" style="font-size:2.4rem;font-weight:950">25:00</div>
-<div class="button-row"><button class="btn primary" id="timer-start" type="button">▶ Empezar</button><button class="btn" id="timer-reset" type="button">↻ Reiniciar</button></div>
-</article>
-<article class="feature">
-<div class="icon">🎲</div><h3>¿Qué estudio ahora?</h3><p>Introduce asignaturas y deja que la web elija una al azar.</p>
-<label for="subjects-input">Tus asignaturas</label><input id="subjects-input" placeholder="Historia, Economía, Lengua">
-<button class="btn primary" id="pick-subject" type="button">Elegir asignatura</button>
-<div class="result" id="subject-result" aria-live="polite"></div>
-</article>
-<article class="feature">
-<div class="icon">🗒️</div><h3>Lista de tareas</h3><p>Añade tareas y márcalas cuando las termines.</p>
-<form id="task-form"><label for="task-input">Nueva tarea</label><input id="task-input" placeholder="Repasar el tema 3" required><button class="btn primary" type="submit">＋ Añadir tarea</button></form>
-<ul id="task-list"></ul><button class="btn" id="clear-tasks" type="button">Borrar lista</button>
-</article>
-</div>
-</section>
+      <div class="tab-panel" id="flashPanel" hidden>
+        <div class="card">
+          <h3>🗂️ Tarjetas de memoria</h3>
+          <p>Crea preguntas con sus respuestas para repasar.</p>
+          <div class="field">
+            <label for="flashQuestion">Pregunta</label>
+            <textarea id="flashQuestion" rows="2" placeholder="¿Qué es el capital humano?"></textarea>
+          </div>
+          <div class="field">
+            <label for="flashAnswer">Respuesta</label>
+            <textarea id="flashAnswer" rows="2" placeholder="Conocimientos y habilidades de las personas."></textarea>
+          </div>
+          <button type="button" id="addFlashBtn">Guardar tarjeta</button>
+          <div id="flashStudy" class="flashcard">
+            <div>
+              <strong id="flashDisplay">Aún no tienes tarjetas.</strong>
+              <p id="flashCounter" class="hint"></p>
+            </div>
+          </div>
+          <div class="button-row">
+            <button type="button" id="flipFlashBtn" class="secondary">Mostrar respuesta</button>
+            <button type="button" id="prevFlashBtn" class="secondary">← Anterior</button>
+            <button type="button" id="nextFlashBtn">Siguiente →</button>
+          </div>
+          <div id="flashList" class="list"></div>
+        </div>
+      </div>
 
-<section>
-<div class="section-head"><div><div class="eyebrow">Aprende a calcular</div><h2>Mini guía de estudio</h2></div></div>
-<div class="features">
-<article class="feature"><h3>📊 Media aritmética</h3><p>Suma las notas y divide entre cuántas tienes. Ejemplo: (7 + 8 + 6) ÷ 3 = 7.</p></article>
-<article class="feature"><h3>⚖️ Media ponderada</h3><p>Multiplica cada nota por su peso y suma los resultados. Los pesos deben sumar el 100%.</p></article>
-<article class="feature"><h3>🎯 Nota necesaria</h3><p>La nota que necesitas depende de lo evaluado y del porcentaje que queda.</p></article>
-</div>
-</section>
+      <div class="tab-panel" id="quizPanel" hidden>
+        <div class="card">
+          <h3>❓ Creador de test</h3>
+          <p>Crea tus propias preguntas tipo test y comprueba tus respuestas.</p>
+          <div class="field">
+            <label for="quizQuestion">Pregunta</label>
+            <textarea id="quizQuestion" rows="2" placeholder="¿Cuál es la capital de Francia?"></textarea>
+          </div>
+          <div class="field">
+            <label for="quizOption1">Opción A</label>
+            <input id="quizOption1" type="text" placeholder="Madrid">
+          </div>
+          <div class="field">
+            <label for="quizOption2">Opción B</label>
+            <input id="quizOption2" type="text" placeholder="París">
+          </div>
+          <div class="field">
+            <label for="quizOption3">Opción C</label>
+            <input id="quizOption3" type="text" placeholder="Roma">
+          </div>
+          <div class="field">
+            <label for="quizCorrect">Respuesta correcta</label>
+            <select id="quizCorrect">
+              <option value="0">A</option>
+              <option value="1">B</option>
+              <option value="2">C</option>
+            </select>
+          </div>
+          <button type="button" id="addQuizBtn">Añadir pregunta</button>
+          <div class="result" id="quizStatus">Añade preguntas para empezar.</div>
+          <div id="quizPlay" class="hidden">
+            <h3 id="quizPlayQuestion"></h3>
+            <div id="quizPlayOptions" class="list"></div>
+            <div id="quizFeedback" class="result" aria-live="polite"></div>
+            <div class="button-row" style="margin-top:12px">
+              <button type="button" id="nextQuizBtn">Siguiente pregunta</button>
+              <button type="button" id="restartQuizBtn" class="secondary">Reiniciar test</button>
+            </div>
+          </div>
+          <div id="quizList" class="list"></div>
+        </div>
+      </div>
 
-<section id="faq">
-<div class="section-head"><div><div class="eyebrow">Dudas habituales</div><h2>Preguntas frecuentes</h2></div></div>
-<details><summary>¿CalculaFácil es gratis?</summary><p>Sí, estas herramientas son gratuitas y no necesitan registro.</p></details>
-<details><summary>¿Puedo escribir decimales?</summary><p>Sí. Usa coma o punto. En la lista de medias, separa las notas con punto y coma si utilizas comas decimales.</p></details>
-<details><summary>¿La nota necesaria garantiza que aprobaré?</summary><p>No. Es un cálculo matemático; comprueba los criterios de evaluación y redondeo de tu centro.</p></details>
-<details><summary>¿Se guardan mis notas?</summary><p>Las calculadoras funcionan en tu navegador. Las tareas no se guardan de forma permanente.</p></details>
-<details><summary>¿Sirve para ESO y Bachillerato?</summary><p>Sí, adaptando los porcentajes y la escala a los criterios de cada asignatura.</p></details>
-</section>
+      <div class="tab-panel" id="pomodoroPanel" hidden>
+        <div class="card">
+          <h3>⏱️ Temporizador Pomodoro</h3>
+          <p>Estudia durante un tiempo concreto y descansa entre sesiones.</p>
+          <div class="row">
+            <div class="field">
+              <label for="studyMinutes">Minutos de estudio</label>
+              <input id="studyMinutes" type="number" min="1" max="180" value="25">
+            </div>
+            <div class="field">
+              <label for="breakMinutes">Minutos de descanso</label>
+              <input id="breakMinutes" type="number" min="1" max="60" value="5">
+            </div>
+          </div>
+          <div class="timer" id="timerDisplay">25:00</div>
+          <div class="timer-label" id="timerLabel">Sesión de estudio</div>
+          <div class="progress"><div id="timerProgress"></div></div>
+          <div class="button-row">
+            <button type="button" id="startTimerBtn">▶ Empezar</button>
+            <button type="button" id="pauseTimerBtn" class="secondary">⏸ Pausar</button>
+            <button type="button" id="resetTimerBtn" class="secondary">↺ Reiniciar</button>
+          </div>
+          <p class="notice">El temporizador funciona mientras esta página esté abierta.</p>
+        </div>
+      </div>
 
-<div class="cta"><div><h2 style="margin:0">Un cálculo menos. Un paso más.</h2><p>Vuelve cuando tengas nuevas notas y sigue planificando.</p></div><a class="btn" href="#calculadoras">Volver arriba ↑</a></div>
-</div>
+      <div class="tab-panel" id="tasksPanel" hidden>
+        <div class="card">
+          <h3>✅ Lista de tareas</h3>
+          <p>Organiza lo que tienes que hacer y marca lo que termines.</p>
+          <div class="row">
+            <div class="field">
+              <label for="taskInput">Nueva tarea</label>
+              <input id="taskInput" type="text" placeholder="Repasar tema 3">
+            </div>
+            <div class="field">
+              <label for="taskSubject">Asignatura</label>
+              <input id="taskSubject" type="text" placeholder="Economía">
+            </div>
+          </div>
+          <button type="button" id="addTaskBtn">Añadir tarea</button>
+          <div id="taskStats" class="result">No tienes tareas todavía.</div>
+          <div id="taskList" class="list"></div>
+          <button type="button" id="clearTasksBtn" class="secondary small">Borrar tareas completadas</button>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="goalsPanel" hidden>
+        <div class="card">
+          <h3>🎯 Objetivo semanal</h3>
+          <p>Define cuántas horas quieres estudiar esta semana y registra tu progreso.</p>
+          <div class="row">
+            <div class="field">
+              <label for="goalHours">Objetivo (horas)</label>
+              <input id="goalHours" type="number" min="1" max="100" step="1" value="10">
+            </div>
+            <div class="field">
+              <label for="completedHours">Horas completadas</label>
+              <input id="completedHours" type="number" min="0" max="100" step="0.5" value="0">
+            </div>
+          </div>
+          <button type="button" id="saveGoalBtn">Guardar objetivo</button>
+          <div id="goalResult" class="result">Configura tu objetivo.</div>
+          <div class="progress"><div id="goalProgress"></div></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="sciencePanel" hidden>
+        <div class="card">
+          <h3>🧪 Calculadora científica</h3>
+          <p>Operaciones básicas, potencias, raíces y funciones trigonométricas en radianes.</p>
+          <div class="field">
+            <label for="scienceInput">Expresión matemática</label>
+            <input id="scienceInput" type="text" placeholder="Ej. sqrt(25) + 2^3" autocomplete="off">
+            <span class="hint">Usa +, -, *, /, ^, paréntesis, sqrt(), abs(), pi, sin(), cos() y tan().</span>
+          </div>
+          <button type="button" id="scienceBtn">Calcular</button>
+          <div id="scienceResult" class="result" aria-live="polite">El resultado aparecerá aquí.</div>
+          <div class="button-row" style="margin-top:10px">
+            <button type="button" class="secondary small scienceExample" data-value="sqrt(25)">√25</button>
+            <button type="button" class="secondary small scienceExample" data-value="2^8">2⁸</button>
+            <button type="button" class="secondary small scienceExample" data-value="sin(pi/2)">sin(π/2)</button>
+            <button type="button" class="secondary small scienceExample" data-value="(3+4)*5">(3+4)×5</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recursos">
+      <div class="section-heading">
+        <h2>🌐 Recursos útiles</h2>
+        <p>Enlaces externos para seguir aprendiendo.</p>
+      </div>
+      <div class="resource-grid">
+        <a class="resource" href="https://www.khanacademy.org/" target="_blank" rel="noopener noreferrer">
+          <strong>📘 Khan Academy</strong>
+          <span>Lecciones y ejercicios de distintas asignaturas.</span>
+        </a>
+        <a class="resource" href="https://www.wolframalpha.com/" target="_blank" rel="noopener noreferrer">
+          <strong>🔬 Wolfram Alpha</strong>
+          <span>Ayuda para operaciones y problemas matemáticos.</span>
+        </a>
+        <a class="resource" href="https://quizlet.com/" target="_blank" rel="noopener noreferrer">
+          <strong>🗂️ Quizlet</strong>
+          <span>Tarjetas y actividades para memorizar conceptos.</span>
+        </a>
+        <a class="resource" href="https://www.geogebra.org/" target="_blank" rel="noopener noreferrer">
+          <strong>📐 GeoGebra</strong>
+          <span>Geometría, funciones y visualización matemática.</span>
+        </a>
+        <a class="resource" href="https://www.desmos.com/calculator?lang=es" target="_blank" rel="noopener noreferrer">
+          <strong>📈 Desmos</strong>
+          <span>Calculadora gráfica interactiva.</span>
+        </a>
+        <a class="resource" href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">
+          <strong>📚 Wikipedia</strong>
+          <span>Consulta información y encuentra referencias.</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="section-heading">
+        <h2>❔ Preguntas frecuentes</h2>
+        <p>Respuestas rápidas sobre CalculaFácil.</p>
+      </div>
+
+      <details>
+        <summary>¿CalculaFácil es gratis?</summary>
+        <p>Sí. Todas las herramientas incluidas en esta página son gratuitas.</p>
+      </details>
+
+      <details>
+        <summary>¿Se guardan mis datos?</summary>
+        <p>Las notas, tarjetas, tareas y exámenes se guardan en el almacenamiento local de tu navegador. No se sincronizan automáticamente con otros dispositivos. Si borras los datos del navegador, puedes perderlos.</p>
+      </details>
+
+      <details>
+        <summary>¿Cómo se calcula la nota necesaria?</summary>
+        <p>La calculadora usa la media ponderada: divide la nota objetivo menos la contribución de la nota actual entre el porcentaje que queda por evaluar.</p>
+      </details>
+
+      <details>
+        <summary>¿Puedo utilizar la página desde el móvil?</summary>
+        <p>Sí. El diseño se adapta a móviles, tabletas y ordenadores.</p>
+      </details>
+
+      <details>
+        <summary>¿Las calculadoras garantizan la nota final de mi asignatura?</summary>
+        <p>Los resultados dependen de los porcentajes que introduzcas. Si tu profesor utiliza reglas especiales, recuperaciones o mínimos por examen, tendrás que tenerlos en cuenta aparte.</p>
+      </details>
+    </section>
+  </div>
 </main>
 
-<footer><div class="footer-inner wrap"><div><strong>CalculaFácil</strong><br>Herramientas gratuitas para estudiantes.</div><div><a href="./media.html">Media</a> · <a href="./nota-necesaria.html">Nota necesaria</a> · <a href="#recursos">Recursos</a></div><div>Creado por <strong>Chocks Studio</strong> ✦</div></div></footer>
-<div id="toast" role="status" aria-live="polite"></div>
+<footer>
+  <div class="container footer-inner">
+    <span>© <span id="year"></span> CalculaFácil · Chocks Studio</span>
+    <span>Hecho para que estudiar sea más fácil.</span>
+  </div>
+</footer>
 
 <script>
 "use strict";
-const $=id=>document.getElementById(id);
-const fmt=n=>new Intl.NumberFormat("es-ES",{maximumFractionDigits:2}).format(n);
-function show(id,title,value,extra="",state=""){
- const el=$(id);el.className="result show"+(state?" "+state:"");el.replaceChildren();
- const t=document.createElement("span");t.className="muted";t.textContent=title;
- const s=document.createElement("strong");s.textContent=value;el.append(t,s);
- if(extra){const x=document.createElement("small");x.textContent=extra;el.append(x)}
+
+const $ = id => document.getElementById(id);
+
+function numberFrom(id) {
+  const raw = $(id).value.trim().replace(",", ".");
+  if (raw === "") return NaN;
+  return Number(raw);
 }
-function err(id,msg){show(id,"Revisa los datos",msg,"","error")}
-function val(id){return Number($(id).value)}
-function within(n,min,max){return Number.isFinite(n)&&n>=min&&n<=max}
-function formNum(form,name){return Number(new FormData(form).get(name))}
-$("average-form").addEventListener("submit",e=>{
- e.preventDefault();const raw=$("average-grades").value.trim();
- const parts=raw.includes(";")?raw.split(";"):raw.split(",");
- const ns=parts.map(x=>Number(x.trim().replace(",",".")));
- if(!raw||ns.some(n=>!within(n,0,10))){err("average-result","Introduce notas entre 0 y 10.");return}
- const avg=ns.reduce((a,b)=>a+b,0)/ns.length;
- show("average-result","Tu nota media es",fmt(avg)+" / 10",ns.length+" notas introducidas.",avg>=5?"success":"");
-});
-$("needed-form").addEventListener("submit",e=>{
- e.preventDefault();const c=val("current-grade"),p=val("completed-weight"),t=val("target-grade");
- if(!within(c,0,10)||!within(p,0,100)||!within(t,0,10)){err("needed-result","Notas de 0 a 10 y porcentaje de 0 a 100.");return}
- if(p===100){err("needed-result","Ya está evaluado el 100%; no queda porcentaje por calcular.");return}
- const n=(t-c*p/100)/(1-p/100);
- if(n<=0)show("needed-result","Objetivo alcanzable","Ya tienes la media necesaria","Según estos pesos.","success");
- else if(n>10)show("needed-result","Objetivo fuera de alcance",fmt(n)+" / 10","Necesitarías más de un 10.","error");
- else show("needed-result","Necesitas una media de",fmt(n)+" / 10","En el "+fmt(100-p)+"% que queda.",n<=5?"success":"");
-});
-$("weighted-form").addEventListener("submit",e=>{
- e.preventDefault();const a=val("grade-one"),p=val("weight-one"),b=val("grade-two");
- if(!within(a,0,10)||!within(b,0,10)||!within(p,0,100)){err("weighted-result","Notas de 0 a 10 y porcentaje de 0 a 100.");return}
- const n=a*p/100+b*(100-p)/100;
- show("weighted-result","Tu nota ponderada es",fmt(n)+" / 10","Pesos: "+fmt(p)+"% y "+fmt(100-p)+"%.",n>=5?"success":"");
-});
-$("percentage-form").addEventListener("submit",e=>{
- e.preventDefault();const p=val("percentage-value"),t=val("percentage-total");
- if(!Number.isFinite(p)||!Number.isFinite(t)||p<0||t<0){err("percentage-result","Introduce cantidades no negativas.");return}
- show("percentage-result",fmt(p)+"% de "+fmt(t)+" es",fmt(p*t/100),"Resultado del cálculo.");
-});
-$("rule-form").addEventListener("submit",e=>{
- e.preventDefault();const a=val("rule-a"),b=val("rule-b"),c=val("rule-c");
- if(![a,b,c].every(Number.isFinite)||a===0){err("rule-result","A debe ser un número distinto de cero.");return}
- show("rule-result","El valor de X es",fmt(b*c/a),"X = B × C ÷ A.");
-});
-$("fraction-form").addEventListener("submit",e=>{
- e.preventDefault();const a=val("fraction-num"),b=val("fraction-den");
- if(!Number.isInteger(a)||!Number.isInteger(b)||b===0){err("fraction-result","Usa enteros y un denominador distinto de cero.");return}
- show("fraction-result",a+"/"+b,fmt(a/b)+" en decimal","Equivale al "+fmt(a/b*100)+"%.");
-});
-$("scale-form").addEventListener("submit",e=>{
- e.preventDefault();const a=val("scale-score"),b=val("scale-max"),t=val("scale-target");
- if(!Number.isFinite(a)||!Number.isFinite(b)||b<=0||a<0||a>b){err("scale-result","La puntuación debe estar entre cero y el máximo.");return}
- show("scale-result","Tu nota convertida es",fmt(a/b*t)+" / "+fmt(t),"Porcentaje: "+fmt(a/b*100)+"%.");
-});
 
-let gradeId=0;
-function addGrade(){
- if($("grade-list").children.length>=20){notify("Puedes añadir hasta 20 notas.");return}
- const id=++gradeId,row=document.createElement("div");row.className="grade-row";
- const box=document.createElement("div"),label=document.createElement("label"),input=document.createElement("input");
- label.htmlFor="grade-"+id;label.textContent="Nota "+($("grade-list").children.length+1);
- input.id="grade-"+id;input.className="list-grade";input.placeholder="Ej. 7,5";input.setAttribute("aria-label",label.textContent);
- box.append(label,input);
- const wbox=document.createElement("div"),wl=document.createElement("label"),weight=document.createElement("input");
- wl.htmlFor="weight-"+id;wl.textContent="Peso %";weight.id="weight-"+id;weight.className="list-weight";weight.type="number";weight.min="0";weight.max="100";weight.step="any";weight.placeholder="Opcional";wbox.append(wl,weight);
- const remove=document.createElement("button");remove.className="remove";remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","Eliminar nota");
- remove.addEventListener("click",()=>{row.remove();[...$("grade-list").children].forEach((r,i)=>r.querySelector("label").textContent="Nota "+(i+1))});
- row.append(box,wbox,remove);$("grade-list").append(row);
+function formatNumber(value, digits = 2) {
+  if (!Number.isFinite(value)) return "No definido";
+  return new Intl.NumberFormat("es-ES", {
+    maximumFractionDigits: digits
+  }).format(value);
 }
-function resetGrades(){$("grade-list").replaceChildren();addGrade();addGrade();addGrade();$("list-result").className="result"}
-addGrade();addGrade();addGrade();
-$("add-grade").addEventListener("click",addGrade);
-$("clear-grades").addEventListener("click",resetGrades);
-$("calculate-list").addEventListener("click",()=>{
- const rows=[...$("grade-list").querySelectorAll(".grade-row")];
- const ns=rows.map(r=>Number(r.querySelector(".list-grade").value.trim().replace(",",".")));
- if(!ns.length||ns.some(n=>!within(n,0,10))){err("list-result","Rellena todas las notas con valores de 0 a 10.");return}
- const ws=rows.map(r=>r.querySelector(".list-weight").value.trim()===""?null:Number(r.querySelector(".list-weight").value));
- if(ws.some(w=>w!==null)){
-  if(ws.some(w=>w===null||!Number.isFinite(w)||w<0)||Math.abs(ws.reduce((a,b)=>a+b,0)-100)>.01){err("list-result","Completa todos los pesos y asegúrate de que suman el 100%.");return}
-  const avg=ns.reduce((s,n,i)=>s+n*ws[i]/100,0);show("list-result","Media ponderada",fmt(avg)+" / 10",ns.length+" notas.",avg>=5?"success":"");
- }else{const avg=ns.reduce((a,b)=>a+b,0)/ns.length;show("list-result","Tu media es",fmt(avg)+" / 10",ns.length+" notas.",avg>=5?"success":"")}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function setResult(id, html) {
+  $(id).innerHTML = html;
+}
+
+function showError(id, message) {
+  setResult(id, `<span class="bad">${escapeHTML(message)}</span>`);
+}
+
+function validRange(value, min, max) {
+  return Number.isFinite(value) && value >= min && value <= max;
+}
+
+// Tema claro/oscuro
+const savedTheme = localStorage.getItem("cf-theme");
+if (savedTheme === "light") document.body.classList.add("light");
+
+$("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("light");
+  localStorage.setItem(
+    "cf-theme",
+    document.body.classList.contains("light") ? "light" : "dark"
+  );
 });
 
-document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
- document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
- const f=btn.dataset.filter;
- document.querySelectorAll(".resource").forEach(r=>r.hidden=f!=="todas"&&!r.dataset.subject.split(" ").includes(f));
-}));
+// Navegación de herramientas de estudio
+document.querySelectorAll("[data-tab]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-tab]").forEach(item => {
+      item.classList.remove("active");
+      item.setAttribute("aria-selected", "false");
+    });
 
-$("theme").addEventListener("click",()=>{
- document.body.classList.toggle("light");
- try{localStorage.setItem("cf-theme",document.body.classList.contains("light")?"light":"dark")}catch(e){}
-});
-try{if(localStorage.getItem("cf-theme")==="light")document.body.classList.add("light")}catch(e){}
+    document.querySelectorAll(".tab-panel").forEach(panel => {
+      panel.hidden = true;
+    });
 
-let seconds=1500,interval=null;
-function drawTimer(){$("timer-display").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
-$("timer-start").addEventListener("click",()=>{
- if(interval){clearInterval(interval);interval=null;$("timer-start").textContent="▶ Continuar";return}
- if(seconds===0)seconds=1500;
- $("timer-start").textContent="Ⅱ Pausar";
- interval=setInterval(()=>{
-  if(seconds>0){seconds--;drawTimer()}
-  else{clearInterval(interval);interval=null;$("timer-start").textContent="▶ Empezar";notify("¡Sesión terminada! Toca descansar.")}
- },1000);
+    button.classList.add("active");
+    button.setAttribute("aria-selected", "true");
+    $(button.dataset.tab).hidden = false;
+  });
 });
-$("timer-reset").addEventListener("click",()=>{clearInterval(interval);interval=null;seconds=1500;drawTimer();$("timer-start").textContent="▶ Empezar"});
 
-$("pick-subject").addEventListener("click",()=>{
- const subjects=$("subjects-input").value.split(",").map(s=>s.trim()).filter(Boolean);
- if(!subjects.length){err("subject-result","Escribe asignaturas separadas por comas.");return}
- show("subject-result","Tu siguiente asignatura",subjects[Math.floor(Math.random()*subjects.length)],"¡Empieza por una tarea pequeña!");
+// 1. Media aritmética
+$("averageBtn").addEventListener("click", () => {
+  const raw = $("averageInput").value.trim();
+
+  if (!raw) {
+    showError("averageResult", "Introduce al menos una nota.");
+    return;
+  }
+
+  const parts = raw.split(/[;\s]+/).filter(Boolean);
+  const grades = parts.map(part => Number(part.replace(",", ".")));
+
+  if (grades.some(n => !Number.isFinite(n) || n < 0 || n > 10)) {
+    showError("averageResult", "Revisa las notas. Deben ser números entre 0 y 10.");
+    return;
+  }
+
+  const average = grades.reduce((sum, n) => sum + n, 0) / grades.length;
+
+  setResult("averageResult", `
+    <div class="muted">Media de ${grades.length} nota(s)</div>
+    <strong>${formatNumber(average, 4)} / 10</strong>
+    <div class="${average >= 5 ? "good" : "bad"}">
+      ${average >= 5 ? "Media de aprobado" : "Media inferior a 5"}
+    </div>
+  `);
 });
-$("task-form").addEventListener("submit",e=>{
- e.preventDefault();const text=$("task-input").value.trim();if(!text)return;
- const li=document.createElement("li"),label=document.createElement("label"),check=document.createElement("input");
- check.type="checkbox";check.style.width="auto";check.style.marginRight="8px";label.style.display="inline";label.style.fontWeight="600";
- label.append(check,document.createTextNode(text));
- check.addEventListener("change",()=>{label.style.textDecoration=check.checked?"line-through":"none";label.style.opacity=check.checked?".55":"1"});
- li.append(label);$("task-list").append(li);$("task-input").value="";
+
+// 2. Nota necesaria
+$("neededBtn").addEventListener("click", () => {
+  const current = numberFrom("currentGrade");
+  const weight = numberFrom("currentWeight");
+  const target = numberFrom("targetGrade");
+
+  if (!validRange(current, 0, 10) ||
+      !validRange(weight, 0, 99.99) ||
+      !validRange(target, 0, 10)) {
+    showError("neededResult", "Introduce una nota actual y una nota objetivo entre 0 y 10, y un porcentaje entre 0 y 99,99.");
+    return;
+  }
+
+  const remaining = 100 - weight;
+  const needed = (target - current * weight / 100) / (remaining / 100);
+
+  if (needed <= 0) {
+    setResult("neededResult", `
+      <div class="good">¡Ya has alcanzado tu objetivo!</div>
+      <strong>Necesitas un 0</strong>
+      <div class="muted">Según los porcentajes introducidos.</div>
+    `);
+  } else if (needed > 10) {
+    setResult("neededResult", `
+      <div class="bad">No es posible alcanzar esa nota solo con la evaluación restante.</div>
+      <strong>Necesitarías un ${formatNumber(needed, 2)}</strong>
+    `);
+  } else {
+    setResult("neededResult", `
+      <div class="muted">Nota necesaria en el porcentaje restante (${formatNumber(remaining)}%)</div>
+      <strong>${formatNumber(needed, 2)} / 10</strong>
+      <div class="good">Objetivo final: ${formatNumber(target)} / 10</div>
+    `);
+  }
 });
-$("clear-tasks").addEventListener("click",()=>$("task-list").replaceChildren());
-let toastTimer;
-function notify(msg){$("toast").textContent=msg;$("toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2200)}
+
+// 3. Media ponderada
+$("weightedBtn").addEventListener("click", () => {
+  const n1 = numberFrom("weightedGrade1");
+  const w1 = numberFrom("weightedWeight1");
+  const n2 = numberFrom("weightedGrade2");
+
+  if (!validRange(n1, 0, 10) ||
+      !validRange(n2, 0, 10) ||
+      !validRange(w1, 0, 100)) {
+    showError("weightedResult", "Introduce notas entre 0 y 10 y un peso entre 0 y 100.");
+    return;
+  }
+
+  const w2 = 100 - w1;
+  const result = (n1 * w1 + n2 * w2) / 100;
+
+  setResult("weightedResult", `
+    <div class="muted">Peso: ${formatNumber(w1)}% + ${formatNumber(w2)}%</div>
+    <strong>${formatNumber(result, 4)} / 10</strong>
+  `);
+});
+
+// 4. Porcentajes
+$("percentBtn").addEventListener("click", () => {
+  const value = numberFrom("percentValue");
+  const rate = numberFrom("percentRate");
+
+  if (!Number.isFinite(value) || !Number.isFinite(rate)) {
+    showError("percentResult", "Introduce una cantidad y un porcentaje válidos.");
+    return;
+  }
+
+  const result = value * rate / 100;
+
+  setResult("percentResult", `
+    <div class="muted">${formatNumber(rate)}% de ${formatNumber(value, 4)}</div>
+    <strong>${formatNumber(result, 6)}</strong>
+  `);
+});
+
+// 5. Regla de tres
+$("ruleBtn").addEventListener("click", () => {
+  const a = numberFrom("ruleA");
+  const b = numberFrom("ruleB");
+  const c = numberFrom("ruleC");
+
+  if (![a, b, c].every(Number.isFinite)) {
+    showError("ruleResult", "Completa los tres campos.");
+    return;
+  }
+
+  if (a === 0) {
+    showError("ruleResult", "A no puede ser cero.");
+    return;
+  }
+
+  const result = b * c / a;
+
+  setResult("ruleResult", `
+    <div class="muted">X = (B × C) ÷ A</div>
+    <strong>X = ${formatNumber(result, 6)}</strong>
+  `);
+});
+
+// 6. Fracciones
+$("fractionBtn").addEventListener("click", () => {
+  const numerator = numberFrom("fractionNumerator");
+  const denominator = numberFrom("fractionDenominator");
+
+  if (!Number.isInteger(numerator) || !Number.isInteger(denominator)) {
+    showError("fractionResult", "El numerador y el denominador deben ser enteros.");
+    return;
+  }
+
+  if (denominator === 0) {
+    showError("fractionResult", "El denominador no puede ser cero.");
+    return;
+  }
+
+  const decimal = numerator / denominator;
+
+  setResult("fractionResult", `
+    <div class="muted">${numerator} / ${denominator}</div>
+    <strong>${formatNumber(decimal, 8)}</strong>
+    <div>${formatNumber(decimal * 100, 4)}%</div>
+  `);
+});
+
+// 7. Conversor de escalas
+$("scaleBtn").addEventListener("click", () => {
+  const score = numberFrom("scaleScore");
+  const from = numberFrom("scaleFrom");
+  const to = numberFrom("scaleTo");
+
+  if (![score, from, to].every(Number.isFinite) || from <= 0 || to <= 0) {
+    showError("scaleResult", "Introduce números válidos y escalas mayores que cero.");
+    return;
+  }
+
+  if (score < 0 || score > from) {
+    showError("scaleResult", "La puntuación debe estar entre 0 y la escala original.");
+    return;
+  }
+
+  const result = score / from * to;
+
+  setResult("scaleResult", `
+    <div class="muted">${formatNumber(score)} / ${formatNumber(from)}</div>
+    <strong>${formatNumber(result, 4)} / ${formatNumber(to)}</strong>
+  `);
+});
+
+// 8. Lista de notas
+let grades = JSON.parse(localStorage.getItem("cf-grades") || "[]");
+
+function saveGrades() {
+  localStorage.setItem("cf-grades", JSON.stringify(grades));
+}
+
+function drawGrades() {
+  const list = $("gradeList");
+  list.innerHTML = "";
+
+  if (grades.length === 0) {
+    $("gradeStats").textContent = "Todavía no has añadido notas.";
+    list.innerHTML = '<div class="empty">Tu lista está vacía.</div>';
+    return;
+  }
+
+  const values = grades.map(item => item.value);
+  const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+  $("gradeStats").innerHTML = `
+    <div class="muted">Número de notas: ${grades.length}</div>
+    <strong>Media: ${formatNumber(average, 3)} / 10</strong>
+    <div>Mayor: ${formatNumber(Math.max(...values))} · Menor: ${formatNumber(Math.min(...values))}</div>
+  `;
+
+  grades.forEach((item, index) => {
+    const element = document.createElement("div");
+    element.className = "list-item";
+    element.innerHTML = `
+      <div>${escapeHTML(item.name || "Sin asignatura")}
+        <small>Nota: ${formatNumber(item.value)}</small>
+      </div>
+      <div class="item-actions">
+        <button type="button" class="danger small" aria-label="Eliminar nota" data-delete-grade="${index}">Eliminar</button>
+      </div>
+    `;
+    list.appendChild(element);
+  });
+}
+
+$("addGradeBtn").addEventListener("click", () => {
+  const value = numberFrom("gradeValue");
+  const name = $("gradeName").value.trim();
+
+  if (!validRange(value, 0, 10)) {
+    alert("Introduce una nota entre 0 y 10.");
+    return;
+  }
+
+  grades.push({ name, value });
+  saveGrades();
+  drawGrades();
+  $("gradeValue").value = "";
+  $("gradeName").value = "";
+});
+
+$("gradeList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-grade]");
+  if (!button) return;
+
+  grades.splice(Number(button.dataset.deleteGrade), 1);
+  saveGrades();
+  drawGrades();
+});
+
+$("clearGradesBtn").addEventListener("click", () => {
+  if (!grades.length || !confirm("¿Quieres borrar todas las notas?")) return;
+  grades = [];
+  saveGrades();
+  drawGrades();
+});
+
+drawGrades();
+
+// 9. Planificador de exámenes
+let exams = JSON.parse(localStorage.getItem("cf-exams") || "[]");
+
+function saveExams() {
+  localStorage.setItem("cf-exams", JSON.stringify(exams));
+}
+
+function daysUntil(dateString) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const date = new Date(dateString + "T00:00:00");
+  return Math.round((date - today) / 86400000);
+}
+
+function drawExams() {
+  const list = $("examList");
+  list.innerHTML = "";
+
+  if (!exams.length) {
+    list.innerHTML = '<div class="empty">Todavía no tienes exámenes programados.</div>';
+    return;
+  }
+
+  exams.sort((a, b) => a.date.localeCompare(b.date));
+
+  exams.forEach((exam, index) => {
+    const days = daysUntil(exam.date);
+    let countdown;
+
+    if (days < 0) countdown = `Hace ${Math.abs(days)} día(s)`;
+    else if (days === 0) countdown = "¡Es hoy!";
+    else countdown = `Quedan ${days} día(s)`;
+
+    const element = document.createElement("div");
+    element.className = "list-item";
+    element.innerHTML = `
+      <div>
+        <strong>${escapeHTML(exam.subject)}</strong>
+        <small>${escapeHTML(exam.date)} · ${escapeHTML(countdown)}</small>
+        ${exam.notes ? `<small>${escapeHTML(exam.notes)}</small>` : ""}
+      </div>
+      <button type="button" class="danger small" data-delete-exam="${index}">Eliminar</button>
+    `;
+    list.appendChild(element);
+  });
+}
+
+$("addExamBtn").addEventListener("click", () => {
+  const subject = $("examSubject").value.trim();
+  const date = $("examDate").value;
+  const notes = $("examNotes").value.trim();
+
+  if (!subject || !date) {
+    alert("Introduce la asignatura y la fecha.");
+    return;
+  }
+
+  exams.push({ subject, date, notes });
+  saveExams();
+  drawExams();
+  $("examSubject").value = "";
+  $("examDate").value = "";
+  $("examNotes").value = "";
+});
+
+$("examList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-exam]");
+  if (!button) return;
+
+  exams.splice(Number(button.dataset.deleteExam), 1);
+  saveExams();
+  drawExams();
+});
+
+drawExams();
+
+// 10. Tarjetas de memoria
+let flashcards = JSON.parse(localStorage.getItem("cf-flashcards") || "[]");
+let flashIndex = 0;
+let flashShowingAnswer = false;
+
+function saveFlashcards() {
+  localStorage.setItem("cf-flashcards", JSON.stringify(flashcards));
+}
+
+function drawFlashcard() {
+  const display = $("flashDisplay");
+  const counter = $("flashCounter");
+
+  if (!flashcards.length) {
+    display.textContent = "Aún no tienes tarjetas.";
+    counter.textContent = "";
+    $("flashList").innerHTML = "";
+    return;
+  }
+
+  flashIndex = (flashIndex + flashcards.length) % flashcards.length;
+  const card = flashcards[flashIndex];
+
+  display.textContent = flashShowingAnswer ? card.answer : card.question;
+  counter.textContent = `Tarjeta ${flashIndex + 1} de ${flashcards.length}`;
+
+  $("flashList").innerHTML = "";
+
+  flashcards.forEach((item, index) => {
+    const element = document.createElement("div");
+    element.className = "list-item";
+    element.innerHTML = `
+      <div>${escapeHTML(item.question)}
+        <small>Tarjeta ${index + 1}</small>
+      </div>
+      <button type="button" class="danger small" data-delete-flash="${index}">Eliminar</button>
+    `;
+    $("flashList").appendChild(element);
+  });
+}
+
+$("addFlashBtn").addEventListener("click", () => {
+  const question = $("flashQuestion").value.trim();
+  const answer = $("flashAnswer").value.trim();
+
+  if (!question || !answer) {
+    alert("Escribe una pregunta y una respuesta.");
+    return;
+  }
+
+  flashcards.push({ question, answer });
+  flashIndex = flashcards.length - 1;
+  flashShowingAnswer = false;
+  saveFlashcards();
+  drawFlashcard();
+
+  $("flashQuestion").value = "";
+  $("flashAnswer").value = "";
+});
+
+$("flipFlashBtn").addEventListener("click", () => {
+  if (!flashcards.length) return;
+  flashShowingAnswer = !flashShowingAnswer;
+  drawFlashcard();
+});
+
+$("nextFlashBtn").addEventListener("click", () => {
+  if (!flashcards.length) return;
+  flashIndex++;
+  flashShowingAnswer = false;
+  drawFlashcard();
+});
+
+$("prevFlashBtn").addEventListener("click", () => {
+  if (!flashcards.length) return;
+  flashIndex--;
+  flashShowingAnswer = false;
+  drawFlashcard();
+});
+
+$("flashList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-flash]");
+  if (!button) return;
+
+  flashcards.splice(Number(button.dataset.deleteFlash), 1);
+  flashIndex = Math.min(flashIndex, flashcards.length - 1);
+  flashShowingAnswer = false;
+  saveFlashcards();
+  drawFlashcard();
+});
+
+drawFlashcard();
+
+// 11. Creador de test
+let quizQuestions = JSON.parse(localStorage.getItem("cf-quiz") || "[]");
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function saveQuiz() {
+  localStorage.setItem("cf-quiz", JSON.stringify(quizQuestions));
+}
+
+function drawQuizList() {
+  const list = $("quizList");
+  list.innerHTML = "";
+
+  if (!quizQuestions.length) {
+    $("quizStatus").textContent = "Añade preguntas para empezar.";
+    list.innerHTML = '<div class="empty">No hay preguntas guardadas.</div>';
+    $("quizPlay").classList.add("hidden");
+    return;
+  }
+
+  $("quizStatus").textContent = `Tienes ${quizQuestions.length} pregunta(s) guardada(s).`;
+
+  quizQuestions.forEach((question, index) => {
+    const element = document.createElement("div");
+    element.className = "list-item";
+    element.innerHTML = `
+      <div>${escapeHTML(question.question)}
+        <small>${question.options.length} opciones</small>
+      </div>
+      <button type="button" class="danger small" data-delete-quiz="${index}">Eliminar</button>
+    `;
+    list.appendChild(element);
+  });
+}
+
+function startQuiz() {
+  if (!quizQuestions.length) return;
+
+  quizIndex = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  $("quizPlay").classList.remove("hidden");
+  drawQuizQuestion();
+}
+
+function drawQuizQuestion() {
+  if (!quizQuestions.length) {
+    $("quizPlay").classList.add("hidden");
+    return;
+  }
+
+  if (quizIndex >= quizQuestions.length) {
+    $("quizPlayQuestion").textContent = "¡Test terminado!";
+    $("quizPlayOptions").innerHTML = "";
+    $("quizFeedback").innerHTML = `
+      <strong>Resultado: ${quizScore} / ${quizQuestions.length}</strong>
+      <div>${formatNumber(quizScore / quizQuestions.length * 100)}% de aciertos</div>
+    `;
+    $("nextQuizBtn").textContent = "Ver resultado";
+    $("nextQuizBtn").disabled = true;
+    return;
+  }
+
+  const question = quizQuestions[quizIndex];
+  quizAnswered = false;
+
+  $("quizPlayQuestion").textContent =
+    `Pregunta ${quizIndex + 1}/${quizQuestions.length}: ${question.question}`;
+
+  $("quizPlayOptions").innerHTML = "";
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "secondary";
+    button.style.textAlign = "left";
+    button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+
+    button.addEventListener("click", () => {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      const correct = index === question.correct;
+      if (correct) quizScore++;
+
+      $("quizFeedback").innerHTML = correct
+        ? '<span class="good"><strong>¡Correcto!</strong></span>'
+        : `<span class="bad">Incorrecto.</span> La respuesta correcta es: <strong>${escapeHTML(question.options[question.correct])}</strong>`;
+
+      Array.from($("quizPlayOptions").children).forEach((item, itemIndex) => {
+        item.disabled = true;
+        if (itemIndex === question.correct) {
+          item.style.borderColor = "var(--good)";
+        } else if (itemIndex === index && !correct) {
+          item.style.borderColor = "var(--bad)";
+        }
+      });
+
+      $("nextQuizBtn").textContent =
+        quizIndex === quizQuestions.length - 1 ? "Terminar test" : "Siguiente pregunta";
+    });
+
+    $("quizPlayOptions").appendChild(button);
+  });
+
+  $("quizFeedback").textContent = "Selecciona una respuesta.";
+  $("nextQuizBtn").disabled = false;
+  $("nextQuizBtn").textContent = "Siguiente pregunta";
+}
+
+$("addQuizBtn").addEventListener("click", () => {
+  const question = $("quizQuestion").value.trim();
+  const options = [
+    $("quizOption1").value.trim(),
+    $("quizOption2").value.trim(),
+    $("quizOption3").value.trim()
+  ];
+  const correct = Number($("quizCorrect").value);
+
+  if (!question || options.some(option => !option)) {
+    alert("Completa la pregunta y las tres opciones.");
+    return;
+  }
+
+  quizQuestions.push({ question, options, correct });
+  saveQuiz();
+  drawQuizList();
+
+  $("quizQuestion").value = "";
+  $("quizOption1").value = "";
+  $("quizOption2").value = "";
+  $("quizOption3").value = "";
+
+  startQuiz();
+});
+
+$("quizList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-quiz]");
+  if (!button) return;
+
+  quizQuestions.splice(Number(button.dataset.deleteQuiz), 1);
+  saveQuiz();
+  drawQuizList();
+  startQuiz();
+});
+
+$("nextQuizBtn").addEventListener("click", () => {
+  if (quizIndex >= quizQuestions.length) return;
+  if (!quizAnswered) {
+    $("quizFeedback").textContent = "Selecciona una respuesta antes de continuar.";
+    return;
+  }
+
+  quizIndex++;
+  drawQuizQuestion();
+});
+
+$("restartQuizBtn").addEventListener("click", startQuiz);
+
+drawQuizList();
+
+// 12. Pomodoro
+let timerInterval = null;
+let timerMode = "study";
+let timerRemaining = 25 * 60;
+let timerRunning = false;
+let timerTotal = 25 * 60;
+
+function getStudySeconds() {
+  const minutes = Number($("studyMinutes").value);
+  return validRange(minutes, 1, 180) ? Math.floor(minutes * 60) : 25 * 60;
+}
+
+function getBreakSeconds() {
+  const minutes = Number($("breakMinutes").value);
+  return validRange(minutes, 1, 60) ? Math.floor(minutes * 60) : 5 * 60;
+}
+
+function drawTimer() {
+  const minutes = Math.floor(timerRemaining / 60);
+  const seconds = timerRemaining % 60;
+
+  $("timerDisplay").textContent =
+    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+  $("timerLabel").textContent =
+    timerMode === "study" ? "Sesión de estudio" : "Tiempo de descanso";
+
+  const elapsed = timerTotal > 0 ? 1 - timerRemaining / timerTotal : 0;
+  $("timerProgress").style.width = `${Math.min(100, Math.max(0, elapsed * 100))}%`;
+}
+
+function stopTimer() {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  timerRunning = false;
+}
+
+function resetTimer() {
+  stopTimer();
+  timerMode = "study";
+  timerTotal = getStudySeconds();
+  timerRemaining = timerTotal;
+  drawTimer();
+}
+
+function startTimer() {
+  if (timerRunning) return;
+
+  if (timerRemaining <= 0) resetTimer();
+
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timerRemaining--;
+    drawTimer();
+
+    if (timerRemaining <= 0) {
+      stopTimer();
+
+      if (timerMode === "study") {
+        alert("¡Sesión terminada! Toca descansar.");
+        timerMode = "break";
+        timerTotal = getBreakSeconds();
+      } else {
+        alert("Descanso terminado. ¡A seguir!");
+        timerMode = "study";
+        timerTotal = getStudySeconds();
+      }
+
+      timerRemaining = timerTotal;
+      drawTimer();
+    }
+  }, 1000);
+}
+
+$("startTimerBtn").addEventListener("click", startTimer);
+$("pauseTimerBtn").addEventListener("click", stopTimer);
+$("resetTimerBtn").addEventListener("click", resetTimer);
+
+$("studyMinutes").addEventListener("change", () => {
+  if (timerMode === "study" && !timerRunning) resetTimer();
+});
+
+$("breakMinutes").addEventListener("change", () => {
+  if (timerMode === "break" && !timerRunning) {
+    timerTotal = getBreakSeconds();
+    timerRemaining = timerTotal;
+    drawTimer();
+  }
+});
+
+drawTimer();
+
+// 13. Lista de tareas
+let tasks = JSON.parse(localStorage.getItem("cf-tasks") || "[]");
+
+function saveTasks() {
+  localStorage.setItem("cf-tasks", JSON.stringify(tasks));
+}
+
+function drawTasks() {
+  const list = $("taskList");
+  list.innerHTML = "";
+
+  const completed = tasks.filter(task => task.done).length;
+  $("taskStats").innerHTML = `
+    <strong>${completed} / ${tasks.length} completadas</strong>
+    <div class="progress"><div style="width:${tasks.length ? completed / tasks.length * 100 : 0}%"></div></div>
+  `;
+
+  if (!tasks.length) {
+    list.innerHTML = '<div class="empty">No tienes tareas todavía.</div>';
+    return;
+  }
+
+  tasks.forEach((task, index) => {
+    const element = document.createElement("div");
+    element.className = "list-item";
+    element.innerHTML = `
+      <div>
+        <label style="display:flex;align-items:center;gap:9px">
+          <input type="checkbox" data-task-check="${index}" ${task.done ? "checked" : ""} style="width:auto">
+          <span style="${task.done ? "text-decoration:line-through;opacity:.65" : ""}">${escapeHTML(task.title)}</span>
+        </label>
+        ${task.subject ? `<small>${escapeHTML(task.subject)}</small>` : ""}
+      </div>
+      <button type="button" class="danger small" data-delete-task="${index}">Eliminar</button>
+    `;
+    list.appendChild(element);
+  });
+}
+
+$("addTaskBtn").addEventListener("click", () => {
+  const title = $("taskInput").value.trim();
+  const subject = $("taskSubject").value.trim();
+
+  if (!title) {
+    alert("Escribe una tarea.");
+    return;
+  }
+
+  tasks.push({ title, subject, done: false });
+  saveTasks();
+  drawTasks();
+
+  $("taskInput").value = "";
+  $("taskSubject").value = "";
+});
+
+$("taskList").addEventListener("change", event => {
+  const checkbox = event.target.closest("[data-task-check]");
+  if (!checkbox) return;
+
+  tasks[Number(checkbox.dataset.taskCheck)].done = checkbox.checked;
+  saveTasks();
+  drawTasks();
+});
+
+$("taskList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-task]");
+  if (!button) return;
+
+  tasks.splice(Number(button.dataset.deleteTask), 1);
+  saveTasks();
+  drawTasks();
+});
+
+$("clearTasksBtn").addEventListener("click", () => {
+  tasks = tasks.filter(task => !task.done);
+  saveTasks();
+  drawTasks();
+});
+
+drawTasks();
+
+// 14. Objetivo semanal
+const savedGoal = JSON.parse(localStorage.getItem("cf-goal") || "null");
+
+if (savedGoal) {
+  $("goalHours").value = savedGoal.goal;
+  $("completedHours").value = savedGoal.completed;
+}
+
+function drawGoal() {
+  const goal = numberFrom("goalHours");
+  const completed = numberFrom("completedHours");
+
+  if (!validRange(goal, 1, 100) || !validRange(completed, 0, 100)) {
+    $("goalResult").textContent = "Introduce horas válidas.";
+    $("goalProgress").style.width = "0%";
+    return;
+  }
+
+  const percent = completed / goal * 100;
+  const remaining = Math.max(0, goal - completed);
+
+  $("goalResult").innerHTML = `
+    <strong>${formatNumber(Math.min(percent, 100))}% del objetivo</strong>
+    <div>${remaining > 0
+      ? `Te quedan ${formatNumber(remaining)} hora(s) para completar tu objetivo.`
+      : "¡Objetivo semanal completado!"}</div>
+  `;
+
+  $("goalProgress").style.width = `${Math.min(100, percent)}%`;
+}
+
+$("saveGoalBtn").addEventListener("click", () => {
+  const goal = numberFrom("goalHours");
+  const completed = numberFrom("completedHours");
+
+  if (!validRange(goal, 1, 100) || !validRange(completed, 0, 100)) {
+    alert("Introduce un objetivo entre 1 y 100 horas y un progreso entre 0 y 100.");
+    return;
+  }
+
+  localStorage.setItem("cf-goal", JSON.stringify({ goal, completed }));
+  drawGoal();
+});
+
+$("goalHours").addEventListener("input", drawGoal);
+$("completedHours").addEventListener("input", drawGoal);
+drawGoal();
+
+// 15. Calculadora científica con parser seguro
+// No se utiliza eval() ni se ejecuta código introducido por el usuario.
+function tokenize(expression) {
+  const tokens = [];
+  let i = 0;
+
+  while (i < expression.length) {
+    const rest = expression.slice(i);
+
+    if (/^\s+/.test(rest)) {
+      i += rest.match(/^\s+/)[0].length;
+      continue;
+    }
+
+    const number = rest.match(/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?/i);
+    if (number) {
+      tokens.push({ type: "number", value: Number(number[0]) });
+      i += number[0].length;
+      continue;
+    }
+
+    const identifier = rest.match(/^[a-z]+/i);
+    if (identifier) {
+      tokens.push({ type: "identifier", value: identifier[0].toLowerCase() });
+      i += identifier[0].length;
+      continue;
+    }
+
+    const char = expression[i];
+
+    if ("+-*/^()".includes(char)) {
+      tokens.push({ type: char, value: char });
+      i++;
+      continue;
+    }
+
+    throw new Error(`Carácter no válido: ${char}`);
+  }
+
+  return tokens;
+}
+
+function calculateScientific(expression) {
+  const tokens = tokenize(expression);
+  let position = 0;
+
+  function peek() {
+    return tokens[position];
+  }
+
+  function consume(type) {
+    const token = peek();
+    if (!token || token.type !== type) {
+      throw new Error("La expresión matemática no está completa.");
+    }
+    position++;
+    return token;
+  }
+
+  function parseExpression() {
+    let value = parseTerm();
+
+    while (peek() && (peek().type === "+" || peek().type === "-")) {
+      const operator = tokens[position++].type;
+      const right = parseTerm();
+      value = operator === "+" ? value + right : value - right;
+    }
+
+    return value;
+  }
+
+  function parseTerm() {
+    let value = parseUnary();
+
+    while (peek() && (peek().type === "*" || peek().type === "/")) {
+      const operator = tokens[position++].type;
+      const right = parseUnary();
+
+      if (operator === "/" && right === 0) {
+        throw new Error("No se puede dividir entre cero.");
+      }
+
+      value = operator === "*" ? value * right : value / right;
+    }
+
+    return value;
+  }
+
+  function parseUnary() {
+    if (peek() && peek().type === "+") {
+      position++;
+      return parseUnary();
+    }
+
+    if (peek() && peek().type === "-") {
+      position++;
+      return -parseUnary();
+    }
+
+    return parsePower();
+  }
+
+  function parsePower() {
+    let value = parsePrimary();
+
+    if (peek() && peek().type === "^") {
+      position++;
+      const exponent = parseUnary();
+      value = Math.pow(value, exponent);
+    }
+
+    return value;
+  }
+
+  function parsePrimary() {
+    const token = peek();
+
+    if (!token) throw new Error("Falta un número.");
+
+    if (token.type === "number") {
+      position++;
+      return token.value;
+    }
+
+    if (token.type === "(") {
+      position++;
+      const value = parseExpression();
+      consume(")");
+      return value;
+    }
+
+    if (token.type === "identifier") {
+      position++;
+      const name = token.value;
+
+      if (name === "pi") return Math.PI;
+      if (name === "e") return Math.E;
+
+      const allowed = ["sqrt", "abs", "sin", "cos", "tan", "log", "ln"];
+
+      if (!allowed.includes(name)) {
+        throw new Error(`Función no reconocida: ${name}`);
+      }
+
+      consume("(");
+      const argument = parseExpression();
+      consume(")");
+
+      if (name === "sqrt") {
+        if (argument < 0) throw new Error("La raíz cuadrada de un número negativo no es real.");
+        return Math.sqrt(argument);
+      }
+
+      if (name === "abs") return Math.abs(argument);
+
+      if (name === "sin") return Math.sin(argument);
+      if (name === "cos") return Math.cos(argument);
+
+      if (name === "tan") {
+        if (Math.abs(Math.cos(argument)) < 1e-12) {
+          throw new Error("La tangente no está definida para ese ángulo.");
+        }
+        return Math.tan(argument);
+      }
+
+      if (name === "log") {
+        if (argument <= 0) throw new Error("El logaritmo requiere un número positivo.");
+        return Math.log10(argument);
+      }
+
+      if (name === "ln") {
+        if (argument <= 0) throw new Error("El logaritmo requiere un número positivo.");
+        return Math.log(argument);
+      }
+    }
+
+    throw new Error("Expresión no válida.");
+  }
+
+  if (!tokens.length) throw new Error("Escribe una expresión matemática.");
+
+  const result = parseExpression();
+
+  if (position !== tokens.length) {
+    throw new Error("Hay caracteres o símbolos que no se han podido interpretar.");
+  }
+
+  if (!Number.isFinite(result)) {
+    throw new Error("El resultado no es un número finito.");
+  }
+
+  return result;
+}
+
+$("scienceBtn").addEventListener("click", () => {
+  try {
+    const result = calculateScientific($("scienceInput").value);
+    setResult("scienceResult", `<strong>${formatNumber(result, 10)}</strong>`);
+  } catch (error) {
+    showError("scienceResult", error.message);
+  }
+});
+
+$("scienceInput").addEventListener("keydown", event => {
+  if (event.key === "Enter") $("scienceBtn").click();
+});
+
+document.querySelectorAll(".scienceExample").forEach(button => {
+  button.addEventListener("click", () => {
+    $("scienceInput").value = button.dataset.value;
+    $("scienceBtn").click();
+  });
+});
+
+// Año del pie de página
+$("year").textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
