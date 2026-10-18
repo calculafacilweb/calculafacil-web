@@ -1,1 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foro | CalculaFácil</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f4f7fb;color:#172033;margin:0}
+header{background:#2457d6;color:white;padding:22px}
+main{max-width:900px;margin:25px auto;padding:0 16px}
+.card{background:white;padding:20px;border-radius:14px;margin:16px 0;box-shadow:0 3px 12px #0000000c}
+input,textarea,select,button{font:inherit;padding:12px;border-radius:8px;border:1px solid #ccd3df;width:100%;margin:6px 0}
+button{background:#2457d6;color:white;border:0;cursor:pointer;font-weight:bold}
+button.secondary{background:#e8edff;color:#2457d6}
+.small{color:#657087;font-size:14px}
+.question{border-top:1px solid #e5e9f0;padding:15px 0}
+.reply{background:#f4f7fb;padding:12px;border-radius:8px;margin:8px 0}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+  <h1>CalculaFácil · Foro</h1>
+  <p>Pregunta, comparte dudas y ayuda a otros estudiantes.</p>
+  <a href="index.html" style="color:white">← Volver a CalculaFácil</a>
+</header>
+<main>
+  <section class="card" id="auth">
+    <h2>Tu cuenta</h2>
+    <input id="name" placeholder="Nombre visible (para registrarte)">
+    <input id="email" type="email" placeholder="Correo electrónico">
+    <input id="password" type="password" placeholder="Contraseña (mínimo 6 caracteres)">
+    <button id="signup">Crear cuenta</button>
+    <button id="login" class="secondary">Iniciar sesión</button>
+    <p id="authMsg" class="small">Al registrarte, puede que tengas que confirmar tu correo.</p>
+  </section>
 
+  <section class="card hidden" id="userPanel">
+    <p id="welcome"></p>
+    <button id="logout" class="secondary">Cerrar sesión</button>
+  </section>
+
+  <section class="card hidden" id="ask">
+    <h2>Publicar una pregunta</h2>
+    <select id="subject">
+      <option value="Matemáticas">Matemáticas</option>
+      <option value="Lengua">Lengua</option>
+      <option value="Gallego">Gallego</option>
+      <option value="Inglés">Inglés</option>
+      <option value="Historia">Historia</option>
+      <option value="Economía">Economía</option>
+      <option value="Filosofía">Filosofía</option>
+      <option value="Física y Química">Física y Química</option>
+      <option value="Otras">Otras</option>
+    </select>
+    <input id="title" maxlength="120" placeholder="Título de la duda">
+    <textarea id="body" rows="4" maxlength="5000" placeholder="Explica tu pregunta..."></textarea>
+    <button id="publish">Publicar pregunta</button>
+    <p id="publishMsg" class="small"></p>
+  </section>
+
+  <section class="card">
+    <h2>Preguntas de estudiantes</h2>
+    <select id="filter">
+      <option value="">Todas las asignaturas</option>
+      <option>Matemáticas</option><option>Lengua</option><option>Gallego</option>
+      <option>Inglés</option><option>Historia</option><option>Economía</option>
+      <option>Filosofía</option><option>Física y Química</option><option>Otras</option>
+    </select>
+    <button id="refresh" class="secondary">Actualizar preguntas</button>
+    <div id="questions">Cargando preguntas...</div>
+  </section>
+</main>
+
+<script>
+const SUPABASE_URL = 'https://kimgbvzxeeyheaaqqldz.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_W-CDVj04WWHXU3dLNUThPw_8Qde0lZb';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+let currentUser = null;
+
+function message(id, text) { $(id).textContent = text; }
+function safe(text) {
+  return String(text ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+function updateUI() {
+  $('auth').classList.toggle('hidden', !!currentUser);
+  $('userPanel').classList.toggle('hidden', !currentUser);
+  $('ask').classList.toggle('hidden', !currentUser);
+  if (currentUser) $('welcome').textContent =
+    'Sesión iniciada: ' + (currentUser.user_metadata?.display_name || currentUser.email);
+}
+async function loadUser() {
+  const { data } = await db.auth.getUser();
+  currentUser = data.user;
+  updateUI();
+}
+$('signup').onclick = async () => {
+  const email = $('email').value.trim(), password = $('password').value;
+  const name = $('name').value.trim();
+  if (!name) return message('authMsg','Escribe el nombre que verán los demás.');
+  if (password.length < 6) return message('authMsg','La contraseña debe tener al menos 6 caracteres.');
+  const { data, error } = await db.auth.signUp({
+    email, password, options: { data: { display_name: name } }
+  });
+  if (error) return message('authMsg', error.message);
+  if (data.session) {
+    currentUser = data.user; updateUI();
+    message('authMsg','Cuenta creada correctamente.');
+  } else {
+    message('authMsg','Revisa tu correo para confirmar la cuenta y después inicia sesión.');
+  }
+};
+$('login').onclick = async () => {
+  const { data, error } = await db.auth.signInWithPassword({
+    email: $('email').value.trim(), password: $('password').value
+  });
+  if (error) return message('authMsg',error.message);
+  currentUser = data.user; updateUI(); await loadQuestions();
+};
+$('logout').onclick = async () => {
+  await db.auth.signOut(); currentUser = null; updateUI();
+};
+$('publish').onclick = async () => {
+  if (!currentUser) return;
+  const title = $('title').value.trim(), body = $('body').value.trim();
+  if (title.length < 8 || body.length < 10)
+    return message('publishMsg','El título debe tener al menos 8 caracteres y el texto 10.');
+  const { error } = await db.from('forum_questions').insert({
+    subject: $('subject').value, title, body, user_id: currentUser.id
+  });
+  if (error) return message('publishMsg','No se pudo publicar: ' + error.message);
+  $('title').value = ''; $('body').value = '';
+  message('publishMsg','Pregunta publicada.');
+  await loadQuestions();
+};
+async function loadQuestions() {
+  const filter = $('filter').value;
+  $('questions').textContent = 'Cargando...';
+  let query = db.from('forum_questions')
+    .select('id,subject,title,body,user_id,created_at')
+    .order('created_at',{ascending:false}).limit(100);
+  if (filter) query = query.eq('subject',filter);
+  const { data, error } = await query;
+  if (error) {
+    $('questions').textContent = 'Error al cargar: ' + error.message;
+    return;
+  }
+  if (!data.length) {
+    $('questions').textContent = 'Todavía no hay preguntas en esta categoría.';
+    return;
+  }
+  $('questions').innerHTML = '';
+  for (const q of data) {
+    const div = document.createElement('article');
+    div.className = 'question';
+    div.innerHTML = `
+      <p class="small">${safe(q.subject)} · ${safe(new Date(q.created_at).toLocaleString('es-ES'))}</p>
+      <h3>${safe(q.title)}</h3>
+      <p style="white-space:pre-wrap">${safe(q.body)}</p>
+      <div id="replies-${safe(q.id)}"><span class="small">Cargando respuestas...</span></div>
+      <form class="replyForm ${currentUser ? '' : 'hidden'}" data-id="${safe(q.id)}">
+        <textarea name="reply" rows="2" maxlength="3000" placeholder="Escribe una respuesta..." required></textarea>
+        <button>Responder</button>
+        <p class="small status"></p>
+      </form>
+      ${currentUser ? '' : '<p class="small">Inicia sesión para responder.</p>'}
+    `;
+    $('questions').appendChild(div);
+    loadReplies(q.id);
+  }
+  document.querySelectorAll('.replyForm').forEach(form => {
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const text = form.elements.reply.value.trim();
+      if (text.length < 2) return;
+      const { error } = await db.from('forum_replies').insert({
+        question_id: form.dataset.id, user_id: currentUser.id, body: text
+      });
+      if (error) form.querySelector('.status').textContent = 'Error: ' + error.message;
+      else {
+        form.elements.reply.value = '';
+        form.querySelector('.status').textContent = 'Respuesta publicada.';
+        await loadReplies(form.dataset.id);
+      }
+    };
+  });
+}
+async function loadReplies(questionId) {
+  const target = $('replies-' + questionId);
+  if (!target) return;
+  const { data, error } = await db.from('forum_replies')
+    .select('id,body,created_at').eq('question_id',questionId)
+    .order('created_at',{ascending:true});
+  if (error) { target.textContent = 'No se pudieron cargar las respuestas.'; return; }
+  target.innerHTML = '<h4>Respuestas (' + data.length + ')</h4>';
+  for (const r of data) {
+    const p = document.createElement('p');
+    p.className = 'reply';
+    p.style.whiteSpace = 'pre-wrap';
+    p.textContent = r.body;
+    target.appendChild(p);
+  }
+}
+$('refresh').onclick = loadQuestions;
+$('filter').onchange = loadQuestions;
+db.auth.onAuthStateChange((_event, session) => {
+  currentUser = session?.user || null;
+  updateUI();
+});
+(async () => { await loadUser(); await loadQuestions(); })();
+</script>
+</body>
+</html>
