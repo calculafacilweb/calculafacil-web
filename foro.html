@@ -679,6 +679,28 @@
           replies.textContent = 'Cargando respuestas…';
 
           article.append(top, heading, body, replies);
+          const { data: questionVotes, error: questionVotesError } = await db
+  .from('forum_question_votes')
+  .select('id,user_id')
+  .eq('question_id', q.id);
+
+if (questionVotesError) {
+  console.error('No se pudieron cargar los votos:', questionVotesError);
+}
+
+const validQuestionVotes = questionVotes || [];
+const questionVoted = validQuestionVotes.some(
+  vote => vote.user_id === currentUser?.id
+);
+
+const questionVoteButton = createVoteButton({
+  type: 'question',
+  itemId: q.id,
+  count: validQuestionVotes.length,
+  voted: questionVoted
+});
+
+article.insertBefore(questionVoteButton, replies);
 
           if (currentUser) {
             const form = document.createElement('form');
