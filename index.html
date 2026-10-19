@@ -728,13 +728,26 @@ function showResult(label, value, note = "") {
     copyText(text);
   };
 }
+
 function parseNumbers(text) {
-  const tokens = text.trim().split(/[;,\s]+/).filter(Boolean);
-  if (!tokens.length) throw new Error("Introduce al menos un número.");
-  const values = tokens.map(t => Number(t.replace(",", ".")));
-  if (values.some(v => !Number.isFinite(v))) throw new Error("Hay algún valor que no es un número válido.");
-  return values;
+  const tokens = text.trim().split(/[;\s]+/).filter(Boolean);
+
+  if (!tokens.length) {
+    throw new Error("Introduce al menos un número.");
+  }
+
+  const values = tokens.map(token => {
+    const normalized = token.replace(",", ".");
+    return normalized;
+  });
+
+  if (values.some(token => !/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(token))) {
+    throw new Error("Introduce números válidos separados por punto y coma o espacios.");
+  }
+
+  return values.map(Number);
 }
+
 function gcd(a, b) {
   a = Math.abs(Math.trunc(a)); b = Math.abs(Math.trunc(b));
   while (b) [a, b] = [b, a % b];
