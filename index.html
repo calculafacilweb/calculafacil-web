@@ -844,6 +844,7 @@ function runCalc(event) {
         break;
       }
      
+
 case "interes": {
   const principal = num("principal");
   const rate = num("annualRate");
@@ -883,6 +884,9 @@ case "interes": {
   note = "Aportaciones totales: " + fmt(contributions) +
     " €. Diferencia estimada: " + fmt(balance - contributions) +
     " €. Simulación con aportaciones al final de cada mes, sin impuestos ni comisiones.";
+  break;
+}
+
   break;
 }
 
