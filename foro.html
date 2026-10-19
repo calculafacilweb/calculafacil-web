@@ -801,11 +801,40 @@ article.insertBefore(questionVoteButton, replies);
       }
 
       for (const reply of replies) {
-        const p = document.createElement('p');
-        p.className = 'reply';
-        p.textContent = reply.body;
-        target.appendChild(p);
-      }
+  const replyBox = document.createElement('div');
+  replyBox.className = 'reply';
+
+  const p = document.createElement('p');
+  p.textContent = reply.body;
+  p.style.margin = '0';
+
+  replyBox.appendChild(p);
+
+  const { data: replyVotes, error: replyVotesError } = await db
+    .from('forum_reply_votes')
+    .select('id,user_id')
+    .eq('reply_id', reply.id);
+
+  if (replyVotesError) {
+    console.error('No se pudieron cargar los votos de la respuesta:', replyVotesError);
+  }
+
+  const validReplyVotes = replyVotes || [];
+  const replyVoted = validReplyVotes.some(
+    vote => vote.user_id === currentUser?.id
+  );
+
+  const replyVoteButton = createVoteButton({
+    type: 'reply',
+    itemId: reply.id,
+    count: validReplyVotes.length,
+    voted: replyVoted
+  });
+
+  replyVoteButton.dataset.questionId = questionId;
+  replyBox.appendChild(replyVoteButton);
+  target.appendChild(replyBox);
+}
     }
 
     $('refresh').addEventListener('click', loadQuestions);
