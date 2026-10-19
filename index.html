@@ -858,7 +858,22 @@ if (totalMonths > 1200) {
 
 let balance = principal;
 let contributions = principal;
-const monthlyRate = Math.pow(1 + rate / 100, 1 / 12) - 1;
+
+const totalMonths = Math.round(years * 12);
+
+if (totalMonths > 1200) {
+  throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
+}
+
+if (![1, 2, 4, 12].includes(freq)) {
+  throw new Error("Selecciona una frecuencia de capitalización válida.");
+}
+
+let balance = principal;
+let contributions = principal;
+
+// Tasa mensual equivalente según la frecuencia seleccionada.
+const monthlyRate = Math.pow(1 + rate / 100 / freq, freq / 12) - 1;
 
 for (let month = 1; month <= totalMonths; month++) {
   balance *= (1 + monthlyRate);
@@ -868,6 +883,9 @@ for (let month = 1; month <= totalMonths; month++) {
 
 result = fmt(balance) + " €";
 note = "Aportaciones totales: " + fmt(contributions) +
+  " €. Diferencia estimada: " + fmt(balance - contributions) +
+  " €. Simulación con aportaciones al final de cada mes, sin impuestos ni comisiones.";
+ " + fmt(contributions) +
   " €. Diferencia estimada: " + fmt(balance - contributions) +
   " €. Modelo con interés mensual equivalente, aportaciones al final de cada mes, sin impuestos ni comisiones.";
 
