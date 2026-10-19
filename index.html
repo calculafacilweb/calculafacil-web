@@ -843,17 +843,50 @@ function runCalc(event) {
         }
         break;
       }
-      case "interes": {
-        const principal = num("principal"), rate = num("annualRate"), years = num("years"), monthly = num("monthlyContribution");
-        positive(principal, "El capital"); positive(rate, "El interés"); positive(years, "La duración", false); positive(monthly, "La aportación");
-        bounded(years, 0.01, 100, "La duración"); bounded(rate, 0, 1000, "El interés");
-        const freq = Number($("compoundFreq").value), periods = Math.round(years * 12);
-      
-const totalMonths = Math.round(years * 12);
+     
+case "interes": {
+  const principal = num("principal");
+  const rate = num("annualRate");
+  const years = num("years");
+  const monthly = num("monthlyContribution");
 
-if (totalMonths > 1200) {
-  throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
+  positive(principal, "El capital");
+  positive(rate, "El interés", false);
+  positive(years, "La duración", false);
+  positive(monthly, "La aportación");
+
+  bounded(years, 0.01, 100, "La duración");
+  bounded(rate, 0, 1000, "El interés");
+
+  const freq = Number($("compoundFreq").value);
+  const totalMonths = Math.round(years * 12);
+
+  if (totalMonths > 1200) {
+    throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
+  }
+
+  if (![1, 2, 4, 12].includes(freq)) {
+    throw new Error("Selecciona una frecuencia de capitalización válida.");
+  }
+
+  let balance = principal;
+  let contributions = principal;
+  const monthlyRate = Math.pow(1 + rate / 100 / freq, freq / 12) - 1;
+
+  for (let month = 1; month <= totalMonths; month++) {
+    balance *= 1 + monthlyRate;
+    balance += monthly;
+    contributions += monthly;
+  }
+
+  result = fmt(balance) + " €";
+  note = "Aportaciones totales: " + fmt(contributions) +
+    " €. Diferencia estimada: " + fmt(balance - contributions) +
+    " €. Simulación con aportaciones al final de cada mes, sin impuestos ni comisiones.";
+  break;
 }
+
+      
 
 let balance = principal;
 let contributions = principal;
