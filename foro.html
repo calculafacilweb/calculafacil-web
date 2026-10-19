@@ -418,6 +418,101 @@
     function displayName(user) {
       return user?.user_metadata?.display_name || user?.email || 'Estudiante';
     }
+    function createVoteButton({ type, itemId, count, voted }) {
+  const row = document.createElement('div');
+  row.className = 'vote-row';
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'vote-btn' + (voted ? ' voted' : '');
+  button.setAttribute('aria-pressed', String(voted));
+  button.setAttribute(
+    'aria-label',
+    voted ? 'Retirar voto positivo' : 'Dar voto positivo'
+  );
+
+  const icon = document.createElement('span');
+  icon.textContent = '👍';
+
+  const label = document.createElement('span');
+  label.textContent = String(count);
+
+  button.append(icon, label);
+
+  const note = document.createElement('span');
+  note.className = 'vote-note';
+
+  if (!currentUser) {
+    note.textContent = 'Inicia sesión para votar';
+    button.title = 'Inicia sesión para votar';
+  } else {
+    note.textContent = voted ? 'Te gusta' : '¿Te resulta útil?';
+  }
+
+  button.addEventListener('click', async () => {
+    if (!currentUser) {
+      $('auth').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setMessage('authMsg', 'Inicia sesión para votar.', 'error');
+      return;
+    }
+
+    button.disabled = true;
+    note.textContent = 'Guardando voto…';
+
+    const table = type === 'question'
+      ? 'forum_question_votes'
+      : 'forum_reply_votes';
+
+    const idColumn = type === 'question'
+      ? 'question_id'
+      : 'reply_id';
+
+    try {
+      const { data: existing, error: findError } = await db
+        .from(table)
+        .select('id')
+        .eq(idColumn, itemId)
+        .eq('user_id', currentUser.id)
+        .maybeSingle();
+
+      if (findError) throw findError;
+
+      if (existing) {
+        const { error } = await db
+          .from(table)
+          .delete()
+          .eq('id', existing.id)
+          .eq('user_id', currentUser.id);
+
+        if (error) throw error;
+      } else {
+        const { error } = await db
+          .from(table)
+          .insert({
+            [idColumn]: itemId,
+            user_id: currentUser.id
+          });
+
+        if (error) throw error;
+      }
+
+      if (type === 'question') {
+        await loadQuestions();
+      } else {
+        await loadReplies(
+          Number(row.dataset.questionId || 0)
+        );
+      }
+    } catch (error) {
+      console.error('Error al votar:', error);
+      note.textContent = 'No se pudo guardar el voto. Inténtalo de nuevo.';
+      button.disabled = false;
+    }
+  });
+
+  row.append(button, note);
+  return row;
+}
 
     function updateUI() {
       $('auth').classList.toggle('hidden', !!currentUser);
