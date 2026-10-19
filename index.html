@@ -635,7 +635,7 @@ function formHTML(key) {
     case "media":
     case "lista":
       return `<form id="activeForm">
-        <div class="field"><label for="values">Notas</label><textarea id="values" required placeholder="Ej. 7,5; 8; 6,25; 9"></textarea><div class="hint">Separa las notas con comas, espacios o saltos de línea.</div></div>
+        <div class="field"><label for="values">Notas</label><textarea id="values" required placeholder="Ej. 7,5; 8; 6,25; 9"></textarea><div class="hint">Separa las notas con punto y coma, espacios o saltos de línea.</div></div>
         <div class="field"><label class="checkline"><input id="checkGrades" type="checkbox" checked> Las notas deben estar entre 0 y 10</label></div>
         ${calcButton("Calcular resultados")}
       </form>`;
