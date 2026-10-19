@@ -739,6 +739,7 @@ function showResult(label, value, note = "") {
   };
 }
 
+
 function parseNumbers(text) {
   const tokens = text.trim().split(/[;\s]+/).filter(Boolean);
 
@@ -746,14 +747,14 @@ function parseNumbers(text) {
     throw new Error("Introduce al menos un número.");
   }
 
-  const values = tokens.map(token => {
-    const normalized = token.replace(",", ".");
-    return normalized;
-  });
+  const values = tokens.map(token => token.replace(",", "."));
 
   if (values.some(token => !/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(token))) {
     throw new Error("Introduce números válidos separados por punto y coma o espacios.");
   }
+
+  return values.map(Number);
+}
 
   return values.map(Number);
 }
