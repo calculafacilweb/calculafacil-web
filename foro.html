@@ -179,7 +179,48 @@
     .question-body { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
     .replies { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border); }
     .replies h4 { margin: 0 0 12px; font-size: .9rem; }
-    .reply {
+    .vote-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.vote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 7px 12px;
+  background: #fff;
+  color: var(--muted);
+  font-weight: 750;
+  transition: background .15s, border-color .15s, color .15s;
+}
+
+.vote-btn:hover {
+  background: var(--soft);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.vote-btn.voted {
+  background: var(--soft);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.vote-btn:disabled {
+  cursor: not-allowed;
+  opacity: .65;
+}
+
+.vote-note {
+  color: var(--muted);
+  font-size: .8rem;
+}.reply {
       padding: 12px 14px;
       background: #f8f7ff;
       border-radius: 10px;
