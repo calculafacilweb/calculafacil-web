@@ -849,17 +849,28 @@ function runCalc(event) {
         positive(principal, "El capital"); positive(rate, "El interés"); positive(years, "La duración", false); positive(monthly, "La aportación");
         bounded(years, 0.01, 100, "La duración"); bounded(rate, 0, 1000, "El interés");
         const freq = Number($("compoundFreq").value), periods = Math.round(years * 12);
-        const periodicRate = rate / 100 / freq;
-        const totalMonths = Math.min(periods, 1200);
-        if (periods > 1200) throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
-        let balance = principal;
-        for (let month=1; month<=totalMonths; month++) {
-          balance += monthly;
-          if (month % (12/freq) === 0) balance *= (1 + periodicRate);
-        }
-        const contributions = principal + monthly * totalMonths;
-        result = fmt(balance) + " €";
-        note = "Aportaciones totales: " + fmt(contributions) + " €. Diferencia estimada: " + fmt(balance-contributions) + " €. Modelo simplificado, sin impuestos, comisiones ni variaciones de rentabilidad.";
+      
+const totalMonths = Math.round(years * 12);
+
+if (totalMonths > 1200) {
+  throw new Error("Para esta simulación, usa una duración máxima de 100 años.");
+}
+
+let balance = principal;
+let contributions = principal;
+const monthlyRate = Math.pow(1 + rate / 100, 1 / 12) - 1;
+
+for (let month = 1; month <= totalMonths; month++) {
+  balance *= (1 + monthlyRate);
+  balance += monthly;
+  contributions += monthly;
+}
+
+result = fmt(balance) + " €";
+note = "Aportaciones totales: " + fmt(contributions) +
+  " €. Diferencia estimada: " + fmt(balance - contributions) +
+  " €. Modelo con interés mensual equivalente, aportaciones al final de cada mes, sin impuestos ni comisiones.";
+
         break;
       }
       case "ecuacion": {
